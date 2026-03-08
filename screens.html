@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitStart AI — All Screens (Figma Export)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0E0D12;
+      --surface:      #18161F;
+      --surface-2:    #211E2A;
+      --accent:       #FF6B47;
+      --accent-2:     #6C7FFF;
+      --accent-violet:#A78BFA;
+      --accent-dim:   rgba(255, 107, 71, 0.12);
+      --text:         #F5F3EE;
+      --text-muted:   #8A8799;
+      --success:      #4ADE80;
+      --radius:       16px;
+      --ph:           24px;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: #05040A;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+    }
+
+    /* ---- Page layout ---- */
+    .page-header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .page-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 28px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .page-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .screens-row {
+      display: flex;
+      gap: 32px;
+      padding: 40px;
+      overflow-x: auto;
+      align-items: flex-start;
+    }
+
+    .screen-wrap {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .screen-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ---- Phone shell ---- */
+    .phone {
+      width: 390px;
+      height: 844px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      border-radius: 44px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(255,255,255,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* ---- Glow layers ---- */
+    .glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .splash-glow {
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,107,71,0.28) 0%, transparent 45%),
+        radial-gradient(circle at 85% 70%, rgba(108,127,255,0.22) 0%, transparent 42%);
+    }
+    .q-glow {
+      background:
+        radial-gradient(circle at 75% 10%, rgba(108,127,255,0.2) 0%, transparent 40%),
+        radial-gradient(circle at 20% 85%, rgba(167,139,250,0.15) 0%, transparent 38%);
+    }
+    .gen-glow {
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,107,71,0.22) 0%, transparent 50%),
+        radial-gradient(circle at 80% 75%, rgba(108,127,255,0.18) 0%, transparent 40%);
+    }
+    .plan-glow {
+      background:
+        radial-gradient(circle at 30% 5%, rgba(255,107,71,0.22) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(108,127,255,0.16) 0%, transparent 35%);
+      height: 260px;
+    }
+    .ex-detail-glow {
+      background:
+        radial-gradient(circle at 80% 5%, rgba(108,127,255,0.2) 0%, transparent 38%),
+        radial-gradient(circle at 20% 35%, rgba(167,139,250,0.14) 0%, transparent 35%);
+      height: 220px;
+    }
+    .completion-glow {
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255,107,71,0.24) 0%, transparent 48%),
+        radial-gradient(circle at 80% 75%, rgba(108,127,255,0.2) 0%, transparent 45%),
+        radial-gradient(circle at 55% 50%, rgba(167,139,250,0.1) 0%, transparent 50%);
+    }
+
+    /* ---- Shared typography ---- */
+    .serif {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      letter-spacing: -0.5px;
+    }
+
+    /* ---- Buttons ---- */
+    .btn {
+      width: 100%;
+      min-height: 56px;
+      border-radius: 14px;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: -0.2px;
+    }
+    .btn-primary { background: var(--accent); color: #FFF8F5; }
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-weight: 600;
+    }
+    .btn-primary.disabled { opacity: 0.35; }
+
+    /* ======================================================
+       SCREEN 1: SPLASH
+    ====================================================== */
+    #s-splash {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 56px var(--ph) 48px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 18px; height: 18px; }
+    .logo-name {
+      font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+    }
+    .logo-name em { font-style: italic; color: var(--accent); font-family: 'Fraunces', Georgia, serif; }
+
+    .splash-hero { position: relative; z-index: 1; }
+    .pill {
+      display: inline-block;
+      background: rgba(255,107,71,0.12);
+      border: 1px solid rgba(255,107,71,0.22);
+      color: var(--accent);
+      font-size: 12px; font-weight: 700;
+      padding: 6px 14px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .splash-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 52px; font-weight: 700; font-style: italic;
+      letter-spacing: -1.5px; line-height: 1.08;
+      margin-bottom: 18px;
+    }
+    .splash-title em { color: var(--accent); font-style: normal; }
+    .splash-sub {
+      font-size: 16px; color: var(--text-muted);
+      line-height: 1.65; max-width: 300px;
+    }
+
+    .splash-cta { position: relative; z-index: 1; }
+    .splash-note {
+      font-size: 12px; color: var(--text-muted);
+      text-align: center; margin-top: 14px; line-height: 1.5;
+    }
+
+    /* ======================================================
+       SCREENS 2–4: QUESTIONS
+    ====================================================== */
+    .q-screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .q-wrap {
+      padding: 56px var(--ph) 0;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      transition: background 300ms, width 300ms;
+    }
+    .dot.active { background: var(--accent); width: 22px; border-radius: 4px; }
+    .dot.done { background: rgba(255,107,71,0.4); }
+    .q-label {
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .q-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 30px; font-weight: 700; font-style: italic;
+      letter-spacing: -0.6px; line-height: 1.18;
+      margin-bottom: 28px;
+    }
+    .options { display: flex; flex-direction: column; gap: 11px; }
+    .option {
+      background: var(--surface);
+      border: 2px solid transparent;
+      border-radius: var(--radius);
+      padding: 17px 18px;
+      display: flex; align-items: center; gap: 15px;
+      min-height: 74px;
+    }
+    .option.selected {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .opt-icon {
+      width: 46px; height: 46px; border-radius: 13px;
+      background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .option.selected .opt-icon { background: rgba(255,107,71,0.14); }
+    .opt-text { flex: 1; }
+    .opt-title { font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .opt-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
+    .opt-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--accent); display: none;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .option.selected .opt-check { display: flex; }
+    .q-footer {
+      padding: 16px var(--ph) 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ======================================================
+       SCREEN 5: GENERATING
+    ====================================================== */
+    #s-generating {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+    .spinner {
+      width: 52px; height: 52px;
+      border: 3px solid rgba(255,107,71,0.15);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 900ms linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .gen-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px; font-weight: 700; font-style: italic;
+      letter-spacing: -0.5px; text-align: center;
+    }
+    .gen-sub {
+      font-size: 15px; color: var(--text-muted);
+      text-align: center; line-height: 1.65;
+    }
+
+    /* ======================================================
+       SCREEN 6: WORKOUT PLAN
+    ====================================================== */
+    #s-plan {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    #s-plan::-webkit-scrollbar { display: none; }
+    .plan-header {
+      padding: 52px var(--ph) 24px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .plan-tag {
+      font-size: 12px; font-weight: 700;
+      color: var(--accent); letter-spacing: 0.8px;
+      margin-bottom: 10px;
+      position: relative; z-index: 1;
+    }
+    .plan-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 34px; font-weight: 700; font-style: italic;
+      letter-spacing: -0.8px; line-height: 1.12;
+      margin-bottom: 6px;
+      position: relative; z-index: 1;
+    }
+    .plan-meta {
+      font-size: 14px; color: var(--text-muted);
+      line-height: 1.55;
+      position: relative; z-index: 1;
+    }
+    .stats-row {
+      display: flex; gap: 10px;
+      padding: 0 var(--ph) 20px;
+      flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+    .stat {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(8px);
+      border-radius: 13px; padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-val {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 26px; font-weight: 700; font-style: italic;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+    .ex-list {
+      padding: 0 var(--ph);
+      display: flex; flex-direction: column; gap: 10px;
+      flex: 1;
+    }
+    .ex-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px;
+      min-height: 68px;
+    }
+    .ex-card.done {
+      background: rgba(74,222,128,0.06);
+      border-color: rgba(74,222,128,0.2);
+    }
+    .ex-num {
+      width: 32px; height: 32px; border-radius: 10px;
+      background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .ex-card.done .ex-num {
+      background: rgba(74,222,128,0.15);
+      color: var(--success);
+    }
+    .ex-info { flex: 1; }
+    .ex-name { font-size: 15px; font-weight: 600; line-height: 1.3; }
+    .ex-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .chevron { color: var(--text-muted); flex-shrink: 0; }
+    .plan-footer {
+      padding: 14px var(--ph) 44px;
+      flex-shrink: 0;
+    }
+
+    /* ======================================================
+       SCREEN 7: EXERCISE DETAIL
+    ====================================================== */
+    #s-exercise {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    #s-exercise::-webkit-scrollbar { display: none; }
+    .ex-detail-header {
+      padding: 52px var(--ph) 20px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .back-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: none;
+      color: var(--accent); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      padding: 14px 0; margin-bottom: 8px;
+      min-height: 48px;
+      position: relative; z-index: 1;
+    }
+    .muscle-tag {
+      display: inline-flex; align-items: center;
+      background: rgba(255,107,71,0.11);
+      color: var(--accent);
+      font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 100px;
+      margin-bottom: 10px;
+      position: relative; z-index: 1;
+    }
+    .ex-detail-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 34px; font-weight: 700; font-style: italic;
+      letter-spacing: -0.8px; line-height: 1.12;
+      position: relative; z-index: 1;
+    }
+    .ex-detail-body {
+      padding: 8px var(--ph) 0;
+      display: flex; flex-direction: column; gap: 20px;
+      flex: 1;
+    }
+    .specs-row {
+      display: flex; gap: 10px;
+    }
+    .spec {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(8px);
+      border-radius: 13px; padding: 14px 10px;
+      text-align: center;
+    }
+    .spec-val {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 20px; font-weight: 700; font-style: italic;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .spec-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+    .section-label {
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-muted); margin-bottom: 12px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 12px; }
+    .step {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 8px;
+      background: var(--surface-2);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+    .tip-box {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.18);
+      border-radius: 14px; padding: 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .tip-text { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
+    .ex-detail-footer {
+      padding: 12px var(--ph) 44px;
+      display: flex; flex-direction: column; gap: 8px;
+      flex-shrink: 0;
+    }
+    .ex-progress-label {
+      font-size: 13px; font-weight: 600;
+      color: var(--text-muted); text-align: center; min-height: 20px;
+    }
+
+    /* ======================================================
+       SCREEN 8: COMPLETION
+    ====================================================== */
+    #s-completion {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px var(--ph) 50px;
+      text-align: center;
+    }
+    .completion-hero {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .trophy {
+      width: 104px; height: 104px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255,107,71,0.22), rgba(167,139,250,0.12));
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 50px; margin-bottom: 28px;
+    }
+    .completion-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 40px; font-weight: 700; font-style: italic;
+      letter-spacing: -0.8px; line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .completion-title em { font-style: normal; color: var(--accent); }
+    .completion-sub {
+      font-size: 16px; color: var(--text-muted);
+      line-height: 1.65; max-width: 275px;
+    }
+    .feel-section { margin-top: 38px; width: 100%; }
+    .feel-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
+    .feel-row { display: flex; gap: 10px; }
+    .feel-opt {
+      flex: 1; background: var(--surface);
+      border: 2px solid transparent;
+      border-radius: 14px; padding: 14px 8px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 6px;
+      min-height: 84px; justify-content: center;
+    }
+    .feel-emoji { font-size: 28px; }
+    .feel-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    .completion-footer {
+      position: relative; z-index: 1;
+      width: 100%; display: flex; flex-direction: column; gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-title">FitStart AI — All Screens</div>
+  <div class="page-sub">Static export for Figma import · Use HTML to Figma plugin (Builder.io)</div>
+</div>
+
+<div class="screens-row">
+
+  <!-- ===== SCREEN 1: SPLASH ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">01 · Splash</div>
+    <div class="phone">
+      <div id="s-splash">
+        <div class="glow splash-glow"></div>
+        <div class="logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 22 22" fill="none">
+              <path d="M11 2.5L4 7.5v7l7 5 7-5v-7L11 2.5z" stroke="#FFF8F5" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="11" cy="11" r="2.8" fill="#0A0C14"/>
+            </svg>
+          </div>
+          <span class="logo-name">FitStart <em>AI</em></span>
+        </div>
+        <div class="splash-hero">
+          <div class="pill">&#10022; Free for your first session</div>
+          <h1 class="splash-title">Your first gym day,<br><em>guided.</em></h1>
+          <p class="splash-sub">Answer 3 quick questions. Get a personalised workout. Walk in with confidence.</p>
+        </div>
+        <div class="splash-cta">
+          <button class="btn btn-primary">Get started &rarr;</button>
+          <p class="splash-note">No account needed &middot; Works offline &middot; Free for your first session</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: QUESTION 1 ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">02 · Goal</div>
+    <div class="phone">
+      <div class="q-screen">
+        <div class="glow q-glow"></div>
+        <div class="q-wrap">
+          <div class="progress-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <div class="q-label">Question 1 of 3</div>
+          <h2 class="q-title">What's your main fitness goal?</h2>
+          <div class="options">
+            <div class="option selected">
+              <div class="opt-icon">&#128293;</div>
+              <div class="opt-text">
+                <div class="opt-title">Lose weight</div>
+                <div class="opt-sub">Burn fat and feel lighter</div>
+              </div>
+              <div class="opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFF8F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="option">
+              <div class="opt-icon">&#128170;</div>
+              <div class="opt-text">
+                <div class="opt-title">Build muscle</div>
+                <div class="opt-sub">Get stronger and more defined</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="option">
+              <div class="opt-icon">&#10084;&#65039;</div>
+              <div class="opt-text">
+                <div class="opt-title">Improve fitness</div>
+                <div class="opt-sub">More energy, better endurance</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+        <div class="q-footer">
+          <button class="btn btn-primary">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: QUESTION 2 ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">03 · Days</div>
+    <div class="phone">
+      <div class="q-screen">
+        <div class="glow q-glow"></div>
+        <div class="q-wrap">
+          <div class="progress-dots">
+            <div class="dot done"></div>
+            <div class="dot active"></div>
+            <div class="dot"></div>
+          </div>
+          <div class="q-label">Question 2 of 3</div>
+          <h2 class="q-title">How many days a week can you train?</h2>
+          <div class="options">
+            <div class="option">
+              <div class="opt-icon">&#128197;</div>
+              <div class="opt-text">
+                <div class="opt-title">2&ndash;3 days</div>
+                <div class="opt-sub">Casual &mdash; fits around a busy life</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="option selected">
+              <div class="opt-icon">&#128467;&#65039;</div>
+              <div class="opt-text">
+                <div class="opt-title">3&ndash;4 days</div>
+                <div class="opt-sub">Committed &mdash; building a real habit</div>
+              </div>
+              <div class="opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFF8F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="option">
+              <div class="opt-icon">&#128293;</div>
+              <div class="opt-text">
+                <div class="opt-title">5+ days</div>
+                <div class="opt-sub">Dedicated &mdash; all in</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+        <div class="q-footer">
+          <button class="btn btn-primary">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 4: QUESTION 3 ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">04 · Experience</div>
+    <div class="phone">
+      <div class="q-screen">
+        <div class="glow q-glow"></div>
+        <div class="q-wrap">
+          <div class="progress-dots">
+            <div class="dot done"></div>
+            <div class="dot done"></div>
+            <div class="dot active"></div>
+          </div>
+          <div class="q-label">Question 3 of 3</div>
+          <h2 class="q-title">How would you describe your gym experience?</h2>
+          <div class="options">
+            <div class="option selected">
+              <div class="opt-icon">&#127807;</div>
+              <div class="opt-text">
+                <div class="opt-title">Complete beginner</div>
+                <div class="opt-sub">First time, or rarely been before</div>
+              </div>
+              <div class="opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFF8F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="option">
+              <div class="opt-icon">&#9889;</div>
+              <div class="opt-text">
+                <div class="opt-title">Some experience</div>
+                <div class="opt-sub">Been a few times, know the basics</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="option">
+              <div class="opt-icon">&#127947;&#65039;</div>
+              <div class="opt-text">
+                <div class="opt-title">Regular gym-goer</div>
+                <div class="opt-sub">I know what I'm doing, just need structure</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+        <div class="q-footer">
+          <button class="btn btn-primary">Build my plan &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 5: GENERATING ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">05 · Generating</div>
+    <div class="phone">
+      <div id="s-generating">
+        <div class="glow gen-glow"></div>
+        <div class="spinner"></div>
+        <h2 class="gen-title">Building your plan&hellip;</h2>
+        <p class="gen-sub">FitStart AI is crafting your<br>personalised first workout.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 6: WORKOUT PLAN ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">06 · Workout Plan</div>
+    <div class="phone">
+      <div id="s-plan">
+        <div class="plan-header">
+          <div class="glow plan-glow"></div>
+          <div class="plan-tag">&#10022; Today's Session</div>
+          <h2 class="plan-title">Muscle Building</h2>
+          <p class="plan-meta">Compound + isolation work to build lean muscle.</p>
+        </div>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-val">5</div>
+            <div class="stat-lbl">Exercises</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">~40</div>
+            <div class="stat-lbl">Minutes</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">Low</div>
+            <div class="stat-lbl">Intensity</div>
+          </div>
+        </div>
+        <div class="ex-list">
+          <div class="ex-card done">
+            <div class="ex-num">&#10003;</div>
+            <div class="ex-info">
+              <div class="ex-name">Treadmill Walk / Light Jog</div>
+              <div class="ex-meta">Full Body · Warmup &middot; 1 set &middot; 10 min</div>
+            </div>
+            <div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="ex-card">
+            <div class="ex-num">2</div>
+            <div class="ex-info">
+              <div class="ex-name">Leg Press</div>
+              <div class="ex-meta">Quads · Glutes &middot; 3 sets &middot; 12 reps</div>
+            </div>
+            <div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="ex-card">
+            <div class="ex-num">3</div>
+            <div class="ex-info">
+              <div class="ex-name">Seated Chest Press Machine</div>
+              <div class="ex-meta">Chest · Shoulders &middot; 3 sets &middot; 12 reps</div>
+            </div>
+            <div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="ex-card">
+            <div class="ex-num">4</div>
+            <div class="ex-info">
+              <div class="ex-name">Seated Cable Row</div>
+              <div class="ex-meta">Back · Biceps &middot; 3 sets &middot; 12 reps</div>
+            </div>
+            <div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+          <div class="ex-card">
+            <div class="ex-num">5</div>
+            <div class="ex-info">
+              <div class="ex-name">Shoulder Press Machine</div>
+              <div class="ex-meta">Shoulders · Triceps &middot; 3 sets &middot; 12 reps</div>
+            </div>
+            <div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+        <div class="plan-footer">
+          <button class="btn btn-primary">Start Workout &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 7: EXERCISE DETAIL ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">07 · Exercise Detail</div>
+    <div class="phone">
+      <div id="s-exercise">
+        <div class="ex-detail-header">
+          <div class="glow ex-detail-glow"></div>
+          <button class="back-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to plan
+          </button>
+          <div class="muscle-tag">Quads &middot; Glutes &middot; Hamstrings</div>
+          <h2 class="ex-detail-name">Leg Press</h2>
+        </div>
+        <div class="ex-detail-body">
+          <div class="specs-row">
+            <div class="spec">
+              <div class="spec-val">3 sets</div>
+              <div class="spec-lbl">Sets</div>
+            </div>
+            <div class="spec">
+              <div class="spec-val">12 reps</div>
+              <div class="spec-lbl">Reps</div>
+            </div>
+            <div class="spec">
+              <div class="spec-val">60s</div>
+              <div class="spec-lbl">Rest</div>
+            </div>
+          </div>
+          <div>
+            <div class="section-label">How to do it</div>
+            <div class="steps">
+              <div class="step"><div class="step-num">1</div><div class="step-text">Sit down and place feet shoulder-width apart on the platform.</div></div>
+              <div class="step"><div class="step-num">2</div><div class="step-text">Unlock the safety handles on the sides before moving.</div></div>
+              <div class="step"><div class="step-num">3</div><div class="step-text">Lower the platform slowly — stop before knees pass 90°.</div></div>
+              <div class="step"><div class="step-num">4</div><div class="step-text">Press through your heels to return to the start position.</div></div>
+              <div class="step"><div class="step-num">5</div><div class="step-text">Re-lock the safety handles before removing your feet.</div></div>
+            </div>
+          </div>
+          <div class="tip-box">
+            <div class="tip-icon">&#9888;&#65039;</div>
+            <div class="tip-text">Never fully straighten your knees at the top. Keep a slight bend to protect your joints.</div>
+          </div>
+        </div>
+        <div class="ex-detail-footer">
+          <div class="ex-progress-label">Exercise 2 of 5</div>
+          <button class="btn btn-primary">Mark as done &#10003;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 8: COMPLETION ===== -->
+  <div class="screen-wrap">
+    <div class="screen-label">08 · Completion</div>
+    <div class="phone">
+      <div id="s-completion">
+        <div class="glow completion-glow"></div>
+        <div class="completion-hero">
+          <div class="trophy">&#127942;</div>
+          <h2 class="completion-title">First session<br><em>complete!</em></h2>
+          <p class="completion-sub">You showed up, pushed through, and did it. That's the hardest part done.</p>
+          <div class="feel-section">
+            <div class="feel-title">How do you feel?</div>
+            <div class="feel-row">
+              <div class="feel-opt">
+                <div class="feel-emoji">&#128516;</div>
+                <div class="feel-label">Great</div>
+              </div>
+              <div class="feel-opt">
+                <div class="feel-emoji">&#128522;</div>
+                <div class="feel-label">Okay</div>
+              </div>
+              <div class="feel-opt">
+                <div class="feel-emoji">&#128517;</div>
+                <div class="feel-label">Struggled</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="completion-footer">
+          <button class="btn btn-primary">Start another session &rarr;</button>
+          <button class="btn btn-ghost">Back to home</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- .screens-row -->
+</body>
+</html>
