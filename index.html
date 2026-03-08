@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FitStart AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -211,15 +211,25 @@
     }
 
     .progress-dots {
-      display: flex; gap: 7px; margin-bottom: 30px;
+      display: flex; gap: 10px; margin-bottom: 30px;
     }
     .dot {
-      height: 4px; flex: 1; border-radius: 4px;
+      flex: 1; display: flex; flex-direction: column; gap: 5px;
+    }
+    .dot-bar {
+      height: 4px; border-radius: 4px;
       background: rgba(255,255,255,0.1);
       transition: background 300ms;
     }
-    .dot.active { background: var(--accent); }
-    .dot.done   { background: rgba(255,107,71,0.38); }
+    .dot-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
+      transition: color 300ms;
+    }
+    .dot.active .dot-bar  { background: var(--accent); }
+    .dot.active .dot-label { color: var(--accent); }
+    .dot.done .dot-bar    { background: rgba(255,107,71,0.38); }
+    .dot.done .dot-label  { color: rgba(255,107,71,0.5); }
 
     .q-label {
       font-size: 12px; font-weight: 600;
@@ -278,6 +288,15 @@
     .option.selected .check-svg { opacity: 1; }
 
     .q-footer { padding: 20px var(--ph) 44px; }
+    .skip-link {
+      display: block; text-align: center;
+      font-size: 13px; font-weight: 600;
+      color: var(--text-muted);
+      padding: 12px; margin-top: 2px;
+      cursor: pointer; letter-spacing: 0.1px;
+      transition: color 150ms;
+    }
+    .skip-link:hover { color: var(--text); }
 
     /* ========================================================
        SCREEN 5 — GENERATING / LOADING
@@ -358,9 +377,9 @@
       backdrop-filter: blur(8px);
     }
     .stat-val {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 24px; font-weight: 700; font-style: italic;
-      color: var(--accent); letter-spacing: -0.5px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--accent); letter-spacing: 0.2px;
     }
     .stat-lbl {
       font-size: 11px; color: var(--text-muted);
@@ -371,6 +390,10 @@
       display: flex; flex-direction: column;
       gap: 10px; padding: 0 var(--ph);
     }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
     .ex-card {
       background: var(--surface);
       border: 1.5px solid transparent;
@@ -379,6 +402,8 @@
       display: flex; align-items: center; gap: 14px;
       cursor: pointer; min-height: 78px;
       transition: border-color 200ms, transform 140ms;
+      opacity: 0;
+      animation: cardIn 320ms ease-out forwards;
     }
     .ex-card:active { transform: scale(0.982); border-color: rgba(255,107,71,0.25); }
     .ex-card.done {
@@ -464,8 +489,9 @@
       backdrop-filter: blur(8px);
     }
     .spec-val {
-      font-size: 18px; font-weight: 700;
-      letter-spacing: -0.3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 700;
+      letter-spacing: 0.2px;
     }
     .spec-lbl {
       font-size: 11px; color: var(--text-muted);
@@ -624,9 +650,9 @@
   <div id="s-q1" class="screen">
     <div class="q-wrap">
       <div class="progress-dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
+        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
+        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 1 of 3</div>
       <h2 class="q-title">What's your main fitness goal?</h2>
@@ -659,6 +685,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q1" class="btn btn-primary" onclick="go('s-q2')" disabled>Continue &rarr;</button>
+      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
     </div>
   </div>
 
@@ -668,9 +695,9 @@
   <div id="s-q2" class="screen">
     <div class="q-wrap">
       <div class="progress-dots">
-        <div class="dot done"></div>
-        <div class="dot active"></div>
-        <div class="dot"></div>
+        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
+        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
+        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 2 of 3</div>
       <h2 class="q-title">How many days a week can you train?</h2>
@@ -703,6 +730,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q2" class="btn btn-primary" onclick="go('s-q3')" disabled>Continue &rarr;</button>
+      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
     </div>
   </div>
 
@@ -712,9 +740,9 @@
   <div id="s-q3" class="screen">
     <div class="q-wrap">
       <div class="progress-dots">
-        <div class="dot done"></div>
-        <div class="dot done"></div>
-        <div class="dot active"></div>
+        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
+        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
+        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 3 of 3</div>
       <h2 class="q-title">How would you describe your gym experience?</h2>
@@ -747,6 +775,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q3" class="btn btn-primary" onclick="buildPlan()" disabled>Build my plan &rarr;</button>
+      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
     </div>
   </div>
 
@@ -1091,6 +1120,13 @@ function go(id) {
 // ============================================================
 // ONBOARDING
 // ============================================================
+function skipToDefault() {
+  if (!S.goal)  S.goal  = 'improve_fitness';
+  if (!S.days)  S.days  = '2-3';
+  if (!S.level) S.level = 'beginner';
+  buildPlan();
+}
+
 function pick(el, key, val, btnId) {
   el.closest('.options').querySelectorAll('.option')
     .forEach(o => o.classList.remove('selected'));
@@ -1130,6 +1166,7 @@ function renderPlan() {
     const card = document.createElement('div');
     card.className = 'ex-card';
     card.id = 'card-' + i;
+    card.style.animationDelay = (i * 80) + 'ms';
     card.onclick = () => showExercise(i, false);
     card.innerHTML =
       '<div class="ex-num" id="num-' + i + '">' + (i + 1) + '</div>' +
