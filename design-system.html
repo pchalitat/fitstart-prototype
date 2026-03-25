@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spottr — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Gabarito:wght@500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg-top:        #C8D8F0;
+      --color-bg-bottom:     #F2F6FD;
+      --color-surface:       #FFFFFF;
+      --color-surface-2:     #EEF2FC;
+      --color-primary:       #1762F9;
+      --color-primary-light: #4E88FA;
+      --color-primary-dim:   #D8E6FF;
+      --color-primary-dark:  #1050D4;
+      --color-lavender:      #9080C8;
+      --color-lavender-dim:  #D0C8F0;
+      --color-teal:          #60A8A0;
+      --color-teal-light:    #B8D4D0;
+      --color-teal-dark:     #88C8C0;
+      --color-rose:          #D06080;
+      --color-rose-light:    #F0C8D0;
+      --color-slate:         #1A1A2E;
+      --color-stone:         #68788C;
+      --color-pebble:        #98AAB8;
+      --color-divide:        #CDD8EE;
+      --color-navy:          #1A2044;
+      --color-navy-mid:      #3050A0;
+      --shadow-sm:  0 1px 4px 0 rgba(23, 98, 249, 0.10);
+      --shadow-md:  0 4px 16px 0 rgba(23, 98, 249, 0.12), 0 1px 4px 0 rgba(23, 98, 249, 0.08);
+      --shadow-lg:  0 8px 32px 0 rgba(23, 98, 249, 0.14), 0 4px 12px 0 rgba(23, 98, 249, 0.10), 0 1px 4px 0 rgba(23, 98, 249, 0.06);
+      --font-logo:    'Gabarito', sans-serif;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-ui:      'Outfit', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --radius: 14px;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: #F0F2F8;
+      color: var(--color-slate);
+      padding: 48px 40px 80px;
+      min-height: 100vh;
+    }
+
+    /* ---- Page header ---- */
+    .page-header {
+      margin-bottom: 56px;
+      border-bottom: 1px solid var(--color-divide);
+      padding-bottom: 28px;
+    }
+    .page-logo {
+      font-family: var(--font-logo);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .page-meta {
+      font-size: 14px;
+      color: var(--color-stone);
+    }
+
+    /* ---- Section ---- */
+    .section { margin-bottom: 64px; }
+    .section-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--color-stone);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-divide);
+    }
+
+    /* ---- Grid helpers ---- */
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+
+    /* ---- Color swatch ---- */
+    .swatch {
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .swatch-color {
+      height: 72px;
+      width: 100%;
+    }
+    .swatch-info {
+      padding: 10px 12px 12px;
+    }
+    .swatch-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-slate);
+      margin-bottom: 2px;
+    }
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-stone);
+    }
+    .swatch-token {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-pebble);
+      margin-top: 3px;
+    }
+
+    /* ---- Color group label ---- */
+    .color-group { margin-bottom: 28px; }
+    .color-group-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-stone);
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ---- Typography row ---- */
+    .type-row {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 10px;
+    }
+    .type-meta {
+      min-width: 200px;
+      flex-shrink: 0;
+    }
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-primary);
+      margin-bottom: 3px;
+    }
+    .type-spec {
+      font-size: 11px;
+      color: var(--color-stone);
+      line-height: 1.6;
+    }
+    .type-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--color-divide);
+      flex-shrink: 0;
+    }
+    .type-sample { flex: 1; }
+
+    /* ---- Shadow cards ---- */
+    .shadow-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .shadow-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-primary);
+    }
+    .shadow-spec {
+      font-size: 11px;
+      color: var(--color-stone);
+      line-height: 1.6;
+    }
+
+    /* ---- Radius cards ---- */
+    .radius-card {
+      background: white;
+      box-shadow: var(--shadow-sm);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      border-radius: 12px;
+    }
+    .radius-preview {
+      width: 64px;
+      height: 64px;
+      background: var(--color-primary-dim);
+      border: 2px solid var(--color-primary-light);
+    }
+    .radius-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-slate);
+      font-weight: 500;
+      text-align: center;
+    }
+    .radius-token {
+      font-size: 11px;
+      color: var(--color-stone);
+      text-align: center;
+    }
+
+    /* ---- Button section ---- */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .btn-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 200px;
+    }
+    .btn-card-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+    .btn-spec {
+      font-size: 11px;
+      color: var(--color-stone);
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: 9999px;
+      border: none;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -0.1px;
+      padding: 0 28px;
+      min-height: 52px;
+      width: 100%;
+      transition: all 120ms ease;
+    }
+    .btn-primary {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-md);
+    }
+    .btn-secondary {
+      background: #FFFFFF;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-stone);
+      border: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #60A8A0 0%, #88C8C0 100%);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-md);
+    }
+    .btn-primary-disabled {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* ---- Component: Option card ---- */
+    .option {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-divide);
+      border-radius: var(--radius);
+      padding: 17px 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-height: 74px;
+      box-shadow: var(--shadow-sm);
+    }
+    .option.selected {
+      border-color: var(--color-primary);
+      background: var(--color-primary-dim);
+    }
+    .opt-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: var(--color-surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .option.selected .opt-icon { background: var(--color-primary-dim); }
+    .opt-text { flex: 1; }
+    .opt-title { font-size: 16px; font-weight: 500; }
+    .opt-sub { font-size: 13px; color: var(--color-stone); margin-top: 3px; }
+    .opt-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-divide);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .option.selected .opt-check {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    /* ---- Component: Pill / Tag ---- */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--color-primary-dim);
+      border: 1px solid var(--color-primary-light);
+      color: var(--color-primary);
+      font-size: 12px; font-weight: 600;
+      padding: 6px 14px; border-radius: 100px;
+      letter-spacing: 0.2px;
+    }
+    .tag {
+      display: inline-flex;
+      background: var(--color-primary-dim);
+      color: var(--color-primary);
+      font-size: 11px; font-weight: 600;
+      padding: 5px 12px; border-radius: 100px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .tag-teal {
+      background: var(--color-teal-light);
+      color: var(--color-teal);
+    }
+    .tag-lavender {
+      background: var(--color-lavender-dim);
+      color: var(--color-lavender);
+    }
+
+    /* ---- Component: Stat ---- */
+    .stat-row {
+      display: flex; gap: 12px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow-sm);
+      flex: 1;
+      text-align: center;
+    }
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.2px;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--color-stone);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* ---- Spacing scale ---- */
+    .spacing-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .spacing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .spacing-bar {
+      background: var(--color-primary);
+      border-radius: 3px;
+      width: 32px;
+    }
+    .spacing-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--color-stone);
+      text-align: center;
+    }
+
+    /* ---- Canvas bg for dark previews ---- */
+    .canvas-dark {
+      background: var(--color-slate);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-logo">Spottr</div>
+    <div class="page-title">Design System</div>
+    <div class="page-meta">v1 &nbsp;·&nbsp; Last updated March 2026 &nbsp;·&nbsp; For Figma handoff</div>
+  </div>
+
+
+  <!-- ================================================
+       1. COLOUR
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">01 &nbsp; Colour</div>
+
+    <div class="color-group">
+      <div class="color-group-label">Primary — Vivid Blue</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1762F9;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Primary</div>
+            <div class="swatch-hex">#1762F9</div>
+            <div class="swatch-token">--color-primary</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#4E88FA;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Primary Light</div>
+            <div class="swatch-hex">#4E88FA</div>
+            <div class="swatch-token">--color-primary-light</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D8E6FF; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Primary Dim</div>
+            <div class="swatch-hex">#D8E6FF</div>
+            <div class="swatch-token">--color-primary-dim</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1050D4;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Primary Dark</div>
+            <div class="swatch-hex">#1050D4</div>
+            <div class="swatch-token">--color-primary-dark</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Accent — Lavender &amp; Teal</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#9080C8;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Lavender</div>
+            <div class="swatch-hex">#9080C8</div>
+            <div class="swatch-token">--color-lavender</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D0C8F0; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Lavender Dim</div>
+            <div class="swatch-hex">#D0C8F0</div>
+            <div class="swatch-token">--color-lavender-dim</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#60A8A0;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Teal</div>
+            <div class="swatch-hex">#60A8A0</div>
+            <div class="swatch-token">--color-teal</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#B8D4D0; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Teal Light</div>
+            <div class="swatch-hex">#B8D4D0</div>
+            <div class="swatch-token">--color-teal-light</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Semantic — Success &amp; Error</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#88C8C0;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Teal Dark (Success)</div>
+            <div class="swatch-hex">#88C8C0</div>
+            <div class="swatch-token">--color-teal-dark</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D06080;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Rose (Error)</div>
+            <div class="swatch-hex">#D06080</div>
+            <div class="swatch-token">--color-rose</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F0C8D0; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Rose Light</div>
+            <div class="swatch-hex">#F0C8D0</div>
+            <div class="swatch-token">--color-rose-light</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Neutrals</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1A1A2E;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Slate (Text)</div>
+            <div class="swatch-hex">#1A1A2E</div>
+            <div class="swatch-token">--color-slate</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#68788C;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Stone (Muted)</div>
+            <div class="swatch-hex">#68788C</div>
+            <div class="swatch-token">--color-stone</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#98AAB8;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Pebble (Subtle)</div>
+            <div class="swatch-hex">#98AAB8</div>
+            <div class="swatch-token">--color-pebble</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#CDD8EE; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Divide (Border)</div>
+            <div class="swatch-hex">#CDD8EE</div>
+            <div class="swatch-token">--color-divide</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FFFFFF; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Surface</div>
+            <div class="swatch-hex">#FFFFFF</div>
+            <div class="swatch-token">--color-surface</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#EEF2FC; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Surface 2</div>
+            <div class="swatch-hex">#EEF2FC</div>
+            <div class="swatch-token">--color-surface-2</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F6F7F9; border:1px solid #CDD8EE;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Background</div>
+            <div class="swatch-hex">#F6F7F9</div>
+            <div class="swatch-token">--bg</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1A2044;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Navy</div>
+            <div class="swatch-hex">#1A2044</div>
+            <div class="swatch-token">--color-navy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       2. TYPOGRAPHY
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">02 &nbsp; Typography</div>
+
+    <!-- Font families -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:16px; margin-bottom:32px;">
+      <div style="background:white; border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow-sm);">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.8px;">--font-logo</div>
+        <div style="font-family:'Gabarito',sans-serif; font-size:28px; font-weight:500; color:var(--color-primary);">Spottr</div>
+        <div style="font-size:11px; color:var(--color-stone); margin-top:8px;">Gabarito · Weight 500<br>Logo / Wordmark only</div>
+      </div>
+      <div style="background:white; border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow-sm);">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.8px;">--font-display</div>
+        <div style="font-family:'Bricolage Grotesque',sans-serif; font-size:28px; font-weight:700; letter-spacing:-0.3px;">Display</div>
+        <div style="font-size:11px; color:var(--color-stone); margin-top:8px;">Bricolage Grotesque<br>Headings &amp; titles</div>
+      </div>
+      <div style="background:white; border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow-sm);">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.8px;">--font-ui</div>
+        <div style="font-family:'Outfit',sans-serif; font-size:28px; font-weight:500;">Interface</div>
+        <div style="font-size:11px; color:var(--color-stone); margin-top:8px;">Outfit<br>Body, buttons, labels</div>
+      </div>
+      <div style="background:white; border-radius:var(--radius); padding:20px 24px; box-shadow:var(--shadow-sm);">
+        <div style="font-family:var(--font-mono); font-size:10px; color:var(--color-primary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.8px;">--font-mono</div>
+        <div style="font-family:'DM Mono',monospace; font-size:26px; font-weight:400;">12:34</div>
+        <div style="font-size:11px; color:var(--color-stone); margin-top:8px;">DM Mono<br>Stats, numbers, code</div>
+      </div>
+    </div>
+
+    <!-- Type scale -->
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">.splash-title</div>
+        <div class="type-spec">Bricolage Grotesque<br>40px / 700 / lh 1.1<br>ls −0.5px</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Bricolage Grotesque',sans-serif; font-size:40px; font-weight:700; line-height:1.1; letter-spacing:-0.5px;">Built for you</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">.q-title / .plan-title</div>
+        <div class="type-spec">Bricolage Grotesque<br>26–30px / 600 / lh 1.25<br>ls −0.3px</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Bricolage Grotesque',sans-serif; font-size:28px; font-weight:600; line-height:1.25; letter-spacing:-0.3px;">Your First Workout</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">.ex-detail-name</div>
+        <div class="type-spec">Bricolage Grotesque<br>28px / 600 / lh 1.15<br>ls −0.3px</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Bricolage Grotesque',sans-serif; font-size:28px; font-weight:600; line-height:1.15; letter-spacing:-0.3px;">Leg Press</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Body / .splash-sub</div>
+        <div class="type-spec">Outfit<br>16px / 400 / lh 1.7</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Outfit',sans-serif; font-size:16px; font-weight:400; line-height:1.7; color:var(--color-stone);">Answer 3 quick questions. Get a personalised workout. Walk in with confidence.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">.opt-title / .ex-name</div>
+        <div class="type-spec">Outfit<br>16–15px / 500</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Outfit',sans-serif; font-size:16px; font-weight:500;">Build muscle</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Button label</div>
+        <div class="type-spec">Outfit<br>15px / 700 / ls −0.1px</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:700; letter-spacing:-0.1px;">Start Workout →</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Label / .q-label</div>
+        <div class="type-spec">Outfit<br>12px / 600 / ls 0.8px<br>UPPERCASE</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'Outfit',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:var(--color-stone);">Question 1 of 3</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-label">Mono stat / .stat-val</div>
+        <div class="type-spec">DM Mono<br>26px / 700 / ls 0.2px</div>
+      </div>
+      <div class="type-divider"></div>
+      <div class="type-sample" style="font-family:'DM Mono',monospace; font-size:26px; font-weight:700; letter-spacing:0.2px; color:var(--color-primary);">~40 min</div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       3. SPACING
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">03 &nbsp; Spacing</div>
+    <div style="background:white; border-radius:var(--radius); padding:28px 32px; box-shadow:var(--shadow-sm);">
+      <div class="spacing-row">
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:4px;"></div>
+          <div class="spacing-label">4px<br>xs</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:8px;"></div>
+          <div class="spacing-label">8px<br>sm</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:12px;"></div>
+          <div class="spacing-label">12px<br>—</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:16px;"></div>
+          <div class="spacing-label">16px<br>md</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:20px;"></div>
+          <div class="spacing-label">20px<br>—</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:24px;"></div>
+          <div class="spacing-label">24px<br>--ph</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:32px;"></div>
+          <div class="spacing-label">32px<br>lg</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:48px;"></div>
+          <div class="spacing-label">48px<br>xl</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-bar" style="height:64px;"></div>
+          <div class="spacing-label">64px<br>2xl</div>
+        </div>
+      </div>
+      <div style="margin-top:20px; font-size:12px; color:var(--color-stone); line-height:1.7;">
+        <strong style="color:var(--color-slate);">--ph = 24px</strong> — horizontal page padding used on all screens.<br>
+        Base unit: <strong style="color:var(--color-slate);">4px</strong>. All spacing values are multiples of 4.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       4. BORDER RADIUS
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">04 &nbsp; Border Radius</div>
+    <div style="display:flex; flex-wrap:wrap; gap:16px;">
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:0;"></div>
+        <div class="radius-label">0px</div>
+        <div class="radius-token">#none</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:2px;"></div>
+        <div class="radius-label">2px</div>
+        <div class="radius-token">#1</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:4px;"></div>
+        <div class="radius-label">4px</div>
+        <div class="radius-token">#2</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:6px;"></div>
+        <div class="radius-label">6px</div>
+        <div class="radius-token">#3</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:8px;"></div>
+        <div class="radius-label">8px</div>
+        <div class="radius-token">#4</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:10px;"></div>
+        <div class="radius-label">10px</div>
+        <div class="radius-token">#5</div>
+      </div>
+      <div class="radius-card" style="outline:2px solid var(--color-primary); outline-offset:2px;">
+        <div class="radius-preview" style="border-radius:12px;"></div>
+        <div class="radius-label" style="color:var(--color-primary);">12px ← Cards</div>
+        <div class="radius-token" style="color:var(--color-primary);">#6 / --radius≈14px</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:16px;"></div>
+        <div class="radius-label">16px</div>
+        <div class="radius-token">#7</div>
+      </div>
+      <div class="radius-card">
+        <div class="radius-preview" style="border-radius:9999px; width:64px; height:32px;"></div>
+        <div class="radius-label">999px</div>
+        <div class="radius-token">#full · Buttons/pills</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       5. SHADOWS
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">05 &nbsp; Elevation &amp; Shadows</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:20px;">
+      <div class="shadow-card" style="box-shadow: 0 1px 4px 0 rgba(23,98,249,0.10);">
+        <div class="shadow-label">--shadow-sm</div>
+        <div class="shadow-spec">0 1px 4px rgba(23,98,249,0.10)<br>Cards, options, tags</div>
+      </div>
+      <div class="shadow-card" style="box-shadow: 0 4px 16px 0 rgba(23,98,249,0.12), 0 1px 4px 0 rgba(23,98,249,0.08);">
+        <div class="shadow-label">--shadow-md</div>
+        <div class="shadow-spec">0 4px 16px rgba(23,98,249,0.12)<br>+ 0 1px 4px rgba(23,98,249,0.08)<br>Primary buttons, modals</div>
+      </div>
+      <div class="shadow-card" style="box-shadow: 0 8px 32px 0 rgba(23,98,249,0.14), 0 4px 12px 0 rgba(23,98,249,0.10), 0 1px 4px 0 rgba(23,98,249,0.06);">
+        <div class="shadow-label">--shadow-lg</div>
+        <div class="shadow-spec">0 8px 32px rgba(23,98,249,0.14)<br>+ 0 4px 12px rgba(23,98,249,0.10)<br>+ 0 1px 4px rgba(23,98,249,0.06)<br>Hover states, popovers</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       6. BUTTONS
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">06 &nbsp; Buttons</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:16px;">
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-primary</div>
+        <button class="btn btn-primary">Start Today</button>
+        <div class="btn-spec">
+          bg: #1762F9<br>
+          text: #FFFFFF · 15px/700<br>
+          radius: 9999px · h: 52px<br>
+          shadow: --shadow-md
+        </div>
+      </div>
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-primary — hover</div>
+        <button class="btn" style="background:#1050D4; color:#fff; box-shadow:var(--shadow-lg);">Start Today</button>
+        <div class="btn-spec">
+          bg: #1050D4 (--primary-dark)<br>
+          shadow: --shadow-lg
+        </div>
+      </div>
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-primary — disabled</div>
+        <button class="btn btn-primary-disabled" disabled>Start Today</button>
+        <div class="btn-spec">
+          opacity: 0.35<br>
+          cursor: not-allowed
+        </div>
+      </div>
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-secondary</div>
+        <button class="btn btn-secondary">Continue →</button>
+        <div class="btn-spec">
+          bg: #FFFFFF<br>
+          text: #1762F9 · border: 1.5px solid<br>
+          radius: 9999px · h: 52px
+        </div>
+      </div>
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-ghost</div>
+        <button class="btn btn-ghost">Skip for now</button>
+        <div class="btn-spec">
+          bg: transparent<br>
+          text: #68788C · 14px/500<br>
+          no border, no shadow
+        </div>
+      </div>
+
+      <div class="btn-card">
+        <div class="btn-card-label">.btn-success</div>
+        <button class="btn btn-success">Session complete ✓</button>
+        <div class="btn-spec">
+          bg: linear #60A8A0 → #88C8C0<br>
+          text: #FFFFFF<br>
+          shadow: --shadow-md
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       7. COMPONENTS
+  ================================================ -->
+  <div class="section">
+    <div class="section-title">07 &nbsp; Components</div>
+
+    <!-- Pills & Tags -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:12px; font-weight:600; color:var(--color-stone); margin-bottom:12px;">Pills &amp; Tags</div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; background:white; padding:20px 24px; border-radius:var(--radius); box-shadow:var(--shadow-sm);">
+        <span class="pill">✦ Personalised for you</span>
+        <span class="tag">Today's Session</span>
+        <span class="tag tag-teal">✓ Done</span>
+        <span class="tag tag-lavender">Quads · Glutes</span>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:12px; font-weight:600; color:var(--color-stone); margin-bottom:12px;">Stat Cards</div>
+      <div class="stat-row" style="max-width:400px;">
+        <div class="stat-card">
+          <div class="stat-val">5</div>
+          <div class="stat-lbl">Exercises</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">~40</div>
+          <div class="stat-lbl">Minutes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">3</div>
+          <div class="stat-lbl">Sets each</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option cards -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:12px; font-weight:600; color:var(--color-stone); margin-bottom:12px;">Option Card — Default &amp; Selected</div>
+      <div style="display:flex; flex-direction:column; gap:10px; max-width:440px;">
+        <div class="option">
+          <div class="opt-icon">💪</div>
+          <div class="opt-text">
+            <div class="opt-title">Build muscle</div>
+            <div class="opt-sub">Get stronger, feel more confident</div>
+          </div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="option selected">
+          <div class="opt-icon">🔥</div>
+          <div class="opt-text">
+            <div class="opt-title">Lose weight</div>
+            <div class="opt-sub">Feel lighter and more energetic</div>
+          </div>
+          <div class="opt-check">
+            <svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:11px; color:var(--color-stone); line-height:1.7;">
+        Default: bg #FFFFFF · border 1.5px #CDD8EE · shadow-sm · radius 14px<br>
+        Selected: bg #D8E6FF · border 1.5px #1762F9
+      </div>
+    </div>
+
+    <!-- Progress dots -->
+    <div>
+      <div style="font-size:12px; font-weight:600; color:var(--color-stone); margin-bottom:12px;">Progress Indicator</div>
+      <div style="background:white; padding:20px 24px; border-radius:var(--radius); box-shadow:var(--shadow-sm); max-width:400px;">
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1;">
+            <div style="height:4px; border-radius:4px; background:#4E88FA;"></div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:#4E88FA; margin-top:5px;">Goal</div>
+          </div>
+          <div style="flex:1;">
+            <div style="height:4px; border-radius:4px; background:#1762F9;"></div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:#1762F9; margin-top:5px;">Days</div>
+          </div>
+          <div style="flex:1;">
+            <div style="height:4px; border-radius:4px; background:#CDD8EE;"></div>
+            <div style="font-size:10px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:#98AAB8; margin-top:5px;">Level</div>
+          </div>
+        </div>
+        <div style="margin-top:12px; font-size:11px; color:var(--color-stone);">
+          Done: --color-primary-light &nbsp;·&nbsp; Active: --color-primary &nbsp;·&nbsp; Inactive: --color-divide
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
