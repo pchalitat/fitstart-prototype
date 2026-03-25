@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Spottr</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,400;0,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,400;0,500&family=Lexend+Exa:wght@500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -54,6 +54,7 @@
                     0 1px 4px  0 rgba(23, 98, 249, 0.06);
 
       /* Typography */
+      --font-logo:    'Lexend Exa', sans-serif;
       --font-display: 'Bricolage Grotesque', sans-serif;
       --font-ui:      'Outfit', sans-serif;
       --font-mono:    'DM Mono', monospace;
@@ -226,17 +227,10 @@
       position: relative;
       z-index: 1;
     }
-    .logo-mark {
-      width: 38px; height: 38px;
-      background: var(--accent);
-      border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .logo-mark svg { width: 22px; height: 22px; }
     .logo-name {
-      font-size: 18px; font-weight: 700; letter-spacing: -0.4px;
+      font-family: var(--font-logo);
+      font-size: 20px; font-weight: 500; letter-spacing: 0;
     }
-    .logo-name em { font-style: normal; color: var(--accent); font-family: var(--font-display); }
 
     .splash-hero {
       flex: 1;
@@ -700,13 +694,7 @@
     <div class="glow splash-glow"></div>
 
     <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 22 22" fill="none">
-          <path d="M11 2.5L4 7.5v7l7 5 7-5v-7L11 2.5z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/>
-          <circle cx="11" cy="11" r="2.8" fill="rgba(255,255,255,0.3)"/>
-        </svg>
-      </div>
-      <span class="logo-name">Spottr <em>AI</em></span>
+      <span class="logo-name">Spottr</span>
     </div>
 
     <div class="splash-hero">
