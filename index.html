@@ -177,20 +177,12 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary {
-      background: radial-gradient(ellipse at 50% 50%, var(--color-sky) 0%, var(--color-sky-light) 100%);
+      background:
+        radial-gradient(ellipse at 50% 50%, var(--color-sky) 0%, var(--color-sky-light) 100%) padding-box,
+        radial-gradient(ellipse at 50% 50%, var(--color-sky-stroke) 52%, #FFFFFF 100%) border-box;
+      border: 2px solid transparent;
       color: #FFFFFF;
       border-radius: 8px;
-      position: relative;
-      isolation: isolate;
-    }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: 10px;
-      background: radial-gradient(ellipse at 50% 50%, var(--color-sky-stroke) 52%, #FFFFFF 100%);
-      z-index: -1;
-      pointer-events: none;
     }
     .btn-primary:hover { opacity: 0.9; }
     .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
