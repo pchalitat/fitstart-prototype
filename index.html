@@ -236,14 +236,39 @@
       color: rgba(255,255,255,0.88);
       letter-spacing: 0.1px;
     }
+    @keyframes letter-float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-6px); }
+    }
+
     .splash-wordmark {
       font-family: var(--font-logo);
       font-size: 80px; font-weight: 700;
-      color: #FFFFFF;
       letter-spacing: -1px;
       line-height: 1;
-      text-shadow: 0 4px 24px rgba(72,100,180,0.18);
+      display: flex;
+      filter: drop-shadow(0 6px 20px rgba(72,100,200,0.22));
     }
+    .splash-wordmark span {
+      display: inline-block;
+      background: linear-gradient(
+        160deg,
+        #FFFFFF        0%,
+        rgba(255,255,255,0.88) 30%,
+        rgba(192,215,255,0.96) 62%,
+        #FFFFFF        100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: letter-float 3s ease-in-out infinite;
+    }
+    .splash-wordmark span:nth-child(1) { animation-delay: 0.00s; }
+    .splash-wordmark span:nth-child(2) { animation-delay: 0.18s; }
+    .splash-wordmark span:nth-child(3) { animation-delay: 0.36s; }
+    .splash-wordmark span:nth-child(4) { animation-delay: 0.54s; }
+    .splash-wordmark span:nth-child(5) { animation-delay: 0.72s; }
+    .splash-wordmark span:nth-child(6) { animation-delay: 0.90s; }
 
     .splash-bottom {
       position: relative; z-index: 1;
@@ -717,7 +742,7 @@
 
     <div class="splash-hero">
       <p class="splash-welcome">Welcome to</p>
-      <h1 class="splash-wordmark">Spottr</h1>
+      <h1 class="splash-wordmark"><span>S</span><span>p</span><span>o</span><span>t</span><span>t</span><span>r</span></h1>
     </div>
 
     <div class="splash-bottom">
