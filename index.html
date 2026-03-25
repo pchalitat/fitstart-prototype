@@ -10,14 +10,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #FFFFFF;
-      --surface:      #F6F7F9;
-      --surface-2:    #EEF0F3;
+      --bg:           #EEF4FA;
+      --surface:      #FFFFFF;
+      --surface-2:    #F6F7F9;
       --accent:       #62788E;
       --accent-light: #A5CEE2;
-      --accent-2:     #63C91E;
+      --accent-2:     #677d75;
       --accent-dim:   rgba(98, 120, 142, 0.1);
       --accent-glow:  rgba(98, 120, 142, 0.18);
+      --btn-primary:  #24344A;
       --text:         #333333;
       --text-muted:   #8E8E8E;
       --border:       #E8E8E8;
@@ -34,7 +35,7 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      background: #EEF0F3;
+      background: #D6E4F0;
     }
 
     body {
@@ -60,7 +61,7 @@
     }
 
     @media (max-width: 420px) {
-      body { background: #FFFFFF; }
+      body { background: #EEF4FA; }
       .phone { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
     }
 
@@ -109,29 +110,40 @@
     /* ---- Buttons ---- */
     .btn {
       width: 100%;
-      min-height: 56px;
-      border-radius: 14px;
+      min-height: 52px;
+      border-radius: 999px;
       border: none;
       font-family: var(--font-ui);
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: opacity 140ms, transform 140ms;
-      letter-spacing: -0.3px;
+      transition: opacity 150ms, transform 150ms;
+      letter-spacing: -0.1px;
     }
-    .btn:active { opacity: 0.82; transform: scale(0.984); }
-    .btn-primary { background: var(--accent); color: #FFFFFF; }
-    .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn:active { opacity: 0.80; transform: scale(0.982); }
+    .btn-primary { background: var(--btn-primary); color: #FFFFFF; }
+    .btn-primary:disabled { opacity: 0.3; cursor: not-allowed; }
     .btn-primary:disabled:active { transform: none; }
-    .btn-ghost {
+    .btn-secondary {
       background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
+      color: var(--btn-primary);
+      border: 1.5px solid #81A2C5;
+      font-weight: 600;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
       font-weight: 500;
+      font-size: 14px;
+    }
+    .btn-success {
+      background: var(--accent-2);
+      color: #FFFFFF;
     }
 
     /* ========================================================
@@ -252,12 +264,13 @@
 
     .option {
       background: var(--surface);
-      border: 2px solid transparent;
+      border: 1.5px solid var(--border);
       border-radius: var(--radius);
       padding: 17px 18px;
       cursor: pointer;
       display: flex; align-items: center; gap: 15px;
       min-height: 74px;
+      box-shadow: 0 1px 3px rgba(36,52,74,0.06);
       transition: border-color 200ms, background 200ms, transform 140ms;
     }
     .option:active { transform: scale(0.982); }
@@ -375,11 +388,11 @@
     }
     .stat {
       flex: 1;
-      background: rgba(255,255,255,0.04);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 13px; padding: 14px 10px;
       text-align: center;
-      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 3px rgba(36,52,74,0.06);
     }
     .stat-val {
       font-family: var(--font-mono);
@@ -400,12 +413,13 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .ex-card {
-      background: var(--bg);
+      background: var(--surface);
       border: 1.5px solid var(--border);
       border-radius: var(--radius);
       padding: 18px 18px;
       display: flex; align-items: center; gap: 14px;
       cursor: pointer; min-height: 78px;
+      box-shadow: 0 1px 3px rgba(36,52,74,0.06);
       transition: border-color 200ms, transform 140ms;
       opacity: 0;
       animation: cardIn 320ms ease-out forwards;
@@ -435,7 +449,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 14px var(--ph) 44px;
-      background: linear-gradient(to top, #ffffff 55%, transparent);
+      background: linear-gradient(to top, #EEF4FA 55%, transparent);
     }
 
     /* ========================================================
@@ -445,7 +459,7 @@
 
     .ex-detail-header {
       padding: 52px var(--ph) 26px;
-      background: var(--surface);
+      background: var(--bg);
       border-bottom: 1px solid var(--border);
       position: relative; overflow: hidden;
     }
@@ -488,11 +502,11 @@
     .specs-row { display: flex; gap: 10px; }
     .spec {
       flex: 1;
-      background: rgba(255,255,255,0.04);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 13px; padding: 14px 10px;
       text-align: center;
-      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 3px rgba(36,52,74,0.06);
     }
     .spec-val {
       font-family: var(--font-mono);
@@ -534,7 +548,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 12px var(--ph) 44px;
-      background: linear-gradient(to top, #ffffff 55%, transparent);
+      background: linear-gradient(to top, #EEF4FA 55%, transparent);
     }
     .ex-progress-label {
       text-align: center; font-size: 13px;
@@ -594,7 +608,7 @@
     .feel-row { display: flex; gap: 10px; }
     .feel-opt {
       flex: 1; background: var(--surface);
-      border: 2px solid transparent;
+      border: 1.5px solid var(--border);
       border-radius: 14px; padding: 14px 8px;
       cursor: pointer;
       display: flex; flex-direction: column;
@@ -605,8 +619,7 @@
     .feel-opt:active { transform: scale(0.96); }
     .feel-opt.picked {
       border-color: var(--accent);
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(8px);
+      background: var(--accent-dim);
     }
     .feel-emoji { font-size: 28px; }
     .feel-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
@@ -644,7 +657,7 @@
     </div>
 
     <div class="splash-cta">
-      <button class="btn btn-primary" onclick="go('s-q1')">Get started &rarr;</button>
+      <button class="btn btn-primary" onclick="go('s-q1')">Start Today</button>
       <p class="splash-note">No account needed &middot; Works offline &middot; Free for your first session</p>
     </div>
   </div>
@@ -660,13 +673,13 @@
         <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 1 of 3</div>
-      <h2 class="q-title">What's your main fitness goal?</h2>
+      <h2 class="q-title">What are you training for?</h2>
       <div class="options">
         <div class="option" onclick="pick(this,'goal','lose_weight','btn-q1')">
           <div class="opt-icon">&#128293;</div>
           <div class="opt-text">
             <div class="opt-title">Lose weight</div>
-            <div class="opt-sub">Burn fat and feel lighter</div>
+            <div class="opt-sub">Feel lighter and more energetic</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFF8F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
@@ -674,7 +687,7 @@
           <div class="opt-icon">&#128170;</div>
           <div class="opt-text">
             <div class="opt-title">Build muscle</div>
-            <div class="opt-sub">Get stronger and more defined</div>
+            <div class="opt-sub">Get stronger, feel more confident</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFF8F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
@@ -690,7 +703,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q1" class="btn btn-primary" onclick="go('s-q2')" disabled>Continue &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
+      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
     </div>
   </div>
 
@@ -705,7 +718,7 @@
         <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 2 of 3</div>
-      <h2 class="q-title">How many days a week can you train?</h2>
+      <h2 class="q-title">How many days a week works for you?</h2>
       <div class="options">
         <div class="option" onclick="pick(this,'days','2-3','btn-q2')">
           <div class="opt-icon">&#128197;</div>
@@ -735,7 +748,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q2" class="btn btn-primary" onclick="go('s-q3')" disabled>Continue &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
+      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
     </div>
   </div>
 
@@ -750,7 +763,7 @@
         <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
       </div>
       <div class="q-label">Question 3 of 3</div>
-      <h2 class="q-title">How would you describe your gym experience?</h2>
+      <h2 class="q-title">How long have you been training?</h2>
       <div class="options">
         <div class="option" onclick="pick(this,'level','beginner','btn-q3')">
           <div class="opt-icon">&#127807;</div>
@@ -780,7 +793,7 @@
     </div>
     <div class="q-footer">
       <button id="btn-q3" class="btn btn-primary" onclick="buildPlan()" disabled>Build my plan &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip to default plan</span>
+      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
     </div>
   </div>
 
@@ -791,7 +804,7 @@
     <div class="glow gen-glow"></div>
     <div class="spinner"></div>
     <h2 class="gen-title">Building your plan&hellip;</h2>
-    <p class="gen-sub">Spottr is crafting your<br>personalised first workout.</p>
+    <p class="gen-sub">Won't take long. Your first<br>session is almost ready.</p>
   </div>
 
   <!-- ================================================
@@ -802,7 +815,7 @@
       <div class="glow plan-glow"></div>
       <div class="plan-tag">&#10022; Today's Session</div>
       <h2 class="plan-title" id="plan-title">Your First Workout</h2>
-      <p class="plan-meta" id="plan-meta">Built for you. Take it at your own pace.</p>
+      <p class="plan-meta" id="plan-meta">Built around you. Go at your own pace.</p>
     </div>
     <div class="stats-row">
       <div class="stat">
