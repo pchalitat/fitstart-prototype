@@ -18,11 +18,11 @@
       --color-surface:       #FFFFFF;
       --color-surface-2:     #EEF2FC;
 
-      /* Primary — periwinkle blue */
-      --color-primary:       #6080C8;
-      --color-primary-light: #98B0E0;
-      --color-primary-dim:   #D0DCF8;
-      --color-primary-dark:  #2840A0;
+      /* Primary — vivid blue */
+      --color-primary:       #1762F9;
+      --color-primary-light: #4E88FA;
+      --color-primary-dim:   #D8E6FF;
+      --color-primary-dark:  #1050D4;
 
       /* Lavender accent */
       --color-lavender:      #9080C8;
@@ -32,11 +32,6 @@
       --color-teal:          #60A8A0;
       --color-teal-light:    #B8D4D0;
       --color-teal-dark:     #88C8C0;
-
-      /* Sky / primary button */
-      --color-sky:           #4CC5FC;
-      --color-sky-light:     #E2F3FB;
-      --color-sky-stroke:    #77CBFD;
 
       /* Rose / error */
       --color-rose:          #D06080;
@@ -51,12 +46,12 @@
       --color-navy-mid:      #3050A0;
 
       /* Shadows */
-      --shadow-sm:  0 1px 4px 0 rgba(72, 114, 168, 0.10);
-      --shadow-md:  0 4px 16px 0 rgba(72, 114, 168, 0.12),
-                    0 1px 4px  0 rgba(72, 114, 168, 0.08);
-      --shadow-lg:  0 8px 32px 0 rgba(72, 114, 168, 0.14),
-                    0 4px 12px 0 rgba(72, 114, 168, 0.10),
-                    0 1px 4px  0 rgba(72, 114, 168, 0.06);
+      --shadow-sm:  0 1px 4px 0 rgba(23, 98, 249, 0.10);
+      --shadow-md:  0 4px 16px 0 rgba(23, 98, 249, 0.12),
+                    0 1px 4px  0 rgba(23, 98, 249, 0.08);
+      --shadow-lg:  0 8px 32px 0 rgba(23, 98, 249, 0.14),
+                    0 4px 12px 0 rgba(23, 98, 249, 0.10),
+                    0 1px 4px  0 rgba(23, 98, 249, 0.06);
 
       /* Typography */
       --font-display: 'Bricolage Grotesque', sans-serif;
@@ -177,21 +172,17 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary {
-      background:
-        radial-gradient(ellipse at 50% 50%, var(--color-sky) 0%, var(--color-sky-light) 100%) padding-box,
-        radial-gradient(ellipse at 50% 50%, var(--color-sky-stroke) 52%, #FFFFFF 100%) border-box;
-      border: 2px solid transparent;
+      background: var(--color-primary);
       color: #FFFFFF;
-      border-radius: 8px;
+      box-shadow: var(--shadow-md);
     }
-    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:hover { background: var(--color-primary-dark); box-shadow: var(--shadow-lg); }
     .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
     .btn-primary:disabled:active { transform: none; }
     .btn-secondary {
-      background: var(--color-surface);
+      background: #FFFFFF;
       color: var(--color-primary);
       border: 1.5px solid var(--color-primary);
-      box-shadow: none;
     }
     .btn-secondary:hover { background: var(--color-primary-dim); }
     .btn-ghost {
