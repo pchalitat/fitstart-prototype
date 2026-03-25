@@ -63,7 +63,7 @@
       --radius: 14px;
 
       /* === Bridge vars — keep existing CSS working === */
-      --bg:          #EEF2FC;
+      --bg:          #F6F7F9;
       --surface:     var(--color-surface);
       --surface-2:   var(--color-surface-2);
       --accent:      var(--color-primary);
@@ -80,7 +80,7 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      background: #B4C8E0;
+      background: #DDDFE3;
     }
 
     body {
@@ -97,7 +97,7 @@
       max-height: 100vh;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, #C8D8F0 0%, #F2F6FD 100%);
+      background: #F6F7F9;
       border-radius: 44px;
       box-shadow:
         0 40px 80px rgba(0,0,0,0.12),
@@ -106,7 +106,7 @@
     }
 
     @media (max-width: 420px) {
-      body { background: linear-gradient(180deg, #C8D8F0 0%, #F2F6FD 100%); }
+      body { background: #F6F7F9; }
       .phone { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
     }
 
@@ -235,7 +235,7 @@
     }
     .logo-mark svg { width: 22px; height: 22px; }
     .logo-name {
-      font-size: 18px; font-weight: 800; letter-spacing: -0.4px;
+      font-size: 18px; font-weight: 700; letter-spacing: -0.4px;
     }
     .logo-name em { font-style: normal; color: var(--accent); font-family: var(--font-display); }
 
@@ -259,10 +259,10 @@
 
     .splash-title {
       font-family: var(--font-display);
-      font-size: 40px; font-weight: 800; font-style: normal;
+      font-size: 40px; font-weight: 700; font-style: normal;
       line-height: 1.1; letter-spacing: -0.5px;
     }
-    .splash-title em { font-style: normal; color: var(--accent); font-weight: 800; }
+    .splash-title em { font-style: normal; color: var(--accent); font-weight: 700; }
 
     .splash-sub {
       font-size: 16px; font-weight: 400;
@@ -315,7 +315,7 @@
     }
     .q-title {
       font-family: var(--font-display);
-      font-size: 26px; font-weight: 700;
+      font-size: 26px; font-weight: 600;
       line-height: 1.25; letter-spacing: -0.3px;
       margin-bottom: 20px;
     }
@@ -349,7 +349,7 @@
     .option.selected .opt-icon { background: var(--color-primary-dim); }
 
     .opt-text { flex: 1; }
-    .opt-title { font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .opt-title { font-size: 16px; font-weight: 500; line-height: 1.3; }
     .opt-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
 
     .opt-check {
@@ -400,7 +400,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .gen-title {
       font-family: var(--font-display);
-      font-size: 26px; font-weight: 700; font-style: normal;
+      font-size: 26px; font-weight: 600; font-style: normal;
       letter-spacing: -0.3px; margin-bottom: 10px;
       position: relative; z-index: 1;
     }
@@ -415,8 +415,8 @@
     #s-plan { padding-bottom: 110px; }
 
     .plan-header {
-      padding: 56px var(--ph) 24px;
-      position: relative; overflow: hidden;
+      padding: 52px var(--ph) 20px;
+      position: relative;
     }
     .plan-glow {
       background:
@@ -430,11 +430,11 @@
       color: var(--color-primary);
       font-size: 11px; font-weight: 600;
       padding: 5px 12px; border-radius: 100px;
-      margin-bottom: 14px; letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase;
     }
     .plan-title {
       font-family: var(--font-display);
-      font-size: 30px; font-weight: 700; font-style: normal;
+      font-size: 30px; font-weight: 600; font-style: normal;
       letter-spacing: -0.3px; line-height: 1.15;
       margin-bottom: 8px; position: relative; z-index: 1;
     }
@@ -500,7 +500,7 @@
     .ex-card.done .ex-num { background: var(--color-teal-light); color: var(--color-teal); }
 
     .ex-info { flex: 1; }
-    .ex-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .ex-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
     .ex-meta { font-size: 13px; color: var(--text-muted); }
 
     .chevron { color: var(--text-muted); flex-shrink: 0; }
@@ -509,7 +509,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 14px var(--ph) 44px;
-      background: linear-gradient(to top, #F2F6FD 55%, transparent);
+      background: linear-gradient(to top, #F6F7F9 55%, transparent);
     }
 
     /* ========================================================
@@ -549,7 +549,7 @@
     }
     .ex-detail-name {
       font-family: var(--font-display);
-      font-size: 28px; font-weight: 700; font-style: normal;
+      font-size: 28px; font-weight: 600; font-style: normal;
       line-height: 1.15; letter-spacing: -0.3px;
       position: relative; z-index: 1;
     }
@@ -608,7 +608,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 12px var(--ph) 44px;
-      background: linear-gradient(to top, #F2F6FD 55%, transparent);
+      background: linear-gradient(to top, #F6F7F9 55%, transparent);
     }
     .ex-progress-label {
       text-align: center; font-size: 13px;
@@ -652,7 +652,7 @@
 
     .completion-title {
       font-family: var(--font-display);
-      font-size: 38px; font-weight: 800; font-style: normal;
+      font-size: 38px; font-weight: 700; font-style: normal;
       letter-spacing: -0.5px; line-height: 1.1;
       margin-bottom: 12px;
     }
