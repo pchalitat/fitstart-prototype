@@ -210,36 +210,68 @@
        SCREEN 1 — SPLASH
     ======================================================== */
     #s-splash {
-      padding: 58px var(--ph) 48px;
-      justify-content: space-between;
-    }
-
-    .splash-glow {
-      background:
-        radial-gradient(circle at 70% 0%, #D0DCF8 0%, transparent 55%),
-        radial-gradient(circle at 15% 85%, #D0C8F0 0%, transparent 45%);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      position: relative;
-      z-index: 1;
-    }
-    .logo-name {
-      font-family: var(--font-logo);
-      font-size: 20px; font-weight: 500; letter-spacing: 0;
+      background: linear-gradient(180deg,
+        #C8D8F0 0%,
+        #D4C8EE 48%,
+        #EAE4F4 72%,
+        #F6F7F9 100%);
+      justify-content: flex-end;
+      overflow: hidden;
     }
 
     .splash-hero {
-      flex: 1;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 62%;
       display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center; gap: 16px;
-      position: relative; z-index: 1;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 56px var(--ph) 0;
+      gap: 8px;
+      pointer-events: none;
     }
+    .splash-welcome {
+      font-family: var(--font-ui);
+      font-size: 17px; font-weight: 400;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.1px;
+    }
+    .splash-wordmark {
+      font-family: var(--font-logo);
+      font-size: 80px; font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -1px;
+      line-height: 1;
+      text-shadow: 0 4px 24px rgba(72,100,180,0.18);
+    }
+
+    .splash-bottom {
+      position: relative; z-index: 1;
+      padding: 28px var(--ph) 44px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .splash-sub {
+      font-size: 14px; font-weight: 400;
+      color: var(--color-slate); line-height: 1.75;
+    }
+    .splash-sub strong { font-weight: 700; }
+
+    .splash-cta {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .btn-dark {
+      background: var(--color-slate);
+      color: #FFFFFF;
+      box-shadow: 0 4px 16px rgba(26,26,46,0.18);
+    }
+    .btn-dark:hover { background: var(--color-navy); }
+    .btn-light {
+      background: rgba(255,255,255,0.80);
+      color: var(--color-slate);
+      border: 1.5px solid rgba(0,0,0,0.10);
+      backdrop-filter: blur(8px);
+    }
+    .btn-light:hover { background: #FFFFFF; }
 
     .pill {
       display: inline-flex; align-items: center; gap: 6px;
@@ -249,28 +281,6 @@
       font-size: 12px; font-weight: 600;
       padding: 6px 14px; border-radius: 100px;
       letter-spacing: 0.2px;
-    }
-
-    .splash-title {
-      font-family: var(--font-display);
-      font-size: 40px; font-weight: 700; font-style: normal;
-      line-height: 1.1; letter-spacing: -0.5px;
-    }
-    .splash-title em { font-style: normal; color: var(--accent); font-weight: 700; }
-
-    .splash-sub {
-      font-size: 16px; font-weight: 400;
-      color: var(--text-muted); line-height: 1.7;
-      max-width: 275px;
-    }
-
-    .splash-cta {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .splash-note {
-      font-size: 12px; color: var(--text-muted);
-      text-align: center; line-height: 1.5;
     }
 
     /* ========================================================
@@ -694,19 +704,17 @@
   <div id="s-splash" class="screen active">
     <div class="glow splash-glow"></div>
 
-    <div class="logo">
-      <span class="logo-name">Spottr</span>
-    </div>
-
     <div class="splash-hero">
-      <div class="pill">&#10022; Free for your first session</div>
-      <h1 class="splash-title">Your first gym day,<br><em>guided.</em></h1>
-      <p class="splash-sub">Answer 3 quick questions. Get a personalised workout. Walk in with confidence.</p>
+      <p class="splash-welcome">Welcome to</p>
+      <h1 class="splash-wordmark">Spottr</h1>
     </div>
 
-    <div class="splash-cta">
-      <button class="btn btn-primary" onclick="go('s-q1')">Start Today</button>
-      <p class="splash-note">No account needed &middot; Works offline &middot; Free for your first session</p>
+    <div class="splash-bottom">
+      <p class="splash-sub"><strong>Spottr</strong> is your workout companion, helping you step by step — stress free from the gym — with a personalised workout, just for you.</p>
+      <div class="splash-cta">
+        <button class="btn btn-dark" onclick="go('s-q1')">Start my journey</button>
+        <button class="btn btn-light">Log in</button>
+      </div>
     </div>
   </div>
 
