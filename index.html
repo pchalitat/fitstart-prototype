@@ -33,6 +33,11 @@
       --color-teal-light:    #B8D4D0;
       --color-teal-dark:     #88C8C0;
 
+      /* Sky / primary button */
+      --color-sky:           #4CC5FC;
+      --color-sky-light:     #E2F3FB;
+      --color-sky-stroke:    #77CBFD;
+
       /* Rose / error */
       --color-rose:          #D06080;
       --color-rose-light:    #F0C8D0;
@@ -172,11 +177,22 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary {
-      background: linear-gradient(135deg, #6080C8 0%, #98B0E0 100%);
+      background: radial-gradient(ellipse at 50% 50%, var(--color-sky) 0%, var(--color-sky-light) 100%);
       color: #FFFFFF;
-      box-shadow: var(--shadow-md);
+      border-radius: 8px;
+      position: relative;
+      isolation: isolate;
     }
-    .btn-primary:hover { box-shadow: var(--shadow-lg); opacity: 0.93; }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 10px;
+      background: radial-gradient(ellipse at 50% 50%, var(--color-sky-stroke) 52%, #FFFFFF 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
     .btn-primary:disabled:active { transform: none; }
     .btn-secondary {
