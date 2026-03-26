@@ -2,265 +2,312 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Spottr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spottr — Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:ital,wght@0,400;0,500&family=Gabarito:wght@500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Gabarito:wght@500&display=swap" rel="stylesheet">
   <style>
+    /* ─── RESET ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: #E2E7F0; font-family: 'Outfit', sans-serif; }
 
+    /* ─── DESIGN TOKENS ─────────────────────────────────────── */
     :root {
-      /* === Spottr Design System v1 === */
-
-      /* Backgrounds */
-      --color-bg-top:        #C8D8F0;
-      --color-bg-bottom:     #F2F6FD;
-      --color-surface:       #FFFFFF;
-      --color-surface-2:     #EEF2FC;
-
-      /* Primary — vivid blue */
-      --color-primary:       #1762F9;
-      --color-primary-light: #4E88FA;
-      --color-primary-dim:   #D8E6FF;
-      --color-primary-dark:  #1050D4;
-
-      /* Lavender accent */
-      --color-lavender:      #9080C8;
-      --color-lavender-dim:  #D0C8F0;
-
-      /* Teal / success */
-      --color-teal:          #60A8A0;
-      --color-teal-light:    #B8D4D0;
-      --color-teal-dark:     #88C8C0;
-
-      /* Rose / error */
-      --color-rose:          #D06080;
-      --color-rose-light:    #F0C8D0;
-
-      /* Neutrals */
-      --color-slate:         #1A1A2E;
-      --color-stone:         #68788C;
-      --color-pebble:        #98AAB8;
-      --color-divide:        #CDD8EE;
-      --color-navy:          #1A2044;
-      --color-navy-mid:      #3050A0;
-
-      /* Shadows */
-      --shadow-sm:  0 1px 4px 0 rgba(23, 98, 249, 0.10);
-      --shadow-md:  0 4px 16px 0 rgba(23, 98, 249, 0.12),
-                    0 1px 4px  0 rgba(23, 98, 249, 0.08);
-      --shadow-lg:  0 8px 32px 0 rgba(23, 98, 249, 0.14),
-                    0 4px 12px 0 rgba(23, 98, 249, 0.10),
-                    0 1px 4px  0 rgba(23, 98, 249, 0.06);
-
-      /* Typography */
+      --bg:              #F6F7F9;
+      --bg-gradient:     linear-gradient(180deg, #C8D8F0 0%, #D4C8EE 48%, #EAE4F4 72%, #F6F7F9 100%);
+      --color-surface:   #FFFFFF;
+      --color-surface-2: #EEF2FC;
+      --color-primary:      #1762F9;
+      --color-primary-dim:  #D8E6FF;
+      --color-primary-dark: #1050D4;
+      --color-teal:    #60A8A0;
+      --color-rose:    #D06080;
+      --color-lavender:#9080C8;
+      --color-navy:    #1A1A2E;
+      --color-slate:   #1A1A2E;
+      --color-stone:   #68788C;
+      --color-pebble:  #98AAB8;
+      --color-divide:  #CDD8EE;
+      --shadow-sm: 0 1px 4px 0 rgba(23,98,249,0.10);
+      --shadow-md: 0 4px 16px rgba(23,98,249,0.12), 0 1px 4px rgba(23,98,249,0.08);
+      --shadow-lg: 0 8px 32px rgba(23,98,249,0.14), 0 4px 12px rgba(23,98,249,0.10);
+      --ph: 24px;
+      --radius: 16px;
       --font-logo:    'Gabarito', sans-serif;
       --font-display: 'Bricolage Grotesque', sans-serif;
       --font-ui:      'Outfit', sans-serif;
       --font-mono:    'DM Mono', monospace;
-
-      /* Spacing */
-      --ph:     24px;
-      --radius: 14px;
-
-      /* === Bridge vars — keep existing CSS working === */
-      --bg:          #F6F7F9;
-      --surface:     var(--color-surface);
-      --surface-2:   var(--color-surface-2);
-      --accent:      var(--color-primary);
-      --accent-light: var(--color-primary-light);
-      --accent-2:    var(--color-teal);
-      --accent-dim:  var(--color-primary-dim);
-      --text:        var(--color-slate);
-      --text-muted:  var(--color-stone);
-      --border:      var(--color-divide);
-      --success:     var(--color-teal);
-      --error:       var(--color-rose);
     }
 
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      background: #DDDFE3;
-    }
-
+    /* ─── PHONE SHELL ────────────────────────────────────────── */
     body {
-      font-family: var(--font-ui);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
     }
-
-    /* ---- Phone shell (desktop view) ---- */
-    .phone {
+    .phone-shell {
       width: 390px;
       height: 844px;
-      max-height: 100vh;
-      position: relative;
-      overflow: hidden;
-      background: #F6F7F9;
+      background: var(--bg);
       border-radius: 44px;
       box-shadow:
-        0 40px 80px rgba(0,0,0,0.12),
-        0 0 0 1px rgba(0,0,0,0.06),
-        inset 0 1px 0 rgba(255,255,255,0.8);
+        0 0 0 10px #1A1A2E,
+        0 0 0 12px #2A2A3A,
+        0 40px 80px rgba(0,0,0,0.4),
+        0 20px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
     }
 
-    @media (max-width: 420px) {
-      body { background: #F6F7F9; }
-      .phone { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
-    }
-
-    /* ---- Screen system ---- */
+    /* ─── SCREENS ────────────────────────────────────────────── */
     .screen {
       position: absolute;
       inset: 0;
-      display: flex;
+      display: none;
       flex-direction: column;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(32px);
-      transition: opacity 280ms ease-out, transform 280ms ease-out;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      color: var(--text);
+      overflow: hidden;
     }
-    .screen::-webkit-scrollbar { display: none; }
-    .screen.active {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateX(0);
+    .screen.active { display: flex; }
+
+    /* ─── STATUS BAR ─────────────────────────────────────────── */
+    .status-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 0 24px;
+      flex-shrink: 0;
+      color: #545F71;
+      font: 500 13px/1 'Outfit', sans-serif;
+      position: relative;
+      z-index: 10;
     }
-    .screen.exit {
-      opacity: 0;
-      transform: translateX(-32px);
-      pointer-events: none;
+    .status-bar.light { color: rgba(255,255,255,0.85); }
+    .status-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
     }
 
-    /* ---- Display font ---- */
-    .serif {
-      font-family: var(--font-display);
-      font-style: normal;
-      letter-spacing: -0.5px;
+    /* ─── GLASS MATERIALS ────────────────────────────────────── */
+    .glass-regular {
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1.5px solid rgba(255,255,255,0.70);
+      box-shadow:
+        0 4px 24px rgba(23,98,249,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        inset 0 -1px 0 rgba(0,0,0,0.04);
+    }
+    .glass-clear-light {
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(16px) saturate(1.1);
+      -webkit-backdrop-filter: blur(16px) saturate(1.1);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow:
+        0 2px 12px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.70);
+    }
+    .glass-circle {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.65);
+      border-radius: 50%;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.90);
     }
 
-    /* ---- Shared glow: full-screen dual-orb ---- */
-    .glow {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+    /* ─── GLASS ORB ──────────────────────────────────────────── */
+    .glass-orb {
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(200,220,255,0.9) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 70%, rgba(200,180,240,0.8) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(180,220,210,0.6) 0%, transparent 70%),
+        linear-gradient(135deg, rgba(160,200,255,0.7) 0%, rgba(180,160,230,0.7) 50%, rgba(160,220,200,0.6) 100%);
+      box-shadow:
+        0 20px 60px rgba(100,140,220,0.25),
+        inset 0 2px 4px rgba(255,255,255,0.6),
+        inset -4px -4px 12px rgba(180,160,230,0.3);
+      backdrop-filter: blur(2px);
+      flex-shrink: 0;
+    }
+    .glass-orb.pulse {
+      animation: orb-pulse 2s ease-in-out infinite;
+    }
+    @keyframes orb-pulse {
+      0%, 100% { transform: scale(1.0); }
+      50% { transform: scale(1.04); }
     }
 
-    /* ---- Buttons ---- */
-    .btn {
-      width: 100%;
-      min-height: 52px;
-      border-radius: 9999px;
+    /* ─── BUTTONS ────────────────────────────────────────────── */
+    .btn-dark {
+      background: linear-gradient(180deg, #3A3A3C 0%, #1E1E1E 100%);
+      color: #FFFFFF;
+      font: 600 16px/1 'Outfit', sans-serif;
+      height: 56px;
+      border-radius: 999px;
       border: none;
-      font-family: var(--font-ui);
-      font-size: 15px;
-      font-weight: 700;
+      width: 100%;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.28);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: transform 80ms ease, box-shadow 120ms ease, opacity 120ms ease;
-      letter-spacing: -0.1px;
-      text-decoration: none;
+      transition: transform 80ms ease;
+      letter-spacing: 0.2px;
     }
-    .btn:active { transform: scale(0.97); }
+    .btn-dark:active { transform: scale(0.97); }
+
     .btn-primary {
-      background: var(--color-primary);
+      background: #1762F9;
       color: #FFFFFF;
-      box-shadow: var(--shadow-md);
-    }
-    .btn-primary:hover { background: var(--color-primary-dark); box-shadow: var(--shadow-lg); }
-    .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
-    .btn-primary:disabled:active { transform: none; }
-    .btn-secondary {
-      background: #FFFFFF;
-      color: var(--color-primary);
-      border: 1.5px solid var(--color-primary);
-    }
-    .btn-secondary:hover { background: var(--color-primary-dim); }
-    .btn-ghost {
-      background: transparent;
-      color: var(--color-stone);
+      font: 600 15px/1 'Outfit', sans-serif;
+      height: 52px;
+      border-radius: 999px;
       border: none;
-      box-shadow: none;
-      font-weight: 500;
-      font-size: 14px;
+      width: 100%;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 80ms ease;
+      letter-spacing: 0.2px;
     }
-    .btn-ghost:hover { color: var(--color-primary); }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary:disabled { opacity: 0.38; pointer-events: none; }
+
+    .btn-liquid-glass {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: #1A1A2E;
+      font: 500 15px/1 'Outfit', sans-serif;
+      height: 52px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.65);
+      width: 100%;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.90);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 80ms ease;
+    }
+    .btn-liquid-glass:active { transform: scale(0.97); }
+
     .btn-success {
       background: linear-gradient(135deg, #60A8A0 0%, #88C8C0 100%);
       color: #FFFFFF;
-      box-shadow: var(--shadow-md);
+      font: 600 16px/1 'Outfit', sans-serif;
+      height: 56px;
+      border-radius: 999px;
+      border: none;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(96,168,160,0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 80ms ease;
     }
-    .btn-sm {
-      min-height: 38px;
-      font-size: 13px;
-      padding: 0 18px;
+    .btn-success:active { transform: scale(0.97); }
+
+    .btn-glass-symbol {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.90);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 80ms ease;
+    }
+    .btn-glass-symbol:active { transform: scale(0.92); }
+    .btn-glass-symbol.selected {
+      background: #1762F9;
+      border-color: #1762F9;
+      box-shadow: 0 2px 8px rgba(23,98,249,0.30);
     }
 
-    /* ========================================================
-       SCREEN 1 — SPLASH
-    ======================================================== */
-    #s-splash {
-      background: linear-gradient(180deg,
-        #C8D8F0 0%,
-        #D4C8EE 48%,
-        #EAE4F4 72%,
-        #F6F7F9 100%);
-      justify-content: flex-end;
-      overflow: hidden;
+    /* ─── LAYOUT HELPERS ─────────────────────────────────────── */
+    .screen-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
+    .screen-scroll::-webkit-scrollbar { display: none; }
+    .ph { padding-left: var(--ph); padding-right: var(--ph); }
+    .cta-zone {
+      padding: 12px var(--ph) 34px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: transparent;
+    }
+    .nav-header {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--ph);
+      flex-shrink: 0;
+    }
+    .nav-back {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--color-slate);
+      border-radius: 50%;
+      transition: background 120ms;
+    }
+    .nav-back:active { background: rgba(0,0,0,0.06); }
+    .nav-skip {
+      font: 500 14px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      cursor: pointer;
+    }
+    .nav-skip.light { color: rgba(255,255,255,0.65); }
 
-    .splash-hero {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 62%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 56px var(--ph) 0;
-      gap: 8px;
-      pointer-events: none;
+    /* ─── PROGRESS BARS ──────────────────────────────────────── */
+    .progress-bars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    .splash-welcome {
-      font-family: var(--font-ui);
-      font-size: 17px; font-weight: 400;
-      color: rgba(255,255,255,0.88);
-      letter-spacing: 0.1px;
+    .progress-bar-seg {
+      height: 3px;
+      width: 72px;
+      border-radius: 999px;
+      background: var(--color-divide);
     }
+    .progress-bar-seg.active { background: var(--color-primary); }
+
+    /* ─── WORDMARK ANIMATION ─────────────────────────────────── */
     @keyframes letter-float {
       0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-6px); }
-    }
-
-    .splash-wordmark {
-      font-family: var(--font-logo);
-      font-size: 80px; font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1;
-      display: flex;
-      filter: drop-shadow(0 6px 20px rgba(72,100,200,0.22));
+      50% { transform: translateY(-6px); }
     }
     .splash-wordmark span {
       display: inline-block;
-      background: linear-gradient(
-        160deg,
-        #FFFFFF        0%,
-        rgba(255,255,255,0.88) 30%,
-        rgba(192,215,255,0.96) 62%,
-        #FFFFFF        100%
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
       animation: letter-float 3s ease-in-out infinite;
     }
     .splash-wordmark span:nth-child(1) { animation-delay: 0.00s; }
@@ -270,1115 +317,1831 @@
     .splash-wordmark span:nth-child(5) { animation-delay: 0.72s; }
     .splash-wordmark span:nth-child(6) { animation-delay: 0.90s; }
 
-    .splash-bottom {
-      position: relative; z-index: 1;
-      padding: 28px var(--ph) 44px;
-      display: flex; flex-direction: column; gap: 20px;
-    }
-    .splash-sub {
-      font-size: 17px; font-weight: 500;
-      color: var(--color-slate); line-height: 1.5;
-      letter-spacing: -0.2px;
-    }
-    .splash-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      align-self: flex-start;
-      background: var(--color-primary-dim);
-      border: 1px solid var(--color-primary-light);
-      color: var(--color-primary);
-      font-size: 11px; font-weight: 600;
-      padding: 5px 12px; border-radius: 100px;
-      letter-spacing: 0.3px;
-    }
-
-    .splash-cta {
-      display: flex; flex-direction: column; gap: 10px;
-    }
-    .btn-dark {
-      background: var(--color-slate);
-      color: #FFFFFF;
-      box-shadow: 0 4px 16px rgba(26,26,46,0.18);
-    }
-    .btn-dark:hover { background: var(--color-navy); }
-    .btn-light {
-      background: rgba(255,255,255,0.22);
+    /* ─── INPUT FIELDS ───────────────────────────────────────── */
+    .input-field {
+      width: 100%;
+      height: 52px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-divide);
+      border-radius: 8px;
+      font: 400 15px/1 'Outfit', sans-serif;
       color: var(--color-slate);
-      border: 1px solid rgba(255,255,255,0.55);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.70),
-        inset 0 -1px 0 rgba(0,0,0,0.04),
-        0 4px 20px rgba(100,120,180,0.10);
+      padding: 0 16px;
+      outline: none;
+      transition: border-color 150ms, box-shadow 150ms;
+      display: block;
     }
-    .btn-light:hover {
-      background: rgba(255,255,255,0.35);
-      box-shadow:
-        inset 0 1.5px 0 rgba(255,255,255,0.80),
-        inset 0 -1px 0 rgba(0,0,0,0.04),
-        0 6px 24px rgba(100,120,180,0.14);
+    .input-field::placeholder { color: var(--color-pebble); }
+    .input-field:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(23,98,249,0.12);
     }
-
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--color-primary-dim);
-      border: 1px solid var(--color-primary-light);
-      color: var(--color-primary);
-      font-size: 12px; font-weight: 600;
-      padding: 6px 14px; border-radius: 100px;
-      letter-spacing: 0.2px;
+    select.input-field {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2398AAB8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
     }
 
-    /* ========================================================
-       SCREENS 2–4 — ONBOARDING QUESTIONS
-    ======================================================== */
-    .q-wrap {
+    /* ─── SELECTION CARDS ────────────────────────────────────── */
+    .sel-card {
+      width: 100%;
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1.5px solid rgba(255,255,255,0.70);
+      box-shadow: var(--shadow-sm);
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 150ms, background 150ms, box-shadow 150ms;
+      text-align: left;
+    }
+    .sel-card:active { transform: scale(0.99); }
+    .sel-card.selected {
+      background: rgba(214,228,255,0.75);
+      border: 1.5px solid var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+    .sel-card-text { flex: 1; min-width: 0; }
+    .sel-card-title {
+      font: 600 16px/1.2 'Outfit', sans-serif;
+      color: var(--color-slate);
+    }
+    .sel-card-sub {
+      font: 400 13px/1.4 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-top: 3px;
+    }
+
+    /* ─── DAY PICKER ─────────────────────────────────────────── */
+    .day-picker-wrap {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .day-picker-label {
+      font: 600 15px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 14px;
+    }
+    .day-circles {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .day-circle {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #EEF2FC;
+      color: var(--color-stone);
+      font: 600 12px/1 'Outfit', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 150ms, color 150ms;
+      flex-shrink: 0;
+      border: none;
+    }
+    .day-circle.active {
+      background: var(--color-primary);
+      color: #FFFFFF;
+    }
+    .day-hint {
+      font: 400 11px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      text-align: center;
+      letter-spacing: 0.3px;
+      margin-top: 12px;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────────────────── */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
       flex: 1;
-      padding: 52px var(--ph) 0;
+      height: 1px;
+      background: var(--color-divide);
+    }
+    .or-text {
+      font: 400 13px/1 'Outfit', sans-serif;
+      color: var(--color-pebble);
     }
 
-    .progress-dots {
-      display: flex; gap: 10px; margin-bottom: 30px;
+    /* ─── BOTTOM NAV ─────────────────────────────────────────── */
+    .bottom-nav {
+      height: 64px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--color-divide);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
     }
-    .dot {
-      flex: 1; display: flex; flex-direction: column; gap: 5px;
+    .bottom-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      cursor: pointer;
+      padding: 6px 0;
     }
-    .dot-bar {
-      height: 4px; border-radius: 4px;
-      background: var(--border);
-      transition: background 300ms;
+    .bottom-nav-icon { font-size: 20px; line-height: 1; }
+    .bottom-nav-label {
+      font: 500 10px/1 'Outfit', sans-serif;
+      color: var(--color-pebble);
     }
-    .dot-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
-      text-transform: uppercase; color: var(--text-muted);
-      transition: color 300ms;
-    }
-    .dot.active .dot-bar  { background: var(--accent); }
-    .dot.active .dot-label { color: var(--accent); }
-    .dot.done .dot-bar    { background: var(--accent-light); }
-    .dot.done .dot-label  { color: var(--accent-light); }
+    .bottom-nav-item.active .bottom-nav-label { color: var(--color-primary); }
 
-    .q-label {
-      font-size: 12px; font-weight: 600;
-      color: var(--text-muted); letter-spacing: 0.8px;
-      text-transform: uppercase; margin-bottom: 10px;
+    /* ─── PROGRESS BAR (GENERATING) ─────────────────────────── */
+    @keyframes progress-fill {
+      0% { width: 0%; }
+      100% { width: 100%; }
     }
-    .q-title {
-      font-family: var(--font-display);
-      font-size: 26px; font-weight: 600;
-      line-height: 1.25; letter-spacing: -0.3px;
+    .gen-progress-track {
+      width: 200px;
+      height: 4px;
+      background: #EEF2FC;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .gen-progress-fill {
+      height: 100%;
+      background: var(--color-primary);
+      border-radius: 999px;
+      width: 0%;
+    }
+    .gen-progress-fill.animating {
+      animation: progress-fill 1.2s ease-in-out forwards;
+    }
+
+    /* ─── STAT CHIPS ─────────────────────────────────────────── */
+    .stat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(16px) saturate(1.1);
+      -webkit-backdrop-filter: blur(16px) saturate(1.1);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: var(--shadow-sm);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font: 400 11px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+      white-space: nowrap;
+    }
+    .chip-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── REST RING ANIMATION ────────────────────────────────── */
+    @keyframes ring-countdown {
+      0%   { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 502; }
+    }
+    .ring-progress {
+      stroke-dasharray: 502;
+      stroke-dashoffset: 0;
+    }
+    .ring-progress.animating {
+      animation: ring-countdown 30s linear forwards;
+    }
+
+    /* ─── MISC HELPERS ───────────────────────────────────────── */
+    .section-label {
+      font: 500 11px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .text-link-blue {
+      font: 500 14px/1 'Outfit', sans-serif;
+      color: var(--color-primary);
+      cursor: pointer;
+      text-align: center;
+    }
+    .text-link-white {
+      font: 400 14px/1 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+    }
+    .connect-btn {
+      width: 100%;
+      height: 48px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-primary);
+      color: var(--color-primary);
+      font: 500 15px/1 'Outfit', sans-serif;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      transition: background 120ms;
+    }
+    .connect-btn:active { background: #EEF2FC; }
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--color-divide);
+      flex-shrink: 0;
+    }
+    .tab-item {
+      flex: 1;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 400 14px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 120ms, border-color 120ms;
+      margin-bottom: -1px;
+    }
+    .tab-item.active {
+      font-weight: 600;
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       SCREEN-SPECIFIC STYLES
+    ══════════════════════════════════════════════════════════ */
+
+    /* ─── SPLASH ─────────────────────────────────────────────── */
+    #s-splash {
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.85) 100%),
+        linear-gradient(160deg, #1a1a2e 0%, #2d3561 40%, #1a1a2e 100%);
+    }
+    .splash-logo-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--ph) 48px;
+      text-align: center;
+    }
+    .splash-welcome-to {
+      font: 400 18px/1 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .splash-wordmark {
+      font: 500 60px/1 'Gabarito', sans-serif;
+      color: #FFFFFF;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .splash-tagline {
+      font: 400 14px/1.6 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.65);
+      max-width: 280px;
+    }
+
+    /* ─── NAME INPUT ─────────────────────────────────────────── */
+    #s-name {
+      background: linear-gradient(180deg, #C8D8F0 0%, #D4DCEE 40%, #EAE4F4 72%, #F6F7F9 100%);
+    }
+    .name-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 40px var(--ph) 0;
+    }
+    .name-heading {
+      font: 700 30px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 28px;
+    }
+
+    /* ─── PERSONAL WELCOME ───────────────────────────────────── */
+    #s-welcome-personal {
+      background: linear-gradient(180deg, #8AAEE0 0%, #9BADD4 30%, #C8C0EC 65%, #F0EDF8 100%);
+    }
+    .wp-text-block {
+      padding: 32px var(--ph) 0;
+      flex-shrink: 0;
+    }
+    .wp-greeting {
+      font: 700 38px/1.15 'Bricolage Grotesque', sans-serif;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .wp-sub {
+      font: 400 18px/1.5 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.85);
+      max-width: 280px;
+    }
+    .orb-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Q SCREENS (shared) ─────────────────────────────────── */
+    .q-screen { background: var(--bg); }
+    .q-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px var(--ph) 0;
+    }
+    .q-content::-webkit-scrollbar { display: none; }
+    .q-meta-label {
+      font: 500 13px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .q-heading {
+      font: 700 28px/1.25 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 6px;
+    }
+    .q-sub {
+      font: 400 14px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 24px;
+    }
+    .cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 16px;
+    }
+
+    /* ─── MEDICAL INTRO ──────────────────────────────────────── */
+    #s-medical-intro {
+      background: linear-gradient(180deg, #A0B8E0 0%, #B4AEE0 40%, #D0C8F0 70%, #F0EDF8 100%);
+    }
+    .mi-text-block {
+      padding: 28px var(--ph) 0;
+      flex-shrink: 0;
+    }
+    .mi-heading {
+      font: 700 28px/1.25 'Bricolage Grotesque', sans-serif;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+    .mi-body {
+      font: 400 15px/1.6 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.80);
+      max-width: 300px;
+    }
+
+    /* ─── MEDICAL INPUT ──────────────────────────────────────── */
+    #s-medical-input { background: var(--bg); }
+    .medical-content {
+      flex: 1;
+      padding: 16px var(--ph) 0;
+    }
+    .medical-heading {
+      font: 700 24px/1.3 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 20px;
+    }
+    textarea.input-field {
+      height: auto;
+      min-height: 140px;
+      padding: 14px 16px;
+      resize: none;
+      line-height: 1.5;
+      border-radius: 12px;
+    }
+
+    /* ─── HEALTH SYNC ────────────────────────────────────────── */
+    #s-health-sync { background: var(--bg); }
+    .hs-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px var(--ph) 0;
+    }
+    .hs-content::-webkit-scrollbar { display: none; }
+    .apple-section {
+      background: #FFFFFF;
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+    .apple-icon { font-size: 32px; line-height: 1; margin-bottom: 10px; }
+    .apple-heading {
+      font: 700 20px/1.3 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 6px;
+    }
+    .apple-sub {
+      font: 400 14px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 14px;
+    }
+    .inputs-section-label {
+      font: 600 14px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 10px;
+    }
+    .inputs-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 16px;
+    }
+
+    /* ─── GENERATING ─────────────────────────────────────────── */
+    #s-generating { background: #FFFFFF; }
+    .gen-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--ph);
+      text-align: center;
+    }
+    .gen-heading {
+      font: 700 28px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+    .gen-sub {
+      font: 400 15px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      max-width: 260px;
+      margin-bottom: 24px;
+    }
+
+    /* ─── PLAN ───────────────────────────────────────────────── */
+    #s-plan { background: var(--bg); }
+    .plan-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px var(--ph) 0;
+    }
+    .plan-content::-webkit-scrollbar { display: none; }
+    .plan-heading {
+      font: 700 24px/1.3 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 16px;
+    }
+    .about-label {
+      font: 600 12px/1 'Outfit', sans-serif;
+      color: var(--color-primary);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .about-card {
+      background: #EEF2FC;
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      margin-bottom: 14px;
+    }
+    .about-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .about-col-label {
+      font: 500 11px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 4px;
+    }
+    .about-col-value {
+      font: 700 15px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+    }
+    .plan-desc {
+      font: 400 14px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 20px;
+    }
+    .session-rows { display: flex; flex-direction: column; gap: 8px; padding-bottom: 16px; }
+    .session-row {
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .session-chip {
+      display: inline-block;
+      background: #D8E6FF;
+      color: var(--color-primary);
+      font: 600 10px/1 'Outfit', sans-serif;
+      border-radius: 4px;
+      padding: 3px 7px;
+      letter-spacing: 0.3px;
+      margin-bottom: 5px;
+    }
+    .session-exercises {
+      font: 600 14px/1.3 'Outfit', sans-serif;
+      color: var(--color-slate);
+    }
+    .session-more {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #F0F3F9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--color-stone);
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    /* ─── SESSION OVERVIEW ───────────────────────────────────── */
+    #s-session-overview {
+      background: linear-gradient(160deg, #DCEAFF 0%, #E8DFFF 50%, #F0F4FF 100%);
+    }
+    .stats-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px var(--ph) 8px;
+      flex-shrink: 0;
+    }
+    .ring-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .ring-inner { position: relative; display: inline-block; }
+    .ring-center-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 500 13px/1 'DM Mono', monospace;
+      color: var(--color-slate);
+    }
+    .ring-label {
+      font: 500 9px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .chips-col {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-end;
+    }
+    .so-exercise-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px var(--ph);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .so-exercise-list::-webkit-scrollbar { display: none; }
+    .ex-card {
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .ex-card-body { flex: 1; min-width: 0; }
+    .ex-muscle {
+      font: 600 10px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .ex-name {
+      font: 700 17px/1.2 'Outfit', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 2px;
+    }
+    .ex-sets {
+      font: 400 13px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+    }
+
+    /* ─── EXERCISE LOGGER ────────────────────────────────────── */
+    #s-exercise {
+      background: linear-gradient(160deg, #DCEAFF 0%, #E8DFFF 50%, #F0F4FF 100%);
+    }
+    .exercise-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 var(--ph) 12px;
+    }
+    .exercise-scroll::-webkit-scrollbar { display: none; }
+    .video-placeholder {
+      width: 100%;
+      height: 190px;
+      border-radius: 16px;
+      background: rgba(232,238,248,0.80);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255,255,255,0.65);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .play-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+    }
+    .video-label {
+      font: 400 11px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .ex-info-block { margin-bottom: 20px; }
+    .ex-current-label {
+      font: 400 11px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .ex-timer-display {
+      font: 500 40px/1 'DM Mono', monospace;
+      color: var(--color-slate);
+      margin-bottom: 4px;
+    }
+    .ex-name-display {
+      font: 600 18px/1.2 'Outfit', sans-serif;
+      color: var(--color-slate);
+    }
+    .set-logger-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .set-box {
+      flex: 1;
+      max-width: 90px;
+      border-radius: 10px;
+      padding: 12px 0;
+      text-align: center;
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255,255,255,0.70);
+      box-shadow: var(--shadow-sm);
+    }
+    .set-box-value {
+      font: 700 24px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+      display: block;
+    }
+    .set-box-label {
+      font: 400 10px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 4px;
+    }
+    .set-sep {
+      font: 400 16px/1 'Outfit', sans-serif;
+      color: var(--color-pebble);
+      flex-shrink: 0;
+    }
+    .ex-cta-row {
+      padding: 8px var(--ph) 34px;
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-stop {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--color-stone);
+      font: 500 14px/1 'Outfit', sans-serif;
+      height: 52px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.65);
+      width: 80px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.90);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 80ms ease;
+    }
+    .btn-stop:active { transform: scale(0.97); }
+    .btn-finish { flex: 1; }
+
+    /* ─── REST TIMER ─────────────────────────────────────────── */
+    #s-rest { background: #FFFFFF; }
+    .rest-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--ph);
+      text-align: center;
+    }
+    .rest-label {
+      font: 400 12px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .rest-ring-wrap { position: relative; margin-bottom: 28px; }
+    .rest-center-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .rest-countdown {
+      font: 500 36px/1 'DM Mono', monospace;
+      color: var(--color-slate);
+    }
+    .rest-remaining {
+      font: 400 13px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-top: 4px;
+    }
+    .rest-did-good {
+      font: 700 22px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 8px;
+    }
+    .rest-body {
+      font: 400 14px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      max-width: 240px;
       margin-bottom: 20px;
     }
 
-    .options { display: flex; flex-direction: column; gap: 11px; }
-
-    .option {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 17px 18px;
-      cursor: pointer;
-      display: flex; align-items: center; gap: 15px;
-      min-height: 74px;
-      box-shadow: var(--shadow-sm);
-      transition: border-color 200ms, background 200ms, transform 140ms;
+    /* ─── POST-SESSION SUMMARY ───────────────────────────────── */
+    #s-complete { background: #FFFFFF; }
+    .complete-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px var(--ph) 0;
     }
-    .option:active { transform: scale(0.982); }
-    .option.selected {
-      border-color: var(--accent);
-      background: var(--accent-dim);
+    .complete-scroll::-webkit-scrollbar { display: none; }
+    .complete-done {
+      font: 800 36px/1 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
     }
-
-    .opt-icon {
-      width: 46px; height: 46px; border-radius: 13px;
-      background: var(--surface-2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-      transition: background 200ms;
+    .complete-crushed {
+      font: 700 28px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 18px;
     }
-    .option.selected .opt-icon { background: var(--color-primary-dim); }
-
-    .opt-text { flex: 1; }
-    .opt-title { font-size: 16px; font-weight: 500; line-height: 1.3; }
-    .opt-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
-
-    .opt-check {
-      width: 24px; height: 24px; border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: background 200ms, border-color 200ms;
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0 18px;
     }
-    .option.selected .opt-check {
-      background: var(--accent);
-      border-color: var(--accent);
+    .stat-cell {
+      border-radius: 12px;
+      padding: 14px;
     }
-    .check-svg { opacity: 0; transition: opacity 200ms; }
-    .option.selected .check-svg { opacity: 1; }
-
-    .q-footer { padding: 20px var(--ph) 44px; }
-    .skip-link {
-      display: block; text-align: center;
-      font-size: 13px; font-weight: 600;
-      color: var(--text-muted);
-      padding: 12px; margin-top: 2px;
-      cursor: pointer; letter-spacing: 0.1px;
-      transition: color 150ms;
+    .stat-cell-label {
+      font: 400 10px/1 'DM Mono', monospace;
+      color: var(--color-pebble);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
-    .skip-link:hover { color: var(--text); }
-
-    /* ========================================================
-       SCREEN 5 — GENERATING / LOADING
-    ======================================================== */
-    #s-generating {
-      justify-content: center; align-items: center;
-      padding: var(--ph); text-align: center;
+    .stat-cell-value {
+      font: 700 18px/1.2 'Outfit', sans-serif;
+      color: var(--color-slate);
     }
-    .gen-glow {
-      background:
-        radial-gradient(circle at 50% 35%, var(--color-primary-dim) 0%, transparent 60%);
+    .stat-cell-value.lg { font-size: 22px; }
+    .stat-cell-sub {
+      font: 400 12px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-top: 3px;
     }
-    .spinner {
-      width: 72px; height: 72px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
+    .stat-cell-sub.teal { color: var(--color-teal); }
+    .feedback-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .feedback-input {
+      flex: 1;
+      height: 52px;
+      background: #F6F7F9;
+      border-radius: 999px;
+      border: none;
+      padding: 0 16px;
+      font: 400 15px/1 'Outfit', sans-serif;
+      color: var(--color-slate);
+      outline: none;
+    }
+    .feedback-input::placeholder { color: var(--color-pebble); }
+    .feedback-send {
+      width: 36px; height: 36px;
       border-radius: 50%;
-      animation: spin 900ms linear infinite;
-      margin: 0 auto 30px;
-      position: relative; z-index: 1;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .gen-title {
-      font-family: var(--font-display);
-      font-size: 26px; font-weight: 600; font-style: normal;
-      letter-spacing: -0.3px; margin-bottom: 10px;
-      position: relative; z-index: 1;
-    }
-    .gen-sub {
-      font-size: 15px; color: var(--text-muted);
-      line-height: 1.65; position: relative; z-index: 1;
-    }
-
-    /* ========================================================
-       SCREEN 6 — WORKOUT PLAN
-    ======================================================== */
-    #s-plan { padding-bottom: 110px; }
-
-    .plan-header {
-      padding: 52px var(--ph) 20px;
-      position: relative;
-    }
-    .plan-glow {
-      background:
-        radial-gradient(circle at 80% 0%, var(--color-primary-dim) 0%, transparent 50%);
-    }
-
-    .plan-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--color-primary-dim);
-      border: 1px solid var(--color-primary-light);
-      color: var(--color-primary);
-      font-size: 11px; font-weight: 600;
-      padding: 5px 12px; border-radius: 100px;
-      margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase;
-    }
-    .plan-title {
-      font-family: var(--font-display);
-      font-size: 30px; font-weight: 600; font-style: normal;
-      letter-spacing: -0.3px; line-height: 1.15;
-      margin-bottom: 8px; position: relative; z-index: 1;
-    }
-    .plan-meta {
-      font-size: 14px; color: var(--text-muted); line-height: 1.6;
-    }
-
-    .stats-row {
-      display: flex; gap: 10px;
-      padding: 0 var(--ph) 22px;
-    }
-    .stat {
-      flex: 1;
-      background: var(--color-surface);
-      border: 1px solid var(--color-divide);
-      border-radius: 13px; padding: 14px 10px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-    }
-    .stat-val {
-      font-family: var(--font-mono);
-      font-size: 26px; font-weight: 700;
-      color: var(--accent); letter-spacing: 0.2px;
-    }
-    .stat-lbl {
-      font-size: 11px; color: var(--text-muted);
-      font-weight: 500; margin-top: 3px; letter-spacing: 0.2px;
-    }
-
-    .ex-list {
-      display: flex; flex-direction: column;
-      gap: 10px; padding: 0 var(--ph);
-    }
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .ex-card {
-      background: var(--color-surface);
-      border: 1.5px solid var(--color-divide);
-      border-radius: var(--radius);
-      padding: 18px 18px;
-      display: flex; align-items: center; gap: 14px;
-      cursor: pointer; min-height: 78px;
-      box-shadow: var(--shadow-sm);
-      transition: border-color 200ms, transform 140ms;
-      opacity: 0;
-      animation: cardIn 320ms ease-out forwards;
-    }
-    .ex-card:active { transform: scale(0.982); border-color: var(--color-primary-light); }
-    .ex-card.done {
-      opacity: 0.5;
-      border-color: var(--color-teal-light);
-    }
-
-    .ex-num {
-      width: 40px; height: 40px; border-radius: 11px;
-      background: var(--surface-2);
+      background: var(--color-primary);
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: var(--accent);
-      flex-shrink: 0; transition: background 200ms, color 200ms;
-    }
-    .ex-card.done .ex-num { background: var(--color-teal-light); color: var(--color-teal); }
-
-    .ex-info { flex: 1; }
-    .ex-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-    .ex-meta { font-size: 13px; color: var(--text-muted); }
-
-    .chevron { color: var(--text-muted); flex-shrink: 0; }
-
-    .plan-footer {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 14px var(--ph) 44px;
-      background: linear-gradient(to top, #F6F7F9 55%, transparent);
-    }
-
-    /* ========================================================
-       SCREEN 7 — EXERCISE DETAIL
-    ======================================================== */
-    #s-exercise { padding-bottom: 110px; }
-
-    .ex-detail-header {
-      padding: 48px var(--ph) 20px;
-      background: var(--color-surface-2);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-    .ex-detail-glow {
-      background:
-        radial-gradient(circle at 85% 0%, var(--color-primary-dim) 0%, transparent 48%);
-    }
-
-    .back-btn {
-      display: flex; align-items: center; gap: 8px;
-      background: none; border: none;
-      color: var(--color-primary); font-family: var(--font-ui);
-      font-size: 14px; font-weight: 600;
-      cursor: pointer; padding: 6px 0; margin-bottom: 6px;
-      min-height: 44px;
-    }
-    .back-btn:active { opacity: 0.7; }
-
-    .muscle-tag {
-      display: inline-flex; align-items: center;
-      background: var(--color-primary-dim);
-      border: 1px solid var(--color-primary-light);
-      color: var(--color-primary);
-      font-size: 12px; font-weight: 600;
-      padding: 5px 12px; border-radius: 100px;
-      margin-bottom: 8px; letter-spacing: 0.3px;
-    }
-    .ex-detail-name {
-      font-family: var(--font-display);
-      font-size: 28px; font-weight: 600; font-style: normal;
-      line-height: 1.15; letter-spacing: -0.3px;
-      position: relative; z-index: 1;
-    }
-
-    .ex-detail-body {
-      padding: 22px var(--ph);
-      display: flex; flex-direction: column; gap: 22px;
-    }
-
-    .specs-row { display: flex; gap: 10px; }
-    .spec {
-      flex: 1;
-      background: var(--color-surface);
-      border: 1px solid var(--color-divide);
-      border-radius: 13px; padding: 14px 10px;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-    }
-    .spec-val {
-      font-family: var(--font-mono);
-      font-size: 20px; font-weight: 700;
-      letter-spacing: 0.2px;
-    }
-    .spec-lbl {
-      font-size: 11px; color: var(--text-muted);
-      font-weight: 500; margin-top: 3px;
-    }
-
-    .section-label {
-      font-size: 12px; font-weight: 600;
-      color: var(--text-muted); letter-spacing: 0.8px;
-      text-transform: uppercase; margin-bottom: 14px;
-    }
-
-    .steps { display: flex; flex-direction: column; gap: 14px; }
-    .step { display: flex; align-items: flex-start; gap: 14px; }
-    .step-num {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: var(--color-primary-dim); color: var(--color-primary);
-      font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 1px;
-    }
-    .step-text { font-size: 15px; line-height: 1.65; }
-
-    .tip-box {
-      background: rgba(255,219,67,0.15);
-      border: 1px solid rgba(255,219,67,0.4);
-      border-radius: 13px; padding: 16px;
-      display: flex; align-items: flex-start; gap: 12px;
-    }
-    .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    .tip-text { font-size: 14px; line-height: 1.6; color: #8a6800; }
-
-    .ex-detail-footer {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 12px var(--ph) 44px;
-      background: linear-gradient(to top, #F6F7F9 55%, transparent);
-    }
-    .ex-progress-label {
-      text-align: center; font-size: 13px;
-      color: var(--text-muted); font-weight: 500;
-      margin-bottom: 11px;
-    }
-
-    /* ========================================================
-       SCREEN 8 — COMPLETION
-    ======================================================== */
-    #s-completion {
-      justify-content: space-between;
-      padding: 60px var(--ph) 50px;
-      text-align: center;
-    }
-    .completion-glow {
-      background:
-        radial-gradient(circle at 50% 20%, var(--color-primary-dim) 0%, transparent 55%),
-        radial-gradient(circle at 80% 75%, var(--color-teal-light) 0%, transparent 45%);
-    }
-
-    .completion-hero {
-      flex: 1; display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      position: relative; z-index: 1;
-    }
-
-    .trophy {
-      width: 104px; height: 104px;
-      border-radius: 32px;
-      background: linear-gradient(135deg, var(--color-primary-dim), var(--color-lavender-dim));
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 50px; margin-bottom: 28px;
-      animation: pop 550ms cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-    @keyframes pop {
-      from { transform: scale(0.4); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-
-    .completion-title {
-      font-family: var(--font-display);
-      font-size: 38px; font-weight: 700; font-style: normal;
-      letter-spacing: -0.5px; line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .completion-title em { font-style: normal; color: var(--accent); }
-
-    .completion-sub {
-      font-size: 16px; color: var(--text-muted);
-      line-height: 1.65; max-width: 275px;
-    }
-
-    .feel-section { margin-top: 38px; width: 100%; }
-    .feel-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
-    .feel-row { display: flex; gap: 10px; }
-    .feel-opt {
-      flex: 1; background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 14px; padding: 14px 8px;
       cursor: pointer;
-      display: flex; flex-direction: column;
-      align-items: center; gap: 6px;
-      min-height: 84px; justify-content: center;
-      transition: border-color 200ms, background 200ms, transform 140ms;
+      flex-shrink: 0;
+      border: none;
+      box-shadow: var(--shadow-sm);
     }
-    .feel-opt:active { transform: scale(0.96); }
-    .feel-opt.picked {
-      border-color: var(--accent);
-      background: var(--accent-dim);
-    }
-    .feel-emoji { font-size: 28px; }
-    .feel-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
-    .feel-opt.picked .feel-label { color: var(--accent); }
 
-    .completion-footer {
-      position: relative; z-index: 1;
-      width: 100%; display: flex; flex-direction: column; gap: 10px;
+    /* ─── RE-ENTRY ───────────────────────────────────────────── */
+    #s-reentry {
+      background: linear-gradient(180deg, #C8D8F0 0%, #D4C8EE 48%, #EAE4F4 72%, #F6F7F9 100%);
+    }
+    .re-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 var(--ph);
+    }
+    .re-heading {
+      font: 700 34px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 16px;
+    }
+    .re-body {
+      font: 400 16px/1.6 'Outfit', sans-serif;
+      color: var(--color-stone);
+      max-width: 300px;
+    }
+
+    /* ─── HOME ───────────────────────────────────────────────── */
+    #s-home { background: var(--bg); }
+    .home-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px var(--ph) 0;
+    }
+    .home-scroll::-webkit-scrollbar { display: none; }
+    .home-greeting {
+      font: 700 24px/1.2 'Bricolage Grotesque', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 20px;
+    }
+    .home-section-label {
+      font: 600 12px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .home-progress-note {
+      font: 400 14px/1 'Outfit', sans-serif;
+      color: var(--color-pebble);
+      margin-bottom: 14px;
+    }
+    .workout-cards { display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; }
+    .workout-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      padding: 16px;
+    }
+    .workout-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .workout-card-body { flex: 1; }
+    .workout-chip {
+      display: inline-flex;
+      align-items: center;
+      background: #D8E6FF;
+      color: var(--color-primary);
+      font: 600 11px/1 'Outfit', sans-serif;
+      border-radius: 999px;
+      padding: 4px 10px;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .workout-meta {
+      font: 400 12px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 4px;
+    }
+    .workout-name {
+      font: 700 20px/1.2 'Outfit', sans-serif;
+      color: var(--color-slate);
+      margin-bottom: 6px;
+    }
+    .workout-stats {
+      font: 400 13px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
     }
   </style>
 </head>
 <body>
-<div class="phone">
+  <div class="phone-shell">
 
-  <!-- ================================================
-       SCREEN 1: SPLASH
-  ================================================ -->
-  <div id="s-splash" class="screen active">
-    <div class="glow splash-glow"></div>
-
-    <div class="splash-hero">
-      <p class="splash-welcome">Welcome to</p>
-      <h1 class="splash-wordmark"><span>S</span><span>p</span><span>o</span><span>t</span><span>t</span><span>r</span></h1>
-    </div>
-
-    <div class="splash-bottom">
-      <p class="splash-sub">Your gym. Your plan. From day one.</p>
-      <div class="splash-cta">
-        <button class="btn btn-dark" onclick="go('s-q1')">Get started</button>
-        <button class="btn btn-light" style="font-size:13px;">I already have an account</button>
+    <!-- ══════════════════════════════════════════════════════
+         S01 — SPLASH
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-splash" class="screen active">
+      <div class="status-bar light">
+        <span>9:41</span>
+        <div class="status-bar-right">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+            <rect x="0" y="4" width="3" height="8" rx="1" fill="currentColor" opacity="0.4"/>
+            <rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="currentColor" opacity="0.6"/>
+            <rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor"/>
+            <rect x="13.5" y="0" width="3" height="12" rx="1" fill="currentColor"/>
+          </svg>
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+            <path d="M8 2.4C10.4 2.4 12.5 3.4 14 5L15.5 3.5C13.6 1.3 10.9 0 8 0C5.1 0 2.4 1.3 0.5 3.5L2 5C3.5 3.4 5.6 2.4 8 2.4Z" fill="currentColor"/>
+            <path d="M8 5C9.7 5 11.2 5.7 12.3 6.8L13.8 5.3C12.3 3.9 10.2 3 8 3C5.8 3 3.7 3.9 2.2 5.3L3.7 6.8C4.8 5.7 6.3 5 8 5Z" fill="currentColor"/>
+            <circle cx="8" cy="10" r="2" fill="currentColor"/>
+          </svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+            <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" opacity="0.35"/>
+            <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/>
+            <path d="M23 4v4a2 2 0 000-4z" fill="currentColor" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="splash-logo-area">
+        <p class="splash-welcome-to">Welcome to</p>
+        <h1 class="splash-wordmark">
+          <span>S</span><span>p</span><span>o</span><span>t</span><span>t</span><span>r</span>
+        </h1>
+        <p class="splash-tagline">Spottr is your personal trainer, helping you day-by-day towards your goal with real insights and personalised plans.</p>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-dark" onclick="go('s-name')">Start my journey →</button>
       </div>
     </div>
-  </div>
 
-  <!-- ================================================
-       SCREEN 2: QUESTION 1 — GOAL
-  ================================================ -->
-  <div id="s-q1" class="screen">
-    <div class="q-wrap">
-      <div class="progress-dots">
-        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
-        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
-        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
+    <!-- ══════════════════════════════════════════════════════
+         S01.1 — NAME INPUT
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-name" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="#545F71" opacity="0.4"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="#545F71" opacity="0.6"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#545F71"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#545F71"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
       </div>
-      <div class="q-label">Question 1 of 3</div>
-      <h2 class="q-title">What are you training for?</h2>
-      <div class="options">
-        <div class="option" onclick="pick(this,'goal','feel_stronger','btn-q1')">
-          <div class="opt-icon">&#128170;</div>
-          <div class="opt-text">
-            <div class="opt-title">Feel stronger</div>
-            <div class="opt-sub">Build real strength, feel the difference</div>
+      <div class="name-content">
+        <h2 class="name-heading">What would you like us to call you?</h2>
+        <input
+          id="name-input"
+          class="input-field"
+          type="text"
+          placeholder="Your name..."
+          oninput="onNameInput()"
+          autocomplete="off"
+        />
+      </div>
+      <div class="cta-zone">
+        <button id="name-next-btn" class="btn-primary" disabled onclick="goFromName()">Next →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         S01.2 — PERSONAL WELCOME
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-welcome-personal" class="screen">
+      <div class="status-bar light">
+        <span>9:41</span>
+        <div class="status-bar-right">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="white" opacity="0.5"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="white" opacity="0.7"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="white"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="white" opacity="0.5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/><path d="M23 4v4a2 2 0 000-4z" fill="white" opacity="0.5"/></svg>
+        </div>
+      </div>
+      <div class="wp-text-block">
+        <h2 class="wp-greeting" id="wp-greeting">Hi there,</h2>
+        <p class="wp-sub">So glad you give us a chance to help you reach your goal!</p>
+      </div>
+      <div class="orb-center">
+        <div class="glass-orb" style="width:230px; height:230px;"></div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-dark" onclick="go('s-q1')">Start my journey →</button>
+        <button class="btn-liquid-glass" onclick="go('s-q1')">Create Account</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         S02 — Q1: GOAL
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-q1" class="screen q-screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="#545F71" opacity="0.4"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="#545F71" opacity="0.6"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#545F71"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#545F71"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-welcome-personal')">←</div>
+        <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg"></div>
+          <div class="progress-bar-seg"></div>
+        </div>
+        <span class="nav-skip" onclick="go('s-q2')">Skip</span>
+      </div>
+      <div class="q-content">
+        <p class="q-meta-label">Question 1/3</p>
+        <h2 class="q-heading">What are you training for?</h2>
+        <div class="cards-stack">
+          <div class="sel-card" id="q1-card-0" onclick="selectCard('q1',0)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">To feel Stronger</div>
+              <div class="sel-card-sub">Build muscle, get more capable in everyday life</div>
+            </div>
+            <div class="btn-glass-symbol" id="q1-chk-0"></div>
           </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'goal','build_routine','btn-q1')">
-          <div class="opt-icon">&#128197;</div>
-          <div class="opt-text">
-            <div class="opt-title">Build a routine</div>
-            <div class="opt-sub">Create a habit that actually sticks</div>
+          <div class="sel-card" id="q1-card-1" onclick="selectCard('q1',1)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">Build consistent routine</div>
+              <div class="sel-card-sub">Create healthy habits that stick</div>
+            </div>
+            <div class="btn-glass-symbol" id="q1-chk-1"></div>
           </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'goal','mental_health','btn-q1')">
-          <div class="opt-icon">&#129504;</div>
-          <div class="opt-text">
-            <div class="opt-title">Mental health</div>
-            <div class="opt-sub">Move your body, clear your mind</div>
+          <div class="sel-card" id="q1-card-2" onclick="selectCard('q1',2)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">A specific sport, activity, event</div>
+              <div class="sel-card-sub">Build sport-specific strength and endurance</div>
+            </div>
+            <div class="btn-glass-symbol" id="q1-chk-2"></div>
           </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-      </div>
-    </div>
-    <div class="q-footer">
-      <button id="btn-q1" class="btn btn-primary" onclick="go('s-q2')" disabled>Continue &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
-    </div>
-  </div>
-
-  <!-- ================================================
-       SCREEN 3: QUESTION 2 — DAYS
-  ================================================ -->
-  <div id="s-q2" class="screen">
-    <div class="q-wrap">
-      <div class="progress-dots">
-        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
-        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
-        <div class="dot"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
-      </div>
-      <div class="q-label">Question 2 of 3</div>
-      <h2 class="q-title">How many days a week works for you?</h2>
-      <div class="options">
-        <div class="option" onclick="pick(this,'days','2','btn-q2')">
-          <div class="opt-icon">&#128197;</div>
-          <div class="opt-text">
-            <div class="opt-title">2 days</div>
-            <div class="opt-sub">Fits around a busy life</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'days','3','btn-q2')">
-          <div class="opt-icon">&#128467;&#65039;</div>
-          <div class="opt-text">
-            <div class="opt-title">3 days</div>
-            <div class="opt-sub">Building a solid habit</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'days','4-5','btn-q2')">
-          <div class="opt-icon">&#128293;</div>
-          <div class="opt-text">
-            <div class="opt-title">4&ndash;5 days</div>
-            <div class="opt-sub">All in, full commitment</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-      </div>
-    </div>
-    <div class="q-footer">
-      <button id="btn-q2" class="btn btn-primary" onclick="go('s-q3')" disabled>Continue &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
-    </div>
-  </div>
-
-  <!-- ================================================
-       SCREEN 4: QUESTION 3 — EXPERIENCE
-  ================================================ -->
-  <div id="s-q3" class="screen">
-    <div class="q-wrap">
-      <div class="progress-dots">
-        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Goal</div></div>
-        <div class="dot done"><div class="dot-bar"></div><div class="dot-label">Days</div></div>
-        <div class="dot active"><div class="dot-bar"></div><div class="dot-label">Level</div></div>
-      </div>
-      <div class="q-label">Question 3 of 3</div>
-      <h2 class="q-title">How long have you been training?</h2>
-      <div class="options">
-        <div class="option" onclick="pick(this,'level','beginner','btn-q3')">
-          <div class="opt-icon">&#127807;</div>
-          <div class="opt-text">
-            <div class="opt-title">Complete beginner</div>
-            <div class="opt-sub">First time, or rarely been before</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'level','some','btn-q3')">
-          <div class="opt-icon">&#9889;</div>
-          <div class="opt-text">
-            <div class="opt-title">Some experience</div>
-            <div class="opt-sub">Been a few times, know the basics</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'level','regular','btn-q3')">
-          <div class="opt-icon">&#127947;&#65039;</div>
-          <div class="opt-text">
-            <div class="opt-title">Regular gym-goer</div>
-            <div class="opt-sub">I know what I'm doing, just need structure</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-      </div>
-    </div>
-    <div class="q-footer">
-      <button id="btn-q3" class="btn btn-primary" onclick="buildPlan()" disabled>Create my plan &rarr;</button>
-      <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
-    </div>
-  </div>
-
-  <!-- ================================================
-       SCREEN 5: GENERATING
-  ================================================ -->
-  <div id="s-generating" class="screen">
-    <div class="glow gen-glow"></div>
-    <div class="spinner"></div>
-    <h2 class="gen-title">Building your plan&hellip;</h2>
-    <p class="gen-sub">Won't take long. Your first<br>session is almost ready.</p>
-  </div>
-
-  <!-- ================================================
-       SCREEN 6: WORKOUT PLAN
-  ================================================ -->
-  <div id="s-plan" class="screen">
-    <div class="plan-header">
-      <div class="glow plan-glow"></div>
-      <div class="plan-tag">&#10022; Today's Session</div>
-      <h2 class="plan-title" id="plan-title">Your First Workout</h2>
-      <p class="plan-meta" id="plan-meta">Built around you. Go at your own pace.</p>
-    </div>
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-val" id="stat-ex">5</div>
-        <div class="stat-lbl">Exercises</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val" id="stat-min">~40</div>
-        <div class="stat-lbl">Minutes</div>
-      </div>
-      <div class="stat">
-        <div class="stat-val">Low</div>
-        <div class="stat-lbl">Intensity</div>
-      </div>
-    </div>
-    <div class="ex-list" id="ex-list"></div>
-    <div class="plan-footer">
-      <button class="btn btn-primary" onclick="startWorkout()">Start Workout &rarr;</button>
-    </div>
-  </div>
-
-  <!-- ================================================
-       SCREEN 7: EXERCISE DETAIL
-  ================================================ -->
-  <div id="s-exercise" class="screen">
-    <div class="ex-detail-header">
-      <div class="glow ex-detail-glow"></div>
-      <button class="back-btn" onclick="go('s-plan')">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to plan
-      </button>
-      <div class="muscle-tag" id="ex-muscle">Quads &middot; Glutes</div>
-      <h2 class="ex-detail-name" id="ex-name">Leg Press</h2>
-    </div>
-
-    <div class="ex-detail-body">
-      <div class="specs-row">
-        <div class="spec">
-          <div class="spec-val" id="ex-sets">3 sets</div>
-          <div class="spec-lbl">Sets</div>
-        </div>
-        <div class="spec">
-          <div class="spec-val" id="ex-reps">12 reps</div>
-          <div class="spec-lbl">Reps</div>
-        </div>
-        <div class="spec">
-          <div class="spec-val" id="ex-rest">60s</div>
-          <div class="spec-lbl">Rest</div>
-        </div>
-      </div>
-
-      <div>
-        <div class="section-label">How to do it</div>
-        <div class="steps" id="ex-steps"></div>
-      </div>
-
-      <div class="tip-box">
-        <div class="tip-icon">&#9888;&#65039;</div>
-        <div class="tip-text" id="ex-tip">Safety tip</div>
-      </div>
-    </div>
-
-    <div class="ex-detail-footer">
-      <div class="ex-progress-label" id="ex-progress"></div>
-      <button class="btn btn-primary" id="ex-cta" onclick="doneTapped()">Mark as done &#10003;</button>
-    </div>
-  </div>
-
-  <!-- ================================================
-       SCREEN 8: COMPLETION
-  ================================================ -->
-  <div id="s-completion" class="screen">
-    <div class="glow completion-glow"></div>
-
-    <div class="completion-hero">
-      <div class="trophy">&#127942;</div>
-      <h2 class="completion-title">First session<br><em>complete!</em></h2>
-      <p class="completion-sub">You showed up, pushed through, and did it. That's the hardest part done.</p>
-
-      <div class="feel-section">
-        <div class="feel-title">How do you feel?</div>
-        <div class="feel-row">
-          <div class="feel-opt" onclick="pickFeel(this)">
-            <div class="feel-emoji">&#128516;</div>
-            <div class="feel-label">Great</div>
-          </div>
-          <div class="feel-opt" onclick="pickFeel(this)">
-            <div class="feel-emoji">&#128522;</div>
-            <div class="feel-label">Okay</div>
-          </div>
-          <div class="feel-opt" onclick="pickFeel(this)">
-            <div class="feel-emoji">&#128517;</div>
-            <div class="feel-label">Struggled</div>
+          <div class="sel-card" id="q1-card-3" onclick="selectCard('q1',3)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">My overall health and energy</div>
+              <div class="sel-card-sub">Feel better every day, inside and out</div>
+            </div>
+            <div class="btn-glass-symbol" id="q1-chk-3"></div>
           </div>
         </div>
       </div>
+      <div class="cta-zone">
+        <button id="q1-continue" class="btn-primary" disabled onclick="go('s-q2')">Continue</button>
+      </div>
     </div>
 
-    <div class="completion-footer">
-      <button class="btn btn-primary" onclick="restart()">Start another session &rarr;</button>
-      <button class="btn btn-ghost" onclick="restart()">Back to home</button>
+    <!-- ══════════════════════════════════════════════════════
+         S03 — Q2: FREQUENCY
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-q2" class="screen q-screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-q1')">←</div>
+        <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg"></div>
+        </div>
+        <span class="nav-skip" onclick="go('s-q3')">Skip</span>
+      </div>
+      <div class="q-content">
+        <p class="q-meta-label">Availability 2/3</p>
+        <h2 class="q-heading" style="font-size:24px;">How often you like to train per week?</h2>
+        <p class="q-sub">Setting a goal will help you stay motivated and track your progress</p>
+        <div class="day-picker-wrap">
+          <div class="day-picker-label" id="days-label">Days Active: 3 days per week</div>
+          <div class="day-circles">
+            <button class="day-circle active" onclick="toggleDay(0,this)">M</button>
+            <button class="day-circle" onclick="toggleDay(1,this)">T</button>
+            <button class="day-circle active" onclick="toggleDay(2,this)">W</button>
+            <button class="day-circle" onclick="toggleDay(3,this)">T</button>
+            <button class="day-circle active" onclick="toggleDay(4,this)">F</button>
+            <button class="day-circle" onclick="toggleDay(5,this)">S</button>
+            <button class="day-circle" onclick="toggleDay(6,this)">S</button>
+          </div>
+          <p class="day-hint">Select day you want to workout</p>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-primary" onclick="go('s-q3')">Continue</button>
+      </div>
     </div>
-  </div>
 
-</div><!-- .phone -->
+    <!-- ══════════════════════════════════════════════════════
+         S03.1 — Q3: GYM LOCATION
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-q3" class="screen q-screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-q2')">←</div>
+        <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg active"></div>
+        </div>
+        <span class="nav-skip" onclick="go('s-medical-intro')">Skip</span>
+      </div>
+      <div class="q-content">
+        <p class="q-meta-label">Location 3/3</p>
+        <h2 class="q-heading">Where do you work out?</h2>
+        <p class="q-sub">We will create your plan based from your location. You can change this in the settings.</p>
+        <div class="cards-stack">
+          <div class="sel-card" id="q3-card-0" onclick="selectCard('q3',0)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">Large Gym</div>
+              <div class="sel-card-sub">Well-stocked gym with machines like Equinox, Anytime Fitness</div>
+            </div>
+            <div class="btn-glass-symbol" id="q3-chk-0"></div>
+          </div>
+          <div class="sel-card" id="q3-card-1" onclick="selectCard('q3',1)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">Compact Gym</div>
+              <div class="sel-card-sub">Compact gyms with limited equipment</div>
+            </div>
+            <div class="btn-glass-symbol" id="q3-chk-1"></div>
+          </div>
+          <div class="sel-card" id="q3-card-2" onclick="selectCard('q3',2)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">Garage Gym</div>
+              <div class="sel-card-sub">Private, own rack, dumbbells, etc.</div>
+            </div>
+            <div class="btn-glass-symbol" id="q3-chk-2"></div>
+          </div>
+          <div class="sel-card" id="q3-card-3" onclick="selectCard('q3',3)">
+            <div class="sel-card-text">
+              <div class="sel-card-title">At Home</div>
+              <div class="sel-card-sub">Limited equipment such as dumbbell and bands</div>
+            </div>
+            <div class="btn-glass-symbol" id="q3-chk-3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button id="q3-continue" class="btn-primary" disabled onclick="go('s-medical-intro')">Continue</button>
+      </div>
+    </div>
 
-<script>
-// ============================================================
-// DATA
-// ============================================================
+    <!-- ══════════════════════════════════════════════════════
+         S04 — MEDICAL INTRO
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-medical-intro" class="screen">
+      <div class="status-bar light">
+        <span>9:41</span>
+        <div class="status-bar-right">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="white" opacity="0.5"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="white" opacity="0.7"/><rect x="9" y="0" width="3" height="12" rx="1" fill="white"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="white"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="white" opacity="0.5"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/><path d="M23 4v4a2 2 0 000-4z" fill="white" opacity="0.5"/></svg>
+        </div>
+      </div>
+      <div class="mi-text-block">
+        <h2 class="mi-heading">Any injury or medical condition we should know?</h2>
+        <p class="mi-body">Anything we should work around? Even something minor. We'd rather know.</p>
+      </div>
+      <div class="orb-center">
+        <div class="glass-orb" style="width:185px; height:185px;"></div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-dark" onclick="go('s-medical-input')">I have something to share</button>
+        <div class="text-link-white" onclick="go('s-health-sync')">No, I'm good →</div>
+      </div>
+    </div>
 
-const EXERCISES = {
-  treadmill: {
-    name: 'Treadmill Walk / Light Jog',
-    muscle: 'Full Body &middot; Warmup',
-    sets: '1 set', reps: '10 min', rest: '&mdash;',
-    steps: [
-      'Hold the side rails before stepping on and start at low speed.',
-      'Set to 4&ndash;5 km/h for a brisk walk, or 6&ndash;7 km/h for a light jog.',
-      'Keep your head up and shoulders relaxed &mdash; no hunching.',
-      'Swing your arms naturally. Don\'t grip the rails while walking.',
-      'Increase speed only if comfortable. This is a warmup.'
-    ],
-    tip: 'You should be able to hold a conversation throughout. If you can\'t speak, slow down.'
-  },
-  rowing: {
-    name: 'Rowing Machine',
-    muscle: 'Full Body &middot; Cardio',
-    sets: '1 set', reps: '8 min', rest: '&mdash;',
-    steps: [
-      'Strap your feet in securely. Sit tall and grip the handle.',
-      'Drive through your legs first &mdash; think legs, then body, then arms.',
-      'Pull the handle to your lower chest as you lean back slightly.',
-      'Return in reverse: arms extend, body tilts forward, then legs bend.',
-      'Keep a steady, sustainable pace &mdash; not a sprint.'
-    ],
-    tip: 'About 60% of the power should come from your legs, not your arms. Let your legs do the work.'
-  },
-  leg_press: {
-    name: 'Leg Press',
-    muscle: 'Quads &middot; Glutes &middot; Hamstrings',
-    sets: '3 sets', reps: '12 reps', rest: '60s',
-    steps: [
-      'Sit down and place feet shoulder-width apart on the platform.',
-      'Unlock the safety handles on the sides before moving.',
-      'Lower the platform slowly &mdash; stop before knees pass 90&deg;.',
-      'Press through your heels to return to the start position.',
-      'Re-lock the safety handles before removing your feet.'
-    ],
-    tip: 'Never fully straighten your knees at the top. Keep a slight bend to protect your joints.'
-  },
-  chest_press: {
-    name: 'Seated Chest Press Machine',
-    muscle: 'Chest &middot; Shoulders &middot; Triceps',
-    sets: '3 sets', reps: '12 reps', rest: '60s',
-    steps: [
-      'Adjust the seat so the handles sit at mid-chest height.',
-      'Grip the handles with palms facing forward.',
-      'Press forward until arms are nearly extended &mdash; don\'t lock elbows.',
-      'Slowly return to start, letting your chest stretch slightly.',
-      'Keep your back flat against the pad throughout.'
-    ],
-    tip: 'Pull your shoulder blades together before each press. Don\'t let your shoulders shrug toward your ears.'
-  },
-  lat_pulldown: {
-    name: 'Lat Pulldown',
-    muscle: 'Back &middot; Biceps',
-    sets: '3 sets', reps: '12 reps', rest: '60s',
-    steps: [
-      'Sit and lock your thighs under the pad &mdash; adjust it to fit snugly.',
-      'Grip the bar slightly wider than shoulder-width, palms facing away.',
-      'Lean back slightly and pull the bar down to your collarbone.',
-      'Squeeze your shoulder blades together at the bottom.',
-      'Let the bar rise slowly back up &mdash; don\'t let it yank you.'
-    ],
-    tip: 'Lead with your elbows, not your hands. Think of pulling your elbows down toward your pockets.'
-  },
-  seated_row: {
-    name: 'Seated Cable Row',
-    muscle: 'Back &middot; Biceps &middot; Rear Delts',
-    sets: '3 sets', reps: '12 reps', rest: '60s',
-    steps: [
-      'Sit at the machine with feet flat on the foot rest, knees slightly bent.',
-      'Grip the handle and extend arms fully forward.',
-      'Sit tall and pull the handle to your lower abdomen.',
-      'Squeeze your shoulder blades together at the end of the pull.',
-      'Extend arms back slowly &mdash; don\'t let the weight snap forward.'
-    ],
-    tip: 'Keep your torso upright throughout. Rocking back and forth reduces the benefit to your back muscles.'
-  },
-  shoulder_press: {
-    name: 'Shoulder Press Machine',
-    muscle: 'Shoulders &middot; Triceps',
-    sets: '3 sets', reps: '12 reps', rest: '60s',
-    steps: [
-      'Adjust the seat so handles are level with your shoulders.',
-      'Grip the handles with palms facing forward.',
-      'Press upward until arms are nearly extended &mdash; don\'t lock out.',
-      'Lower slowly back to shoulder height with control.',
-      'Keep your core braced and lower back against the pad.'
-    ],
-    tip: 'If you feel sharp pain in your shoulder joint, lower the weight immediately. Pain here is a warning sign.'
-  },
-  bicep_curl: {
-    name: 'Bicep Curl Machine',
-    muscle: 'Biceps',
-    sets: '3 sets', reps: '12 reps', rest: '45s',
-    steps: [
-      'Adjust the seat so your upper arms rest flat on the pad.',
-      'Grip the handles with palms facing up (underhand).',
-      'Curl upward toward your shoulders in a smooth arc.',
-      'Squeeze at the top for one count.',
-      'Lower slowly back to start &mdash; don\'t drop it.'
-    ],
-    tip: 'Keep your upper arms pressed firmly against the pad throughout. Lifting them away is cheating the rep.'
-  },
-  tricep_pushdown: {
-    name: 'Cable Tricep Pushdown',
-    muscle: 'Triceps',
-    sets: '3 sets', reps: '12 reps', rest: '45s',
-    steps: [
-      'Stand at the cable machine with the rope or bar at the top.',
-      'Grip the attachment and tuck both elbows to your sides &mdash; keep them there.',
-      'Push down until your arms are fully extended.',
-      'Slowly return to start, stopping when forearms are roughly horizontal.',
-      'Stay upright &mdash; avoid leaning excessively forward.'
-    ],
-    tip: 'If your elbows flare out, the weight is too heavy. Elbows glued to your sides is the whole point.'
-  },
-  plank: {
-    name: 'Plank Hold',
-    muscle: 'Core &middot; Full Body Stability',
-    sets: '3 sets', reps: '30 sec', rest: '30s',
-    steps: [
-      'Get on the floor on your forearms and toes.',
-      'Form a straight line from your head to your heels &mdash; no sagging hips.',
-      'Engage your core by drawing your belly button toward your spine.',
-      'Breathe steadily throughout &mdash; don\'t hold your breath.',
-      'Hold for 30 seconds, rest 30 seconds, repeat.'
-    ],
-    tip: 'If a full plank is too difficult, drop to your knees. Same straight back &mdash; just modified.'
-  },
-  core_crunch: {
-    name: 'Ab Crunch Machine',
-    muscle: 'Core &middot; Abs',
-    sets: '3 sets', reps: '15 reps', rest: '45s',
-    steps: [
-      'Sit in the machine and grip the handles at chest or overhead height.',
-      'Set the weight very low &mdash; control beats load here.',
-      'Crunch forward slowly, bringing your chest toward your knees.',
-      'Hold for one count at the bottom of the movement.',
-      'Return to start slowly &mdash; resist the weight on the way back.'
-    ],
-    tip: 'This is a small, controlled movement. If you\'re swinging your whole body, the weight is too heavy.'
-  }
-};
+    <!-- ══════════════════════════════════════════════════════
+         S04.1 — MEDICAL INPUT
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-medical-input" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-medical-intro')">←</div>
+        <div></div>
+      </div>
+      <div class="medical-content">
+        <h2 class="medical-heading">Any injury or medical condition we should know?</h2>
+        <textarea
+          class="input-field"
+          placeholder="Describe any injuries, limitations, or anything else we should know..."
+          style="min-height:140px; border-radius:12px; height:auto; padding:14px 16px; resize:none; line-height:1.5;"
+        ></textarea>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-primary" onclick="go('s-health-sync')">Continue →</button>
+      </div>
+    </div>
 
-const PLANS = {
-  lose_weight: {
-    beginner: ['treadmill','leg_press','chest_press','lat_pulldown','core_crunch'],
-    some:     ['treadmill','leg_press','chest_press','lat_pulldown','seated_row','core_crunch'],
-    regular:  ['treadmill','leg_press','chest_press','lat_pulldown','seated_row','shoulder_press','core_crunch']
-  },
-  build_muscle: {
-    beginner: ['treadmill','leg_press','chest_press','seated_row','shoulder_press'],
-    some:     ['treadmill','leg_press','chest_press','seated_row','shoulder_press','bicep_curl'],
-    regular:  ['treadmill','leg_press','chest_press','seated_row','shoulder_press','bicep_curl','tricep_pushdown']
-  },
-  improve_fitness: {
-    beginner: ['treadmill','rowing','leg_press','lat_pulldown','plank'],
-    some:     ['treadmill','rowing','leg_press','lat_pulldown','seated_row','plank'],
-    regular:  ['treadmill','rowing','leg_press','lat_pulldown','seated_row','shoulder_press','plank']
-  }
-};
+    <!-- ══════════════════════════════════════════════════════
+         S05 — HEALTH SYNC
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-health-sync" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-medical-intro')">←</div>
+        <span style="font:600 14px/1 'Outfit',sans-serif; color:var(--color-slate);">Health Profile</span>
+        <div style="width:36px;"></div>
+      </div>
+      <div class="hs-content">
+        <div class="apple-section">
+          <div class="apple-icon">❤️</div>
+          <h3 class="apple-heading">Sync Spottr with Apple Health for the Best Experience</h3>
+          <p class="apple-sub">The more access, the better your plan.</p>
+          <button class="connect-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1762F9"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Connect Apple Health
+          </button>
+        </div>
+        <div class="or-divider" style="margin:16px 0;">
+          <span class="or-text">Or</span>
+        </div>
+        <p class="inputs-section-label">Enter your health profile</p>
+        <div class="inputs-stack">
+          <input class="input-field" type="text" placeholder="Height (e.g. 170 cm)" id="hs-height">
+          <input class="input-field" type="text" placeholder="Weight (e.g. 65 kg)" id="hs-weight">
+          <input class="input-field" type="text" placeholder="Age (e.g. 28)" id="hs-age">
+          <select class="input-field" id="hs-gender">
+            <option value="" disabled selected>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Prefer not to say</option>
+          </select>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-primary" onclick="goGenerating()">Continue</button>
+      </div>
+    </div>
 
-const PLAN_META = {
-  lose_weight:     { title: 'Fat Loss Focus',       meta: 'Cardio + compound lifts to maximise calorie burn.' },
-  build_muscle:    { title: 'Muscle Building',       meta: 'Compound + isolation work to build lean muscle.' },
-  improve_fitness: { title: 'Fitness & Endurance',  meta: 'Cardio + strength to build a well-rounded base.' }
-};
+    <!-- ══════════════════════════════════════════════════════
+         LOADING — GENERATING
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-generating" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="gen-center">
+        <div class="glass-orb pulse" style="width:200px; height:200px;"></div>
+        <h2 class="gen-heading">Almost Ready!</h2>
+        <p class="gen-sub">Your AI personal coach is creating a training plan, just for you.</p>
+        <div class="gen-progress-track">
+          <div class="gen-progress-fill" id="gen-progress-fill"></div>
+        </div>
+      </div>
+    </div>
 
-// ============================================================
-// STATE
-// ============================================================
-const S = {
-  goal: null, days: null, level: null,
-  plan: [],
-  exIdx: 0,
-  doneSet: new Set(),
-  workoutMode: false
-};
+    <!-- ══════════════════════════════════════════════════════
+         S06 — PLAN PREVIEW
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-plan" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="plan-content">
+        <h2 class="plan-heading">Your 4 Weeks Foundation Plan is Ready</h2>
+        <p class="about-label">About you</p>
+        <div class="about-card">
+          <div class="about-col">
+            <span class="about-col-label">Weight</span>
+            <span class="about-col-value" id="plan-weight">60 kg</span>
+          </div>
+          <div class="about-col">
+            <span class="about-col-label">Age</span>
+            <span class="about-col-value" id="plan-age">28</span>
+          </div>
+          <div class="about-col">
+            <span class="about-col-label">Gender</span>
+            <span class="about-col-value" id="plan-gender">F</span>
+          </div>
+        </div>
+        <p class="plan-desc">This 30-day plan will help you start from the basics and build confidence in the gym.</p>
+        <div class="session-rows">
+          <div class="session-row">
+            <div style="flex:1; min-width:0;">
+              <span class="session-chip">Session 1</span>
+              <div class="session-exercises">Hip Thrust · Bulgarian Split · Leg Press</div>
+            </div>
+            <div class="session-more">···</div>
+          </div>
+          <div class="session-row">
+            <div style="flex:1; min-width:0;">
+              <span class="session-chip">Session 2</span>
+              <div class="session-exercises">Chest Press · Lat Pulldown · Shoulder Press</div>
+            </div>
+            <div class="session-more">···</div>
+          </div>
+          <div class="session-row">
+            <div style="flex:1; min-width:0;">
+              <span class="session-chip">Session 3</span>
+              <div class="session-exercises">Deadlift · Leg Curl · Calf Raise</div>
+            </div>
+            <div class="session-more">···</div>
+          </div>
+          <div class="session-row">
+            <div style="flex:1; min-width:0;">
+              <span class="session-chip">Session 4</span>
+              <div class="session-exercises">Rest &amp; Stretch Day</div>
+            </div>
+            <div class="session-more">···</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-primary" style="height:56px;" onclick="go('s-session-overview')">Continue →</button>
+      </div>
+    </div>
 
-// ============================================================
-// NAVIGATION
-// ============================================================
-let current = 's-splash';
+    <!-- ══════════════════════════════════════════════════════
+         S07 — SESSION OVERVIEW
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-session-overview" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <!-- Stats strip -->
+      <div class="stats-strip">
+        <div class="ring-wrap">
+          <div class="ring-inner">
+            <svg width="52" height="52" style="transform:rotate(-90deg)">
+              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(23,98,249,0.15)" stroke-width="4"/>
+              <circle cx="26" cy="26" r="21" fill="none" stroke="#1762F9" stroke-width="4"
+                stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="33"/>
+            </svg>
+            <div class="ring-center-text">1:00</div>
+          </div>
+          <span class="ring-label">HR TOTAL</span>
+        </div>
+        <div class="chips-col">
+          <div class="stat-chip"><span class="chip-dot" style="background:#F0902A;"></span>Total 420 Calories</div>
+          <div class="stat-chip"><span class="chip-dot" style="background:#60B070;"></span>Total 3,200 Volume</div>
+          <div class="stat-chip"><span class="chip-dot" style="background:#9080C8;"></span>Leg and Full Body</div>
+        </div>
+      </div>
+      <!-- Tab bar -->
+      <div class="tab-bar">
+        <div class="tab-item active">Exercise</div>
+        <div class="tab-item">Goals</div>
+        <div class="tab-item">Saved</div>
+      </div>
+      <!-- Exercise list -->
+      <div class="so-exercise-list">
+        <div class="ex-card glass-regular">
+          <div class="ex-card-body">
+            <div class="ex-muscle">GLUTES (BUTT), HAMSTRINGS</div>
+            <div class="ex-name">Hip Thrust</div>
+            <div class="ex-sets">8 reps, 4 sets</div>
+          </div>
+          <div class="btn-glass-symbol" style="color:var(--color-stone); font-size:12px; letter-spacing:2px;">···</div>
+        </div>
+        <div class="ex-card glass-regular">
+          <div class="ex-card-body">
+            <div class="ex-muscle">GLUTES, QUADS, BALANCE</div>
+            <div class="ex-name">Bulgarian Split</div>
+            <div class="ex-sets">10 reps, 3 sets</div>
+          </div>
+          <div class="btn-glass-symbol" style="color:var(--color-stone); font-size:12px; letter-spacing:2px;">···</div>
+        </div>
+        <div class="ex-card glass-regular">
+          <div class="ex-card-body">
+            <div class="ex-muscle">QUADS, HAMSTRINGS</div>
+            <div class="ex-name">Leg Press</div>
+            <div class="ex-sets">12 reps, 3 sets</div>
+          </div>
+          <div class="btn-glass-symbol" style="color:var(--color-stone); font-size:12px; letter-spacing:2px;">···</div>
+        </div>
+      </div>
+      <div class="cta-zone" style="padding-bottom:28px;">
+        <button class="btn-dark" onclick="go('s-exercise')">Start Workout</button>
+      </div>
+    </div>
 
-function go(id) {
-  if (id === current) return;
-  const from = document.getElementById(current);
-  const to   = document.getElementById(id);
+    <!-- ══════════════════════════════════════════════════════
+         S08 — ACTIVE EXERCISE LOGGER
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-exercise" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-session-overview')">←</div>
+        <span style="font:600 14px/1 'Outfit',sans-serif; color:var(--color-slate);">Session 1 / 3</span>
+        <div style="width:36px;"></div>
+      </div>
+      <div class="exercise-scroll">
+        <!-- Video placeholder -->
+        <div class="video-placeholder">
+          <div class="btn-glass-symbol play-btn">
+            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+              <path d="M2 1.5L16.5 10L2 18.5V1.5Z" fill="#68788C"/>
+            </svg>
+          </div>
+          <span class="video-label">Bulgarian Split</span>
+        </div>
+        <!-- Exercise info -->
+        <div class="ex-info-block">
+          <div class="ex-current-label">Current Exercise</div>
+          <div class="ex-timer-display">03:30</div>
+          <div class="ex-name-display">Hip Thrust</div>
+        </div>
+        <!-- Set logger -->
+        <div class="set-logger-row">
+          <div class="set-box">
+            <span class="set-box-value">3</span>
+            <span class="set-box-label">Set</span>
+          </div>
+          <span class="set-sep">×</span>
+          <div class="set-box">
+            <span class="set-box-value">8</span>
+            <span class="set-box-label">Reps</span>
+          </div>
+          <span class="set-sep">×</span>
+          <div class="set-box">
+            <span class="set-box-value">60</span>
+            <span class="set-box-label">KG</span>
+          </div>
+        </div>
+      </div>
+      <div class="ex-cta-row">
+        <button class="btn-dark btn-finish" onclick="go('s-rest')">▶ Finish the set</button>
+        <button class="btn-stop" onclick="go('s-session-overview')">■ Stop</button>
+      </div>
+    </div>
 
-  from.classList.add('exit');
-  from.classList.remove('active');
-  setTimeout(() => from.classList.remove('exit'), 300);
+    <!-- ══════════════════════════════════════════════════════
+         S09 — REST TIMER
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-rest" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="rest-center">
+        <div class="rest-label">Take a rest...</div>
+        <div class="rest-ring-wrap">
+          <svg width="180" height="180" style="transform:rotate(-90deg)">
+            <circle cx="90" cy="90" r="80" fill="none" stroke="#EEF2FC" stroke-width="10"/>
+            <circle cx="90" cy="90" r="80" fill="none" stroke="#1762F9" stroke-width="10"
+              stroke-linecap="round" id="rest-ring" class="ring-progress"
+              stroke-dasharray="502" stroke-dashoffset="0"/>
+          </svg>
+          <div class="rest-center-inner">
+            <div class="rest-countdown" id="rest-countdown">00:30</div>
+            <div class="rest-remaining">remaining</div>
+          </div>
+        </div>
+        <div class="rest-did-good">You did good</div>
+        <p class="rest-body">Remember to keep breathing during your workout</p>
+        <div class="text-link-blue" onclick="skipRest()">Skip the rest →</div>
+      </div>
+    </div>
 
-  to.style.transform = 'translateX(32px)';
-  to.style.opacity = '0';
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    to.style.transform = '';
-    to.style.opacity = '';
-    to.classList.add('active');
-  }));
+    <!-- ══════════════════════════════════════════════════════
+         S11 — POST-SESSION SUMMARY
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-complete" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="complete-scroll">
+        <div class="complete-done">Done!</div>
+        <div class="complete-crushed">You crushed it 💪</div>
+        <div class="section-label" style="margin-bottom:8px;">Your Overview</div>
+        <div class="stat-grid">
+          <div class="stat-cell glass-regular">
+            <div class="stat-cell-label">Total Workout</div>
+            <div class="stat-cell-value">5 workout</div>
+            <div class="stat-cell-sub">5 min warm-up</div>
+          </div>
+          <div class="stat-cell glass-regular">
+            <div class="stat-cell-label">Most Time With</div>
+            <div class="stat-cell-value">Hip Thrust</div>
+            <div class="stat-cell-sub teal">Your fav ✓</div>
+          </div>
+          <div class="stat-cell glass-regular">
+            <div class="stat-cell-label">Duration</div>
+            <div class="stat-cell-value lg">1 hr 20</div>
+            <div class="stat-cell-sub">mins</div>
+          </div>
+          <div class="stat-cell glass-regular">
+            <div class="stat-cell-label">Total Calories</div>
+            <div class="stat-cell-value lg">80 cals</div>
+            <div class="stat-cell-sub teal">↑ from last</div>
+          </div>
+        </div>
+        <div class="feedback-row">
+          <input class="feedback-input" type="text" placeholder="Tell us how you feel...">
+          <button class="feedback-send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-success" onclick="goHome()">See you next time →</button>
+      </div>
+    </div>
 
-  // scroll to top on any screen transition
-  to.scrollTop = 0;
-  current = id;
-}
+    <!-- ══════════════════════════════════════════════════════
+         RE-ENTRY
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-reentry" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="re-center">
+        <h2 class="re-heading" id="re-greeting">Welcome back</h2>
+        <p class="re-body">It's been 6 days. Life happens. Showing up again is the hardest part. You did it.</p>
+      </div>
+      <div class="cta-zone">
+        <button class="btn-dark" onclick="goHome()">Let's pick up where we left off</button>
+      </div>
+    </div>
 
-// ============================================================
-// ONBOARDING
-// ============================================================
-function skipToDefault() {
-  if (!S.goal)  S.goal  = 'improve_fitness';
-  if (!S.days)  S.days  = '2-3';
-  if (!S.level) S.level = 'beginner';
-  buildPlan();
-}
+    <!-- ══════════════════════════════════════════════════════
+         S20 — HOME
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-home" class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="home-scroll">
+        <h2 class="home-greeting" id="home-greeting">Good to have you back</h2>
+        <div class="home-section-label">This week</div>
+        <div class="home-progress-note">0 out of 3 workout completed</div>
+        <div class="workout-cards">
+          <div class="workout-card">
+            <div class="workout-card-header">
+              <div class="workout-card-body">
+                <div><span class="workout-chip">NEXT WORKOUT</span></div>
+                <div class="workout-meta">Upper body · 45M</div>
+                <div class="workout-name">Pull Day</div>
+                <div class="workout-stats">5 Exercises · 3 Muscles</div>
+              </div>
+              <div class="session-more" style="margin-top:0; flex-shrink:0;">···</div>
+            </div>
+          </div>
+          <div class="workout-card">
+            <div class="workout-card-header">
+              <div class="workout-card-body">
+                <div class="workout-meta" style="margin-top:4px;">Lower body · 40M</div>
+                <div class="workout-name">Push Day</div>
+                <div class="workout-stats">5 Exercises · 3 Muscles</div>
+              </div>
+              <div class="session-more" style="margin-top:0; flex-shrink:0;">···</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-zone" style="padding-bottom:8px;">
+        <button class="btn-primary" onclick="go('s-session-overview')">See Workout →</button>
+      </div>
+      <div class="bottom-nav">
+        <div class="bottom-nav-item active">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1762F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="bottom-nav-label" style="color:#1762F9;">Home</span>
+        </div>
+        <div class="bottom-nav-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#98AAB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="bottom-nav-label">Today</span>
+        </div>
+        <div class="bottom-nav-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#98AAB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span class="bottom-nav-label">Progress</span>
+        </div>
+        <div class="bottom-nav-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#98AAB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="bottom-nav-label">Profile</span>
+        </div>
+      </div>
+    </div>
 
-function pick(el, key, val, btnId) {
-  el.closest('.options').querySelectorAll('.option')
-    .forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  S[key] = val;
-  const btn = document.getElementById(btnId);
-  if (btn) btn.disabled = false;
-}
+  </div><!-- /phone-shell -->
 
-// ============================================================
-// PLAN GENERATION
-// ============================================================
-function buildPlan() {
-  go('s-generating');
-  const keys = (PLANS[S.goal] || PLANS.lose_weight)[S.level] || PLANS.lose_weight.beginner;
-  S.plan = keys.map(k => ({ key: k, ...EXERCISES[k] }));
-  S.doneSet = new Set();
-  S.exIdx = 0;
-  S.workoutMode = false;
+  <script>
+    /* ─── STATE ────────────────────────────────────────────── */
+    var userName = '';
+    var selectedDays = [0, 2, 4]; // M, W, F default
+    var restTimer = null;
+    var restSeconds = 30;
 
-  setTimeout(() => {
-    renderPlan();
-    go('s-plan');
-  }, 2400);
-}
+    /* ─── NAVIGATION ───────────────────────────────────────── */
+    function go(screenId) {
+      document.querySelectorAll('.screen').forEach(function(s) {
+        s.classList.remove('active');
+      });
+      var target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
+    }
 
-function renderPlan() {
-  const meta = PLAN_META[S.goal] || PLAN_META.lose_weight;
-  document.getElementById('plan-title').textContent = meta.title;
-  document.getElementById('plan-meta').textContent  = meta.meta;
-  document.getElementById('stat-ex').textContent    = S.plan.length;
-  document.getElementById('stat-min').textContent   = '~' + (S.plan.length * 8);
+    /* ─── NAME INPUT ────────────────────────────────────────── */
+    function onNameInput() {
+      var input = document.getElementById('name-input');
+      var btn = document.getElementById('name-next-btn');
+      btn.disabled = input.value.trim().length === 0;
+    }
 
-  const list = document.getElementById('ex-list');
-  list.innerHTML = '';
-  S.plan.forEach((ex, i) => {
-    const card = document.createElement('div');
-    card.className = 'ex-card';
-    card.id = 'card-' + i;
-    card.style.animationDelay = (i * 80) + 'ms';
-    card.onclick = () => showExercise(i, false);
-    card.innerHTML =
-      '<div class="ex-num" id="num-' + i + '">' + (i + 1) + '</div>' +
-      '<div class="ex-info">' +
-        '<div class="ex-name">' + ex.name + '</div>' +
-        '<div class="ex-meta">' + ex.muscle + ' &middot; ' + ex.sets + ' &middot; ' + ex.reps + '</div>' +
-      '</div>' +
-      '<div class="chevron"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    list.appendChild(card);
-  });
-}
+    function goFromName() {
+      var input = document.getElementById('name-input');
+      userName = input.value.trim() || 'there';
+      document.getElementById('wp-greeting').textContent = 'Hi ' + userName + ',';
+      document.getElementById('re-greeting').textContent = 'Welcome back, ' + userName;
+      document.getElementById('home-greeting').textContent = 'Good to have you back, ' + userName;
+      go('s-welcome-personal');
+    }
 
-// ============================================================
-// EXERCISE DETAIL
-// ============================================================
-function showExercise(idx, workoutMode) {
-  if (idx >= S.plan.length) { go('s-completion'); return; }
-  S.exIdx       = idx;
-  S.workoutMode = workoutMode;
+    /* ─── SELECTION CARDS ───────────────────────────────────── */
+    var checkSVG = '<svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-  const ex = S.plan[idx];
-  document.getElementById('ex-muscle').innerHTML = ex.muscle;
-  document.getElementById('ex-name').textContent  = ex.name;
-  document.getElementById('ex-sets').textContent  = ex.sets;
-  document.getElementById('ex-reps').textContent  = ex.reps;
-  document.getElementById('ex-rest').innerHTML    = ex.rest;
-  document.getElementById('ex-tip').innerHTML     = ex.tip;
+    function selectCard(group, idx) {
+      var count = group === 'q1' ? 4 : 4;
+      for (var i = 0; i < count; i++) {
+        var card = document.getElementById(group + '-card-' + i);
+        var chk  = document.getElementById(group + '-chk-' + i);
+        if (card) card.classList.remove('selected');
+        if (chk)  { chk.classList.remove('selected'); chk.innerHTML = ''; }
+      }
+      var selCard = document.getElementById(group + '-card-' + idx);
+      var selChk  = document.getElementById(group + '-chk-' + idx);
+      if (selCard) selCard.classList.add('selected');
+      if (selChk)  { selChk.classList.add('selected'); selChk.innerHTML = checkSVG; }
 
-  const stepsEl = document.getElementById('ex-steps');
-  stepsEl.innerHTML = ex.steps.map((s, i) =>
-    '<div class="step">' +
-      '<div class="step-num">' + (i + 1) + '</div>' +
-      '<div class="step-text">' + s + '</div>' +
-    '</div>'
-  ).join('');
+      var contBtn = document.getElementById(group + '-continue');
+      if (contBtn) contBtn.disabled = false;
+    }
 
-  const prog = document.getElementById('ex-progress');
-  const cta  = document.getElementById('ex-cta');
+    /* ─── DAY PICKER ────────────────────────────────────────── */
+    function toggleDay(idx, el) {
+      var pos = selectedDays.indexOf(idx);
+      if (pos > -1) {
+        selectedDays.splice(pos, 1);
+        el.classList.remove('active');
+      } else {
+        selectedDays.push(idx);
+        el.classList.add('active');
+      }
+      var n = selectedDays.length;
+      document.getElementById('days-label').textContent =
+        'Days Active: ' + n + ' day' + (n !== 1 ? 's' : '') + ' per week';
+    }
 
-  if (workoutMode) {
-    const isLast = idx === S.plan.length - 1;
-    prog.textContent      = 'Exercise ' + (idx + 1) + ' of ' + S.plan.length;
-    cta.innerHTML         = isLast ? 'Complete workout &#127942;' : 'Mark as done &#10003;';
-  } else {
-    prog.textContent = '';
-    cta.innerHTML    = 'Got it &rarr;';
-  }
+    /* ─── HEALTH SYNC → GENERATING ─────────────────────────── */
+    function goGenerating() {
+      var weight = document.getElementById('hs-weight').value.trim();
+      var age    = document.getElementById('hs-age').value.trim();
+      var gender = document.getElementById('hs-gender').value;
 
-  go('s-exercise');
-}
+      if (weight) document.getElementById('plan-weight').textContent = weight;
+      if (age)    document.getElementById('plan-age').textContent = age;
+      if (gender) {
+        var gMap = { male: 'M', female: 'F', other: '—' };
+        document.getElementById('plan-gender').textContent = gMap[gender] || '—';
+      }
 
-function startWorkout() { showExercise(0, true); }
+      go('s-generating');
 
-function doneTapped() {
-  if (!S.workoutMode) { go('s-plan'); return; }
+      setTimeout(function() {
+        var fill = document.getElementById('gen-progress-fill');
+        fill.classList.add('animating');
+      }, 80);
 
-  S.doneSet.add(S.exIdx);
-  const card = document.getElementById('card-' + S.exIdx);
-  const num  = document.getElementById('num-'  + S.exIdx);
-  if (card) card.classList.add('done');
-  if (num)  num.innerHTML = '&#10003;';
+      setTimeout(function() {
+        go('s-plan');
+        var fill = document.getElementById('gen-progress-fill');
+        fill.classList.remove('animating');
+        fill.style.width = '0%';
+      }, 1700);
+    }
 
-  const next = S.exIdx + 1;
-  if (next >= S.plan.length) {
-    go('s-completion');
-  } else {
-    showExercise(next, true);
-  }
-}
+    /* ─── REST TIMER ────────────────────────────────────────── */
+    function startRestTimer() {
+      restSeconds = 30;
+      updateRestDisplay();
 
-// ============================================================
-// COMPLETION
-// ============================================================
-function pickFeel(el) {
-  document.querySelectorAll('.feel-opt').forEach(o => o.classList.remove('picked'));
-  el.classList.add('picked');
-}
+      var ring = document.getElementById('rest-ring');
+      if (ring) {
+        ring.classList.remove('animating');
+        void ring.offsetWidth; // force reflow
+        ring.classList.add('animating');
+      }
 
-function restart() {
-  S.goal = S.days = S.level = null;
-  S.plan = []; S.doneSet = new Set(); S.exIdx = 0; S.workoutMode = false;
+      clearInterval(restTimer);
+      restTimer = setInterval(function() {
+        restSeconds--;
+        updateRestDisplay();
+        if (restSeconds <= 0) {
+          clearInterval(restTimer);
+          go('s-exercise');
+        }
+      }, 1000);
+    }
 
-  // reset question UI
-  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-  document.querySelectorAll('.feel-opt').forEach(o => o.classList.remove('picked'));
-  ['btn-q1','btn-q2','btn-q3'].forEach(id => {
-    const b = document.getElementById(id);
-    if (b) b.disabled = true;
-  });
+    function updateRestDisplay() {
+      var s  = Math.max(0, restSeconds);
+      var mm = String(Math.floor(s / 60)).padStart(2, '0');
+      var ss = String(s % 60).padStart(2, '0');
+      var el = document.getElementById('rest-countdown');
+      if (el) el.textContent = mm + ':' + ss;
+    }
 
-  go('s-splash');
-}
-</script>
+    function skipRest() {
+      clearInterval(restTimer);
+      go('s-exercise');
+    }
+
+    /* ─── HOME ──────────────────────────────────────────────── */
+    function goHome() {
+      go('s-home');
+    }
+
+    /* ─── REST TIMER AUTO-START (MutationObserver) ──────────── */
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.target.id === 's-rest') {
+          if (m.target.classList.contains('active')) {
+            startRestTimer();
+          } else {
+            clearInterval(restTimer);
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll('.screen').forEach(function(s) {
+      observer.observe(s, { attributes: true, attributeFilter: ['class'] });
+    });
+  </script>
 </body>
 </html>
