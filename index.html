@@ -276,10 +276,20 @@
       display: flex; flex-direction: column; gap: 20px;
     }
     .splash-sub {
-      font-size: 14px; font-weight: 400;
-      color: var(--color-slate); line-height: 1.75;
+      font-size: 17px; font-weight: 500;
+      color: var(--color-slate); line-height: 1.5;
+      letter-spacing: -0.2px;
     }
-    .splash-sub strong { font-weight: 700; }
+    .splash-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      align-self: flex-start;
+      background: var(--color-primary-dim);
+      border: 1px solid var(--color-primary-light);
+      color: var(--color-primary);
+      font-size: 11px; font-weight: 600;
+      padding: 5px 12px; border-radius: 100px;
+      letter-spacing: 0.3px;
+    }
 
     .splash-cta {
       display: flex; flex-direction: column; gap: 10px;
@@ -746,10 +756,11 @@
     </div>
 
     <div class="splash-bottom">
-      <p class="splash-sub"><strong>Spottr</strong> is your workout companion, helping you step by step — stress free from the gym — with a personalised workout, just for you.</p>
+      <p class="splash-sub">Your gym. Your plan. From day one.</p>
       <div class="splash-cta">
-        <button class="btn btn-dark" onclick="go('s-q1')">Start my journey</button>
-        <button class="btn btn-light">Log in</button>
+        <div class="splash-badge">&#10024; AI Powered</div>
+        <button class="btn btn-dark" onclick="go('s-q1')">Get started</button>
+        <button class="btn btn-light" style="font-size:13px;">I already have an account</button>
       </div>
     </div>
   </div>
@@ -767,27 +778,27 @@
       <div class="q-label">Question 1 of 3</div>
       <h2 class="q-title">What are you training for?</h2>
       <div class="options">
-        <div class="option" onclick="pick(this,'goal','lose_weight','btn-q1')">
-          <div class="opt-icon">&#128293;</div>
-          <div class="opt-text">
-            <div class="opt-title">Lose weight</div>
-            <div class="opt-sub">Feel lighter and more energetic</div>
-          </div>
-          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <div class="option" onclick="pick(this,'goal','build_muscle','btn-q1')">
+        <div class="option" onclick="pick(this,'goal','feel_stronger','btn-q1')">
           <div class="opt-icon">&#128170;</div>
           <div class="opt-text">
-            <div class="opt-title">Build muscle</div>
-            <div class="opt-sub">Get stronger, feel more confident</div>
+            <div class="opt-title">Feel stronger</div>
+            <div class="opt-sub">Build real strength, feel the difference</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
-        <div class="option" onclick="pick(this,'goal','improve_fitness','btn-q1')">
-          <div class="opt-icon">&#10084;&#65039;</div>
+        <div class="option" onclick="pick(this,'goal','build_routine','btn-q1')">
+          <div class="opt-icon">&#128197;</div>
           <div class="opt-text">
-            <div class="opt-title">Improve fitness</div>
-            <div class="opt-sub">More energy, better endurance</div>
+            <div class="opt-title">Build a routine</div>
+            <div class="opt-sub">Create a habit that actually sticks</div>
+          </div>
+          <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="option" onclick="pick(this,'goal','mental_health','btn-q1')">
+          <div class="opt-icon">&#129504;</div>
+          <div class="opt-text">
+            <div class="opt-title">Mental health</div>
+            <div class="opt-sub">Move your body, clear your mind</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
@@ -812,27 +823,27 @@
       <div class="q-label">Question 2 of 3</div>
       <h2 class="q-title">How many days a week works for you?</h2>
       <div class="options">
-        <div class="option" onclick="pick(this,'days','2-3','btn-q2')">
+        <div class="option" onclick="pick(this,'days','2','btn-q2')">
           <div class="opt-icon">&#128197;</div>
           <div class="opt-text">
-            <div class="opt-title">2&ndash;3 days</div>
-            <div class="opt-sub">Casual &mdash; fits around a busy life</div>
+            <div class="opt-title">2 days</div>
+            <div class="opt-sub">Fits around a busy life</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
-        <div class="option" onclick="pick(this,'days','3-4','btn-q2')">
+        <div class="option" onclick="pick(this,'days','3','btn-q2')">
           <div class="opt-icon">&#128467;&#65039;</div>
           <div class="opt-text">
-            <div class="opt-title">3&ndash;4 days</div>
-            <div class="opt-sub">Committed &mdash; building a real habit</div>
+            <div class="opt-title">3 days</div>
+            <div class="opt-sub">Building a solid habit</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
-        <div class="option" onclick="pick(this,'days','5+','btn-q2')">
+        <div class="option" onclick="pick(this,'days','4-5','btn-q2')">
           <div class="opt-icon">&#128293;</div>
           <div class="opt-text">
-            <div class="opt-title">5+ days</div>
-            <div class="opt-sub">Dedicated &mdash; all in</div>
+            <div class="opt-title">4&ndash;5 days</div>
+            <div class="opt-sub">All in, full commitment</div>
           </div>
           <div class="opt-check"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8L11 1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
@@ -884,7 +895,7 @@
       </div>
     </div>
     <div class="q-footer">
-      <button id="btn-q3" class="btn btn-primary" onclick="buildPlan()" disabled>Build my plan &rarr;</button>
+      <button id="btn-q3" class="btn btn-primary" onclick="buildPlan()" disabled>Create my plan &rarr;</button>
       <span class="skip-link" onclick="skipToDefault()">Skip for now</span>
     </div>
   </div>
