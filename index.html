@@ -6,7 +6,7 @@
   <title>Spottr — Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Gabarito:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Gabarito:wght@500&display=swap" rel="stylesheet">
   <style>
     /* ─── RESET ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,7 +35,7 @@
       --ph: 24px;
       --radius: 16px;
       --font-logo:    'Gabarito', sans-serif;
-      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-display: 'Plus Jakarta Sans', sans-serif;
       --font-ui:      'Outfit', sans-serif;
       --font-mono:    'DM Mono', monospace;
     }
@@ -72,6 +72,23 @@
       overflow: hidden;
     }
     .screen.active { display: flex; }
+
+    @keyframes screen-out {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-14px); }
+    }
+    @keyframes screen-in {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .screen.screen-exit {
+      display: flex;
+      animation: screen-out 180ms ease-in forwards;
+      pointer-events: none;
+    }
+    .screen.screen-enter {
+      animation: screen-in 260ms cubic-bezier(0.32, 0, 0.67, 1.06) forwards;
+    }
 
     /* ─── STATUS BAR ─────────────────────────────────────────── */
     .status-bar {
@@ -162,10 +179,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 80ms ease;
+      transition: transform 80ms ease, background 140ms ease, box-shadow 140ms ease;
       letter-spacing: 0.2px;
     }
-    .btn-dark:active { transform: scale(0.97); }
+    .btn-dark:hover {
+      background: linear-gradient(180deg, #4A4A4E 0%, #2A2A2A 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 32px rgba(0,0,0,0.38);
+    }
+    .btn-dark:active {
+      background: linear-gradient(180deg, #2A2A2C 0%, #141414 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 12px rgba(0,0,0,0.40);
+      transform: scale(0.97);
+    }
 
     .btn-primary {
       background: #1762F9;
@@ -180,10 +205,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 80ms ease;
+      transition: transform 80ms ease, background 140ms ease, box-shadow 140ms ease;
       letter-spacing: 0.2px;
     }
-    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary:hover {
+      background: #2B73FF;
+      box-shadow: 0 6px 28px rgba(23,98,249,0.45);
+    }
+    .btn-primary:active {
+      background: #0E52D6;
+      box-shadow: 0 2px 12px rgba(23,98,249,0.30);
+      transform: scale(0.97);
+    }
     .btn-primary:disabled { opacity: 0.38; pointer-events: none; }
 
     .btn-liquid-glass {
@@ -201,9 +234,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 80ms ease;
+      transition: transform 80ms ease, background 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
     }
-    .btn-liquid-glass:active { transform: scale(0.97); }
+    .btn-liquid-glass:hover {
+      background: rgba(255,255,255,0.50);
+      border-color: rgba(255,255,255,0.30);
+    }
+    .btn-liquid-glass:active {
+      background: rgba(255,255,255,0.35);
+      border-color: rgba(255,255,255,0.20);
+      transform: scale(0.97);
+    }
 
     .btn-success {
       background: linear-gradient(135deg, #60A8A0 0%, #88C8C0 100%);
@@ -218,9 +259,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 80ms ease;
+      transition: transform 80ms ease, background 140ms ease, box-shadow 140ms ease;
     }
-    .btn-success:active { transform: scale(0.97); }
+    .btn-success:hover {
+      background: linear-gradient(135deg, #72BAB2 0%, #9AD4CC 100%);
+      box-shadow: 0 6px 28px rgba(96,168,160,0.50);
+    }
+    .btn-success:active {
+      background: linear-gradient(135deg, #508E86 0%, #70ACA4 100%);
+      box-shadow: 0 2px 10px rgba(96,168,160,0.30);
+      transform: scale(0.97);
+    }
 
     .btn-glass-symbol {
       width: 36px; height: 36px;
@@ -590,10 +639,27 @@
 
     /* ─── SPLASH ─────────────────────────────────────────────── */
     #s-splash {
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.85) 100%),
-        linear-gradient(160deg, #1a1a2e 0%, #2d3561 40%, #1a1a2e 100%);
+      background: #0e1220;
+      overflow: hidden;
     }
+    #s-splash .splash-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    #s-splash::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.82) 100%);
+      z-index: 1;
+    }
+    #s-splash .status-bar,
+    #s-splash .splash-logo-area,
+    #s-splash .cta-zone { position: relative; z-index: 2; }
     .splash-logo-area {
       flex: 1;
       display: flex;
@@ -629,11 +695,11 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       padding: 40px var(--ph) 0;
     }
     .name-heading {
-      font: 700 30px/1.2 'Bricolage Grotesque', sans-serif;
+      font: 700 30px/1.2 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-bottom: 28px;
     }
@@ -647,7 +713,7 @@
       flex-shrink: 0;
     }
     .wp-greeting {
-      font: 700 38px/1.15 'Bricolage Grotesque', sans-serif;
+      font: 700 38px/1.15 'Plus Jakarta Sans', sans-serif;
       color: #FFFFFF;
       margin-bottom: 10px;
     }
@@ -664,7 +730,7 @@
     }
 
     /* ─── Q SCREENS (shared) ─────────────────────────────────── */
-    .q-screen { background: var(--bg); }
+    .q-screen { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
     .q-content {
       flex: 1;
       overflow-y: auto;
@@ -678,7 +744,7 @@
       margin-bottom: 8px;
     }
     .q-heading {
-      font: 700 28px/1.25 'Bricolage Grotesque', sans-serif;
+      font: 700 28px/1.25 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-bottom: 6px;
     }
@@ -703,7 +769,7 @@
       flex-shrink: 0;
     }
     .mi-heading {
-      font: 700 28px/1.25 'Bricolage Grotesque', sans-serif;
+      font: 700 28px/1.25 'Plus Jakarta Sans', sans-serif;
       color: #FFFFFF;
       margin-bottom: 12px;
     }
@@ -714,13 +780,13 @@
     }
 
     /* ─── MEDICAL INPUT ──────────────────────────────────────── */
-    #s-medical-input { background: var(--bg); }
+    #s-medical-input { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
     .medical-content {
       flex: 1;
       padding: 16px var(--ph) 0;
     }
     .medical-heading {
-      font: 700 24px/1.3 'Bricolage Grotesque', sans-serif;
+      font: 700 24px/1.3 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-bottom: 20px;
     }
@@ -734,7 +800,7 @@
     }
 
     /* ─── HEALTH SYNC ────────────────────────────────────────── */
-    #s-health-sync { background: var(--bg); }
+    #s-health-sync { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
     .hs-content {
       flex: 1;
       overflow-y: auto;
@@ -751,7 +817,7 @@
     }
     .apple-icon { font-size: 32px; line-height: 1; margin-bottom: 10px; }
     .apple-heading {
-      font: 700 20px/1.3 'Bricolage Grotesque', sans-serif;
+      font: 700 20px/1.3 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-bottom: 6px;
     }
@@ -773,7 +839,8 @@
     }
 
     /* ─── GENERATING ─────────────────────────────────────────── */
-    #s-generating { background: #FFFFFF; }
+    #s-home { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
+    #s-generating { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
     .gen-center {
       flex: 1;
       display: flex;
@@ -784,7 +851,7 @@
       text-align: center;
     }
     .gen-heading {
-      font: 700 28px/1.2 'Bricolage Grotesque', sans-serif;
+      font: 700 28px/1.2 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-top: 28px;
       margin-bottom: 10px;
@@ -797,15 +864,98 @@
     }
 
     /* ─── PLAN ───────────────────────────────────────────────── */
-    #s-plan { background: var(--bg); }
+    --gradient-steel-mist: linear-gradient(135deg, #8BB2D0 0%, #CFCECD 100%);
+
+    #s-plan { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
     .plan-content {
       flex: 1;
       overflow-y: auto;
       padding: 16px var(--ph) 0;
     }
     .plan-content::-webkit-scrollbar { display: none; }
-    .plan-heading {
-      font: 700 24px/1.3 'Bricolage Grotesque', sans-serif;
+    .plan-hero {
+      background: var(--gradient-steel-mist);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px var(--ph) 0;
+      flex-shrink: 0;
+    }
+    .plan-hero-title {
+      font: 700 22px/1.2 'Plus Jakarta Sans', sans-serif;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .plan-hero-sub {
+      font: 400 13px/1.4 'Outfit', sans-serif;
+      color: rgba(255,255,255,0.78);
+    }
+    .plan-about-card {
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1.5px solid rgba(255,255,255,0.70);
+      box-shadow: 0 4px 16px rgba(23,98,249,0.10);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 12px var(--ph) 0;
+      display: flex;
+      gap: 0;
+    }
+    .plan-about-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .plan-about-col + .plan-about-col {
+      border-left: 1px solid var(--color-divide);
+    }
+    .plan-about-label {
+      font: 600 11px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .plan-about-value {
+      font: 500 18px/1.2 'DM Mono', monospace;
+      color: var(--color-slate);
+    }
+    .plan-session-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px var(--ph) 0;
+    }
+    .plan-session-cell {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 2px 8px rgba(23,98,249,0.08);
+      border-radius: 14px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .plan-session-chip {
+      font: 700 10px/1 'Outfit', sans-serif;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: var(--color-primary-dim);
+      border-radius: 999px;
+      padding: 3px 8px;
+      display: inline-block;
+    }
+    .plan-session-exercises {
+      font: 400 12px/1.5 'Outfit', sans-serif;
+      color: var(--color-slate);
+    }
+    
+        .plan-heading {
+      font: 700 24px/1.3 'Plus Jakarta Sans', sans-serif;
       color: var(--color-slate);
       margin-bottom: 16px;
     }
@@ -954,326 +1104,649 @@
     }
 
     /* ─── EXERCISE LOGGER ────────────────────────────────────── */
+    /* ─── EXERCISE LOGGER (S08 — verbatim, scoped) ─── */
     #s-exercise {
-      background: linear-gradient(160deg, #DCEAFF 0%, #E8DFFF 50%, #F0F4FF 100%);
+      --ink:       #0F1217;
+      --ink-2:     #4B5563;
+      --ink-3:     #9CA3AF;
+      --ink-4:     #D1D5DB;
+      --surface:   #F5F6F8;
+      --surface-2: #ECEEF2;
+      --border:    #E4E6EA;
+      --accent:    #1e3a5f;
+      --accent-bg: #EBF1F8;
+      --white:     #FFFFFF;
+      --danger:    #DC2626;
+      --danger-bg: #FEF2F2;
     }
-    .exercise-scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0 var(--ph) 12px;
+    /* ─── PHONE ─── */
+    /* ─── STATUS ─── */
+    #s-exercise .status {
+      position: absolute; top: 0; left: 0; right: 0; height: 54px;
+      padding: 15px 26px 0;
+      display: flex; align-items: center; justify-content: space-between; z-index: 30;
     }
-    .exercise-scroll::-webkit-scrollbar { display: none; }
-    .video-placeholder {
-      width: 100%;
-      height: 190px;
-      border-radius: 16px;
-      background: rgba(232,238,248,0.80);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(255,255,255,0.65);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow-sm);
+    #s-exercise .s-time { font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,0.88); }
+    #s-exercise .s-icons { display: flex; gap: 5px; align-items: center; }
+    #s-exercise .s-icons svg { width: 16px; height: 16px; }
+    /* ─── BACK ─── */
+    #s-exercise .back-btn {
+      position: absolute; top: 62px; left: 20px; z-index: 30;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
-    .play-btn {
-      width: 48px; height: 48px;
-      border-radius: 50%;
+    /* ─── VIDEO ─── */
+    #s-exercise .video-area {
+      position: absolute; inset: 0; background: #07090d; overflow: hidden;
     }
-    .video-label {
-      font: 400 11px/1 'DM Mono', monospace;
-      color: var(--color-pebble);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+    #s-exercise .video-area::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background:
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.011) 0px, rgba(255,255,255,0.011) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.011) 0px, rgba(255,255,255,0.011) 1px, transparent 1px, transparent 64px);
     }
-    .ex-info-block { margin-bottom: 20px; }
-    .ex-current-label {
-      font: 400 11px/1 'DM Mono', monospace;
-      color: var(--color-pebble);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
+    #s-exercise .video-area::after {
+      content: ''; position: absolute; z-index: 2;
+      width: 260px; height: 260px; top: 8%; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(30,58,95,0.26) 0%, transparent 70%);
+      animation: amb 5s ease-in-out infinite;
     }
-    .ex-timer-display {
-      font: 500 40px/1 'DM Mono', monospace;
-      color: var(--color-slate);
-      margin-bottom: 4px;
+    @keyframes amb {
+      0%,100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+      50%      { opacity: 0.85; transform: translateX(-50%) scale(1.1); }
     }
-    .ex-name-display {
-      font: 600 18px/1.2 'Outfit', sans-serif;
-      color: var(--color-slate);
+    #s-exercise .video-center {
+      position: absolute; inset: 0; z-index: 4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
     }
-    .set-logger-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .set-box {
-      flex: 1;
-      max-width: 90px;
-      border-radius: 10px;
-      padding: 12px 0;
-      text-align: center;
-      background: rgba(255,255,255,0.90);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(255,255,255,0.70);
-      box-shadow: var(--shadow-sm);
-    }
-    .set-box-value {
-      font: 700 24px/1 'Outfit', sans-serif;
-      color: var(--color-slate);
-      display: block;
-    }
-    .set-box-label {
-      font: 400 10px/1 'DM Mono', monospace;
-      color: var(--color-pebble);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: block;
-      margin-top: 4px;
-    }
-    .set-sep {
-      font: 400 16px/1 'Outfit', sans-serif;
-      color: var(--color-pebble);
-      flex-shrink: 0;
-    }
-    .ex-cta-row {
-      padding: 8px var(--ph) 34px;
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .btn-stop {
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      color: var(--color-stone);
-      font: 500 14px/1 'Outfit', sans-serif;
-      height: 52px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(255,255,255,0.65);
-      width: 80px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.90);
-      cursor: pointer;
+    #s-exercise .vid-ring {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
       display: flex; align-items: center; justify-content: center;
-      transition: transform 80ms ease;
     }
-    .btn-stop:active { transform: scale(0.97); }
-    .btn-finish { flex: 1; }
-
-    /* ─── REST TIMER ─────────────────────────────────────────── */
-    #s-rest { background: #FFFFFF; }
-    .rest-center {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0 var(--ph);
-      text-align: center;
+    #s-exercise .vid-hint { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.28); }
+    #s-exercise .video-bottom {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;
+      padding: 40px 20px 18px;
+      background: linear-gradient(0deg, rgba(0,0,0,0.56) 0%, transparent 100%);
+      display: flex; justify-content: space-between; align-items: flex-end;
     }
-    .rest-label {
-      font: 400 12px/1 'DM Mono', monospace;
-      color: var(--color-pebble);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
+    #s-exercise .ex-name { font-size: 22px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+    #s-exercise .set-badge {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px); color: rgba(255,255,255,0.9);
+      font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: 20px; white-space: nowrap;
     }
-    .rest-ring-wrap { position: relative; margin-bottom: 28px; }
-    .rest-center-inner {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    #s-exercise .next-up {
+      position: absolute; top: 64px; right: 16px; z-index: 20; width: 106px;
+      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px; overflow: hidden; backdrop-filter: blur(14px);
     }
-    .rest-countdown {
-      font: 500 36px/1 'DM Mono', monospace;
-      color: var(--color-slate);
+    #s-exercise .nu-lbl { font-size: 8.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.38); padding: 7px 9px 3px; }
+    #s-exercise .nu-thumb { width: 100%; height: 48px; background: linear-gradient(135deg, #102030 0%, #081420 100%); display: flex; align-items: center; justify-content: center; }
+    #s-exercise .nu-name { font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.72); padding: 5px 9px 7px; line-height: 1.35; }
+    /* ─── SHEET ─── */
+    #s-exercise .sheet {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      background: var(--white); border-radius: 28px 28px 0 0;
+      z-index: 40; display: flex; flex-direction: column;
+      box-shadow: 0 -4px 28px rgba(0,0,0,0.1);
+      will-change: top;
     }
-    .rest-remaining {
-      font: 400 13px/1 'Outfit', sans-serif;
-      color: var(--color-stone);
-      margin-top: 4px;
+    #s-exercise .drag-zone {
+      padding: 14px 0 6px; display: flex; justify-content: center; align-items: center;
+      position: relative;
+      cursor: grab; flex-shrink: 0; touch-action: none;
     }
-    .rest-did-good {
-      font: 700 22px/1.2 'Bricolage Grotesque', sans-serif;
-      color: var(--color-slate);
-      margin-bottom: 8px;
-    }
-    .rest-body {
-      font: 400 14px/1.5 'Outfit', sans-serif;
-      color: var(--color-stone);
-      max-width: 240px;
-      margin-bottom: 20px;
-    }
-
-    /* ─── POST-SESSION SUMMARY ───────────────────────────────── */
-    #s-complete { background: #FFFFFF; }
-    .complete-scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px var(--ph) 0;
-    }
-    .complete-scroll::-webkit-scrollbar { display: none; }
-    .complete-done {
-      font: 800 36px/1 'Bricolage Grotesque', sans-serif;
-      color: var(--color-slate);
-    }
-    .complete-crushed {
-      font: 700 28px/1.2 'Bricolage Grotesque', sans-serif;
-      color: var(--color-slate);
-      margin-bottom: 18px;
-    }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 10px 0 18px;
-    }
-    .stat-cell {
-      border-radius: 12px;
-      padding: 14px;
-    }
-    .stat-cell-label {
-      font: 400 10px/1 'DM Mono', monospace;
-      color: var(--color-pebble);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .stat-cell-value {
-      font: 700 18px/1.2 'Outfit', sans-serif;
-      color: var(--color-slate);
-    }
-    .stat-cell-value.lg { font-size: 22px; }
-    .stat-cell-sub {
-      font: 400 12px/1 'Outfit', sans-serif;
-      color: var(--color-stone);
-      margin-top: 3px;
-    }
-    .stat-cell-sub.teal { color: var(--color-teal); }
-    .feedback-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .feedback-input {
-      flex: 1;
-      height: 52px;
-      background: #F6F7F9;
-      border-radius: 999px;
-      border: none;
-      padding: 0 16px;
-      font: 400 15px/1 'Outfit', sans-serif;
-      color: var(--color-slate);
-      outline: none;
-    }
-    .feedback-input::placeholder { color: var(--color-pebble); }
-    .feedback-send {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: var(--color-primary);
+    #s-exercise .drag-zone:active { cursor: grabbing; }
+    #s-exercise .drag-pill { width: 34px; height: 3.5px; background: var(--surface-2); border-radius: 2px; }
+    /* Info icon — floats on video just above sheet top edge */
+    #s-exercise .btn-info {
+      position: absolute; right: 20px; z-index: 50;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      border: none;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.14);
+      transition: background 0.15s, transform 0.12s;
+      touch-action: manipulation;
     }
-
-    /* ─── RE-ENTRY ───────────────────────────────────────────── */
-    #s-reentry {
-      background: linear-gradient(180deg, #C8D8F0 0%, #D4C8EE 48%, #EAE4F4 72%, #F6F7F9 100%);
+    #s-exercise .btn-info:hover { background: #fff; }
+    #s-exercise .btn-info:active { transform: scale(0.91); }
+    #s-exercise .sheet-inner {
+      flex: 1; overflow: hidden; display: flex; flex-direction: column;
+      padding: 0 22px; min-height: 0;
     }
-    .re-center {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    /* ─── TIMER — thin, elegant ─── */
+    #s-exercise .timer-section {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 10px 0 18px; flex-shrink: 0;
+    }
+    #s-exercise .timer-lbl {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 6px;
+    }
+    #s-exercise .timer-display {
+      font-size: 72px; font-weight: 300;
+      color: var(--ink); letter-spacing: -2px; line-height: 1;
+    }
+    /* ─── PROGRESS BAR ─── */
+    #s-exercise .set-row { display: flex; gap: 6px; padding: 0 0 20px; flex-shrink: 0; }
+    #s-exercise .dot { flex: 1; height: 4px; border-radius: 2px; background: var(--surface-2); transition: background 0.3s, opacity 0.3s; }
+    #s-exercise .dot.done { background: var(--accent); }
+    #s-exercise .dot.active { background: var(--accent); opacity: 0.3; }
+    /* ─── LOG PANEL ─── */
+    #s-exercise .log-panel {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px; flex-shrink: 0; margin-bottom: 16px;
+    }
+    /* Sets auto */
+    #s-exercise .field-sets {
+      background: var(--surface); border-radius: 18px;
+      padding: 16px 8px 14px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative;
+    }
+    #s-exercise .field-lbl {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 6px;
+    }
+    #s-exercise .sets-val { font-size: 36px; font-weight: 300; color: var(--ink); letter-spacing: -1px; line-height: 1; }
+    #s-exercise .sets-denom { font-size: 10px; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
+    #s-exercise .sets-auto {
+      position: absolute; bottom: 8px; right: 10px;
+      font-size: 7.5px; font-weight: 500; color: var(--ink-4); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    /* Number boxes — swipe up/down to change */
+    #s-exercise .field-num {
+      background: var(--surface); border-radius: 18px;
+      padding: 16px 8px 14px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      border: 1.5px solid transparent;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+      cursor: ns-resize; position: relative; overflow: hidden;
+      touch-action: none;
+    }
+    #s-exercise .field-num:hover { background: var(--surface-2); }
+    #s-exercise .field-num.dragging {
+      background: var(--white); border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-bg);
+    }
+    /* sliding number inside box */
+    #s-exercise .num-viewport {
+      height: 44px; overflow: hidden; position: relative; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #s-exercise .num-value {
+      font-size: 36px; font-weight: 300; color: var(--ink);
+      letter-spacing: -1px; line-height: 1; text-align: center;
+      will-change: transform;
+      transition: transform 0.12s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.08s;
+    }
+    #s-exercise .field-num-unit { font-size: 10px; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
+    #s-exercise .field-num-plan { font-size: 8.5px; font-weight: 400; color: var(--ink-4); font-style: italic; margin-top: 4px; }
+    /* swipe hint arrows */
+    #s-exercise .swipe-hint {
+      position: absolute; left: 0; right: 0;
+      display: flex; justify-content: center; pointer-events: none;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    #s-exercise .swipe-hint.top { top: 4px; }
+    #s-exercise .swipe-hint.bottom { bottom: 4px; }
+    #s-exercise .field-num:hover .swipe-hint,
+    #s-exercise .field-num.dragging .swipe-hint { opacity: 1; }
+    #s-exercise .swipe-hint svg { width: 12px; height: 12px; }
+    /* ─── COLLAPSED STATE — pause stays, log+skip hide ─── */
+    #s-exercise .sheet .set-row { opacity: 1; transition: opacity 0.25s ease; }
+    #s-exercise .sheet.collapsed .set-row { opacity: 0; pointer-events: none; }
+    #s-exercise .sheet .helper { transition: opacity 0.2s ease; opacity: 1; overflow: hidden; margin-bottom: 12px; flex-shrink: 0; font-size: 10px; font-weight: 400; color: var(--ink-4); text-align: center; letter-spacing: 0.01em; }
+    #s-exercise .sheet.collapsed .helper { opacity: 0; margin-bottom: 0; }
+    /* Log + skip fade out, pause stays */
+    #s-exercise .sheet .btn-log { transition: opacity 0.22s ease, transform 0.26s ease, max-width 0.28s ease, margin 0.28s ease; opacity: 1; transform: translateY(0); max-width: 200px; }
+    #s-exercise .sheet.collapsed .btn-log { opacity: 0; transform: translateY(10px); pointer-events: none; max-width: 0; margin: 0; overflow: hidden; padding: 0; }
+    #s-exercise .sheet .btn-skip { transition: opacity 0.22s ease, transform 0.26s ease, max-width 0.28s ease, margin 0.28s ease; opacity: 1; transform: translateY(0); max-width: 200px; }
+    #s-exercise .sheet.collapsed .btn-skip { opacity: 0; transform: translateY(10px); pointer-events: none; max-width: 0; overflow: hidden; padding: 0; }
+    /* Slide hint — appears when collapsed */
+    #s-exercise .slide-hint {
+      text-align: center; font-size: 11px; font-weight: 400; color: var(--ink-3);
+      opacity: 0; transition: opacity 0.25s ease;
+      flex-shrink: 0; margin-bottom: 4px;
+      pointer-events: none;
+    }
+    #s-exercise .sheet.collapsed .slide-hint { opacity: 1; }
+    #s-exercise .sheet .spec-row { transition: opacity 0.18s ease; opacity: 1; flex-shrink: 0; margin-bottom: 8px; }
+    #s-exercise .sheet.collapsed .spec-row { opacity: 0; pointer-events: none; }
+    /* ─── CUECARD ─── */
+    #s-exercise .cuecard-overlay {
+      position: absolute; inset: 0; border-radius: 52px; overflow: hidden;
+      z-index: 100; pointer-events: none;
+      background: var(--white);
+      transform: translateY(100%);
+      transition: transform 0.36s cubic-bezier(0.32,1.08,0.58,1);
+      display: flex; flex-direction: column;
+    }
+    #s-exercise .cuecard-overlay.open { transform: translateY(0); pointer-events: all; }
+    #s-exercise .cuecard-header {
+      padding: 60px 22px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; border-bottom: 1px solid var(--border);
+    }
+    #s-exercise .cuecard-back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 500; color: var(--accent);
+      cursor: pointer; background: none; border: none;
+      font-family: 'Inter', sans-serif;
+    }
+    #s-exercise .cuecard-title { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px; }
+    #s-exercise .cuecard-body { flex: 1; overflow-y: auto; padding: 22px 22px 32px; }
+    /* ─── CUECARD ENTRANCE ANIMATION ─── */
+    @keyframes ccFadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ccFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    /* all animatable children start hidden */
+    #s-exercise .cuecard-overlay .cuecard-header,
+    #s-exercise .cuecard-overlay .cue-section {
+      opacity: 0;
+    }
+    /* when open — trigger staggered animations */
+    #s-exercise .cuecard-overlay.open .cuecard-header {
+      animation: ccFadeIn 0.22s ease forwards;
+      animation-delay: 0.18s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(1) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.26s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(2) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.34s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(3) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.42s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(4) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.50s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(5) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.58s;
+    }
+    #s-exercise .cuecard-overlay.open .cuecard-body .cue-section:nth-child(6) {
+      animation: ccFadeUp 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-delay: 0.66s;
+    }
+    /* reset when closed so animations replay on next open */
+    #s-exercise .cuecard-overlay:not(.open) .cuecard-header,
+    #s-exercise .cuecard-overlay:not(.open) .cue-section {
+      opacity: 0;
+      animation: none;
+    }
+    #s-exercise .cue-section { margin-bottom: 24px; }
+    #s-exercise .cue-section-lbl {
+      font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 10px;
+    }
+    #s-exercise .cue-card {
+      background: var(--surface); border-radius: 16px;
+      padding: 14px 16px; margin-bottom: 8px;
+    }
+    #s-exercise .cue-card-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    #s-exercise .cue-card-body { font-size: 13px; font-weight: 400; color: var(--ink-2); line-height: 1.6; }
+    #s-exercise .cue-highlight {
+      background: var(--accent-bg); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 12px 16px; margin-bottom: 8px;
+    }
+    #s-exercise .cue-highlight p { font-size: 13px; font-weight: 500; color: var(--accent); line-height: 1.6; }
+    /* ─── VISUAL PLACEHOLDERS ─── */
+    #s-exercise .visual-row {
+      display: flex; gap: 10px; margin-bottom: 24px;
+    }
+    #s-exercise .visual-card {
+      flex: 1; border-radius: 14px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    #s-exercise .visual-thumb {
+      height: 88px; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    #s-exercise .visual-thumb-focus { background: linear-gradient(135deg, #0d2340 0%, #1e3a5f 100%); }
+    #s-exercise .visual-thumb-avoid { background: linear-gradient(135deg, #2a0d0d 0%, #5f1e1e 100%); }
+    #s-exercise .visual-thumb-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #s-exercise .visual-thumb-focus .visual-thumb-icon { background: rgba(30,90,200,0.25); }
+    #s-exercise .visual-thumb-avoid .visual-thumb-icon { background: rgba(220,50,50,0.25); }
+    #s-exercise .visual-pill {
+      position: absolute; bottom: 8px; left: 8px;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px;
+    }
+    #s-exercise .visual-pill-focus { background: rgba(30,90,200,0.3); color: #7eb8ff; }
+    #s-exercise .visual-pill-avoid { background: rgba(220,50,50,0.3); color: #ff9a9a; }
+    #s-exercise .visual-card-lbl {
+      background: var(--surface); padding: 8px 10px;
+      font-size: 11px; font-weight: 500; color: var(--ink-2);
+    }
+    /* ─── ALTERNATIVES ─── */
+    #s-exercise .alt-swipe-wrap {
+      position: relative; border-radius: 16px;
+      margin-bottom: 8px; overflow: hidden;
+    }
+    /* reveal layer behind the card */
+    #s-exercise .alt-swipe-reveal {
+      position: absolute; inset: 0; border-radius: 16px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: flex-end;
+      padding-right: 20px;
+    }
+    #s-exercise .alt-reveal-btn {
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; pointer-events: none;
+    }
+    #s-exercise .alt-reveal-lbl { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; }
+    /* the draggable card itself */
+    #s-exercise .alt-card {
+      position: relative; z-index: 1;
+      background: var(--surface); border-radius: 16px;
+      padding: 12px 14px;
+      display: flex; align-items: center; gap: 12px;
+      transform: translateX(0);
+      transition: transform 0.25s cubic-bezier(0.25,1,0.5,1);
+      cursor: grab; user-select: none;
+      will-change: transform;
+    }
+    #s-exercise .alt-card.swiped { transform: translateX(-88px); }
+    #s-exercise .alt-card.snap-back { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    #s-exercise .alt-thumb {
+      width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+      background: #e8edf4; display: flex; align-items: center; justify-content: center;
+    }
+    #s-exercise .alt-info { flex: 1; min-width: 0; }
+    #s-exercise .alt-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    #s-exercise .alt-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    #s-exercise .alt-tag {
+      font-size: 10px; font-weight: 500; padding: 2px 8px;
+      border-radius: 20px; white-space: nowrap;
+    }
+    #s-exercise .alt-tag-level-beg { background: #e8f5e9; color: #2e7d32; }
+    #s-exercise .alt-tag-level-reg { background: #e3f2fd; color: #1565c0; }
+    #s-exercise .alt-tag-muscle { background: var(--surface-2); color: var(--ink-3); }
+    #s-exercise .alt-tag-match { background: rgba(30,90,200,0.1); color: var(--accent); }
+    /* ─── SWAP CONFIRMATION SHEET ─── */
+    #s-exercise .swap-overlay {
+      position: absolute; inset: 0; border-radius: 52px; overflow: hidden;
+      background: rgba(4,6,10,0.55); backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end; z-index: 300;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+    #s-exercise .swap-overlay.open { opacity: 1; pointer-events: all; }
+    #s-exercise .swap-sheet {
+      width: 100%; background: var(--white);
+      border-radius: 28px 28px 0 0;
+      padding: 20px 22px 34px;
+      transform: translateY(110%);
+      transition: transform 0.32s cubic-bezier(0.32,1.1,0.6,1);
+    }
+    #s-exercise .swap-overlay.open .swap-sheet { transform: translateY(0); }
+    #s-exercise .swap-pill { width: 34px; height: 3.5px; background: var(--surface-2); border-radius: 2px; margin: 0 auto 20px; }
+    #s-exercise .swap-icon {
+      width: 52px; height: 52px; border-radius: 14px; background: var(--surface);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
+    }
+    #s-exercise .swap-head { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.3px; text-align: center; margin-bottom: 6px; }
+    #s-exercise .swap-sub { font-size: 13px; font-weight: 400; color: var(--ink-3); text-align: center; line-height: 1.55; margin-bottom: 24px; }
+    #s-exercise .swap-sub strong { color: var(--ink-2); font-weight: 600; }
+    #s-exercise .swap-btns { display: flex; gap: 10px; }
+    #s-exercise .swap-cancel { flex: 1; height: 54px; background: var(--surface); color: var(--ink-2); border: none; border-radius: 27px; font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+    #s-exercise .swap-confirm { flex: 1; height: 54px; background: var(--accent); color: #fff; border: none; border-radius: 27px; font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+    #s-exercise .cta-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-bottom: 6px; }
+    #s-exercise .btn-log {
+      flex: 1; height: 56px; background: var(--accent); color: #fff;
+      border: none; border-radius: 28px;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; letter-spacing: -0.2px;
+      transition: background 0.15s, transform 0.1s;
+    }
+    #s-exercise .btn-log:active { transform: scale(0.98); background: #2D4A6E; }
+    #s-exercise .btn-pause {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--surface); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.15s, transform 0.1s;
+    }
+    #s-exercise .btn-pause:active { transform: scale(0.93); background: var(--surface-2); }
+    #s-exercise .btn-skip {
+      flex: 1; height: 56px; background: transparent; color: var(--ink-2);
+      border: 1.5px solid var(--border); border-radius: 28px;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s;
+    }
+    #s-exercise .btn-skip:active { background: var(--surface); transform: scale(0.98); }
+    /* spec row — mirrors CTA row layout */
+    #s-exercise .spec-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0; margin-bottom: 8px; flex-shrink: 0;
+    }
+    #s-exercise .spec {
+      text-align: center; font-size: 8.5px; font-weight: 400;
+      color: var(--ink-4); letter-spacing: 0.04em;
+    }
+    /* match btn-log width */
+    #s-exercise .spec:nth-child(1) { flex: 1; }
+    /* match btn-pause width */
+    #s-exercise .spec:nth-child(2) { width: 56px; flex-shrink: 0; }
+    /* match btn-skip width */
+    #s-exercise .spec:nth-child(3) { flex: 1; }
+    /* home */
+    #s-exercise .home-ind { height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    #s-exercise .home-bar { width: 128px; height: 4px; background: var(--ink); border-radius: 2px; opacity: 0.14; }
+    /* ─── PAUSE MODAL ─── */
+    #s-exercise .modal-overlay {
+      position: absolute; inset: 0; border-radius: 52px; overflow: hidden;
+      background: rgba(4,6,10,0.6); backdrop-filter: blur(8px);
+      display: flex; align-items: flex-end; z-index: 200;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    #s-exercise .modal-overlay.open { opacity: 1; pointer-events: all; }
+    #s-exercise .modal-sheet {
+      width: 100%; background: var(--white); border-radius: 28px 28px 0 0;
+      padding: 20px 22px 34px;
+      transform: translateY(110%); transition: transform 0.3s cubic-bezier(0.32,1.1,0.6,1);
+    }
+    #s-exercise .modal-overlay.open .modal-sheet { transform: translateY(0); }
+    #s-exercise .modal-pill { width: 34px; height: 3.5px; background: var(--surface-2); border-radius: 2px; margin: 0 auto 20px; }
+    #s-exercise .modal-head { font-size: 20px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px; text-align: center; margin-bottom: 8px; }
+    #s-exercise .modal-body { font-size: 14px; font-weight: 400; color: var(--ink-2); line-height: 1.65; text-align: center; margin-bottom: 24px; }
+    #s-exercise .modal-btns { display: flex; gap: 10px; }
+    #s-exercise .m-end { flex: 1; height: 54px; background: var(--danger-bg); color: var(--danger); border: none; border-radius: 27px; font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+    #s-exercise .m-go { flex: 1; height: 54px; background: var(--accent); color: #fff; border: none; border-radius: 27px; font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+    /* ─── TOAST ─── */
+    #s-exercise .toast {
+      position: absolute; bottom: 106px; left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--ink); color: #fff;
+      font-size: 13px; font-weight: 500;
+      padding: 9px 18px; border-radius: 20px;
+      white-space: nowrap; z-index: 300;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.16s, transform 0.16s;
+    }
+    #s-exercise .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    @keyframes bump { 0%,100%{transform:scale(1)} 40%{transform:scale(1.12)} 70%{transform:scale(0.96)} }
+    #s-exercise .bump { animation: bump 0.25s ease; }
+    /* ─── S09 REST TIMER — FULL SCREEN ─── */
+    #s-exercise .rest-overlay {
+      position: absolute; inset: 0; border-radius: 52px; overflow: hidden;
+      z-index: 90; background: #07090d;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.32,1.08,0.58,1);
+      pointer-events: none; display: flex; flex-direction: column;
+    }
+    #s-exercise .rest-overlay.open { transform: translateY(0); pointer-events: all; }
+    /* bg layers */
+    #s-exercise .rest-bg { position: absolute; inset: 0; }
+    #s-exercise .rest-grid {
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.011) 0px, rgba(255,255,255,0.011) 1px, transparent 1px, transparent 64px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.011) 0px, rgba(255,255,255,0.011) 1px, transparent 1px, transparent 64px);
+    }
+    #s-exercise .rest-glow {
+      position: absolute; width: 320px; height: 320px;
+      top: 20%; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(30,58,95,0.3) 0%, transparent 68%);
+      animation: amb 5s ease-in-out infinite;
+    }
+    #s-exercise .rest-vignette {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.1) 65%, rgba(0,0,0,0.7) 100%);
+    }
+    /* status bar */
+    #s-exercise .rest-status {
+      position: relative; z-index: 10;
+      padding: 15px 26px 0; height: 54px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    #s-exercise .rest-s-time { font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,0.88); }
+    #s-exercise .rest-state-pill {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      padding: 3px 12px; border-radius: 20px;
+    }
+    /* next up */
+    /* next up — expandable */
+    #s-exercise .rest-next-up {
+      position: absolute; bottom: 148px; left: 16px; right: 16px; z-index: 20;
+      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px; overflow: hidden; backdrop-filter: blur(14px);
+    }
+    #s-exercise .rnu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 9px 3px;
+    }
+    #s-exercise .rnu-lbl { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.38); padding: 10px 14px 6px; }
+    #s-exercise .rnu-row { display: flex; align-items: center; gap: 14px; padding: 0 14px 14px; }
+    #s-exercise .rnu-thumb { width: 64px; height: 64px; flex-shrink: 0; background: linear-gradient(135deg, #102030 0%, #081420 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    #s-exercise .rnu-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    #s-exercise .rnu-name { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.88); letter-spacing: -0.3px; }
+    #s-exercise .rnu-meta { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.42); }
+    /* repeat btn inside blob */
+    #s-exercise .rest-repeat-btn {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 50%; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.15s, transform 0.12s;
+      margin-bottom: -4px;
+    }
+    #s-exercise .rest-repeat-btn:active { background: rgba(255,255,255,0.25); transform: scale(0.9) rotate(45deg); }
+    /* cue card btn */
+    #s-exercise .rest-cue-btn { display: none; }
+    /* content */
+    #s-exercise .rest-content {
+      position: relative; z-index: 10; flex: 1;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* headline */
+    #s-exercise .rest-headline { margin-top: 72px; text-align: center; }
+    #s-exercise .rest-pre-lbl {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 8px;
+    }
+    #s-exercise .rest-title {
+      font-size: 38px; font-weight: 700; color: #fff;
+      letter-spacing: -0.8px; line-height: 1;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    /* central timer with rings */
+    #s-exercise .rest-center {
+      position: relative; margin-top: 42px;
+      display: flex; align-items: center; justify-content: center;
+      width: 240px; height: 240px;
+    }
+    #s-exercise .rest-ring {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      animation: rest-ripple 3.5s ease-out infinite;
+    }
+    #s-exercise .rest-ring-1 { width: 240px; height: 240px; animation-delay: 0s; }
+    #s-exercise .rest-ring-2 { width: 190px; height: 190px; animation-delay: 0.7s; }
+    #s-exercise .rest-ring-3 { width: 148px; height: 148px; animation-delay: 1.4s; }
+    @keyframes rest-ripple {
+      0%   { transform: scale(0.92); opacity: 0.9; }
+      60%  { opacity: 0.4; }
+      100% { transform: scale(1.06); opacity: 0; }
+    }
+    /* timer blob */
+    #s-exercise .rest-timer-blob {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px);
+      border-radius: 50%; width: 148px; height: 148px;
       justify-content: center;
-      padding: 0 var(--ph);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
     }
-    .re-heading {
-      font: 700 34px/1.2 'Bricolage Grotesque', sans-serif;
-      color: var(--color-slate);
-      margin-bottom: 16px;
+    #s-exercise .rest-timer-display {
+      font-size: 40px; font-weight: 300; color: #fff;
+      letter-spacing: -1.5px; line-height: 1;
+      font-variant-numeric: tabular-nums;
     }
-    .re-body {
-      font: 400 16px/1.6 'Outfit', sans-serif;
-      color: var(--color-stone);
-      max-width: 300px;
+    #s-exercise .rest-duration-row { display: flex; align-items: center; gap: 4px; }
+    #s-exercise .rest-rec-note { font-size: 9px; font-weight: 400; color: rgba(255,255,255,0.5); }
+    /* breathing */
+    #s-exercise .rest-breath-row {
+      display: flex; align-items: center; gap: 8px; margin-top: 32px;
     }
-
-    /* ─── HOME ───────────────────────────────────────────────── */
-    #s-home { background: var(--bg); }
-    .home-scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px var(--ph) 0;
+    #s-exercise .rest-breath-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      animation: breathe-dot 3s ease-in-out infinite;
     }
-    .home-scroll::-webkit-scrollbar { display: none; }
-    .home-greeting {
-      font: 700 24px/1.2 'Bricolage Grotesque', sans-serif;
-      color: var(--color-slate);
-      margin-bottom: 20px;
+    @keyframes breathe-dot {
+      0%,100% { transform: scale(1); opacity: 0.4; }
+      50%      { transform: scale(1.6); opacity: 1; }
     }
-    .home-section-label {
-      font: 600 12px/1 'Outfit', sans-serif;
-      color: var(--color-stone);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
+    #s-exercise .rest-breath-text { font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.55); }
+    /* bottom */
+    #s-exercise .rest-bottom {
+      position: relative; z-index: 10;
+      padding: 0 24px 44px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0;
     }
-    .home-progress-note {
-      font: 400 14px/1 'Outfit', sans-serif;
-      color: var(--color-pebble);
-      margin-bottom: 14px;
+    #s-exercise .rest-skip-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      background: transparent; border: none;
+      cursor: pointer; transition: opacity 0.15s, transform 0.12s;
+      padding: 4px 32px;
     }
-    .workout-cards { display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; }
-    .workout-card {
-      background: #FFFFFF;
-      border-radius: 16px;
-      box-shadow: var(--shadow-md);
-      padding: 16px;
+    #s-exercise .rest-skip-btn:active { opacity: 0.55; transform: scale(0.93); }
+    #s-exercise .rest-skip-icon {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
     }
-    .workout-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+    #s-exercise .rest-skip-btn:hover .rest-skip-icon { background: rgba(255,255,255,0.18); }
+    #s-exercise .rest-skip-label {
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+      color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
     }
-    .workout-card-body { flex: 1; }
-    .workout-chip {
-      display: inline-flex;
-      align-items: center;
-      background: #D8E6FF;
-      color: var(--color-primary);
-      font: 600 11px/1 'Outfit', sans-serif;
-      border-radius: 999px;
-      padding: 4px 10px;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-    .workout-meta {
-      font: 400 12px/1 'Outfit', sans-serif;
-      color: var(--color-stone);
-      margin-bottom: 4px;
-    }
-    .workout-name {
-      font: 700 20px/1.2 'Outfit', sans-serif;
-      color: var(--color-slate);
-      margin-bottom: 6px;
-    }
-    .workout-stats {
-      font: 400 13px/1 'Outfit', sans-serif;
-      color: var(--color-stone);
-    }
+    #s-exercise .rest-home-bar { width: 128px; height: 4px; background: rgba(255,255,255,0.25); border-radius: 2px; margin-top: 6px; }
   </style>
 </head>
 <body>
@@ -1283,6 +1756,9 @@
          S01 — SPLASH
     ══════════════════════════════════════════════════════ -->
     <div id="s-splash" class="screen active">
+      <video class="splash-video" autoplay muted loop playsinline>
+        <source src="Spotrr-cover-opt-2.mp4" type="video/mp4">
+      </video>
       <div class="status-bar light">
         <span>9:41</span>
         <div class="status-bar-right">
@@ -1313,6 +1789,7 @@
       </div>
       <div class="cta-zone">
         <button class="btn-dark" onclick="go('s-name')">Start my journey →</button>
+        <button class="btn-liquid-glass" onclick="go('s-name')">Log in →</button>
       </div>
     </div>
 
@@ -1328,12 +1805,13 @@
         </div>
       </div>
       <div class="name-content">
+        <p class="q-meta-label" style="margin-bottom:8px;">First thing first</p>
         <h2 class="name-heading">What would you like us to call you?</h2>
         <input
           id="name-input"
           class="input-field"
           type="text"
-          placeholder="Your name..."
+          placeholder="e.g. Alex"
           oninput="onNameInput()"
           autocomplete="off"
         />
@@ -1392,37 +1870,84 @@
         <h2 class="q-heading">What are you training for?</h2>
         <div class="cards-stack">
           <div class="sel-card" id="q1-card-0" onclick="selectCard('q1',0)">
-            <div class="sel-card-text">
-              <div class="sel-card-title">To feel Stronger</div>
-              <div class="sel-card-sub">Build muscle, get more capable in everyday life</div>
-            </div>
+            <div class="sel-card-text"><div class="sel-card-title">Build muscle</div></div>
             <div class="btn-glass-symbol" id="q1-chk-0"></div>
           </div>
           <div class="sel-card" id="q1-card-1" onclick="selectCard('q1',1)">
-            <div class="sel-card-text">
-              <div class="sel-card-title">Build consistent routine</div>
-              <div class="sel-card-sub">Create healthy habits that stick</div>
-            </div>
+            <div class="sel-card-text"><div class="sel-card-title">Lose fat</div></div>
             <div class="btn-glass-symbol" id="q1-chk-1"></div>
           </div>
           <div class="sel-card" id="q1-card-2" onclick="selectCard('q1',2)">
-            <div class="sel-card-text">
-              <div class="sel-card-title">A specific sport, activity, event</div>
-              <div class="sel-card-sub">Build sport-specific strength and endurance</div>
-            </div>
+            <div class="sel-card-text"><div class="sel-card-title">Get stronger</div></div>
             <div class="btn-glass-symbol" id="q1-chk-2"></div>
           </div>
           <div class="sel-card" id="q1-card-3" onclick="selectCard('q1',3)">
-            <div class="sel-card-text">
-              <div class="sel-card-title">My overall health and energy</div>
-              <div class="sel-card-sub">Feel better every day, inside and out</div>
-            </div>
+            <div class="sel-card-text"><div class="sel-card-title">Improve fitness</div></div>
             <div class="btn-glass-symbol" id="q1-chk-3"></div>
+          </div>
+          <div class="sel-card" id="q1-card-4" onclick="selectCard('q1',4)">
+            <div class="sel-card-text"><div class="sel-card-title">Train for sport</div></div>
+            <div class="btn-glass-symbol" id="q1-chk-4"></div>
+          </div>
+          <div class="sel-card" id="q1-card-5" onclick="selectCard('q1',5)">
+            <div class="sel-card-text"><div class="sel-card-title">Just stay active</div></div>
+            <div class="btn-glass-symbol" id="q1-chk-5"></div>
           </div>
         </div>
       </div>
       <div class="cta-zone">
-        <button id="q1-continue" class="btn-primary" disabled onclick="go('s-q2')">Continue</button>
+        <button id="q1-continue" class="btn-primary" disabled onclick="go('s-experience')">Continue</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         S04.1 — EXPERIENCE LEVEL
+    ══════════════════════════════════════════════════════ -->
+    <div id="s-experience" class="screen q-screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-bar-right" style="color:#545F71">
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="#545F71" opacity="0.4"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1" fill="#545F71" opacity="0.6"/><rect x="9" y="0" width="3" height="12" rx="1" fill="#545F71"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#545F71"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
+        </div>
+      </div>
+      <div class="nav-header">
+        <div class="nav-back" onclick="go('s-q1')">←</div>
+        <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg"></div>
+          <div class="progress-bar-seg"></div>
+        </div>
+        <span class="nav-skip" onclick="go('s-q2')">Skip</span>
+      </div>
+      <div class="q-content">
+        <p class="q-meta-label">Experience 1.5/3</p>
+        <h2 class="q-heading">How would you describe your experience level?</h2>
+        <div class="cards-stack">
+          <div class="sel-card" id="exp-card-0" onclick="selectCard('exp',0)">
+            <div class="sel-card-text"><div class="sel-card-title">Brand new — need full guidance</div></div>
+            <div class="btn-glass-symbol" id="exp-chk-0"></div>
+          </div>
+          <div class="sel-card" id="exp-card-1" onclick="selectCard('exp',1)">
+            <div class="sel-card-text"><div class="sel-card-title">Returning after a break</div></div>
+            <div class="btn-glass-symbol" id="exp-chk-1"></div>
+          </div>
+          <div class="sel-card" id="exp-card-2" onclick="selectCard('exp',2)">
+            <div class="sel-card-text"><div class="sel-card-title">Under 1 year — still learning</div></div>
+            <div class="btn-glass-symbol" id="exp-chk-2"></div>
+          </div>
+          <div class="sel-card" id="exp-card-3" onclick="selectCard('exp',3)">
+            <div class="sel-card-text"><div class="sel-card-title">1–2 years — ready to level up</div></div>
+            <div class="btn-glass-symbol" id="exp-chk-3"></div>
+          </div>
+          <div class="sel-card" id="exp-card-4" onclick="selectCard('exp',4)">
+            <div class="sel-card-text"><div class="sel-card-title">3+ years — comfortable with complex moves</div></div>
+            <div class="btn-glass-symbol" id="exp-chk-4"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-zone">
+        <button id="exp-continue" class="btn-primary" disabled onclick="go('s-q2')">Continue</button>
       </div>
     </div>
 
@@ -1655,56 +2180,48 @@
         </div>
       </div>
       <div class="plan-content">
-        <h2 class="plan-heading">Your 4 Weeks Foundation Plan is Ready</h2>
-        <p class="about-label">About you</p>
-        <div class="about-card">
-          <div class="about-col">
-            <span class="about-col-label">Weight</span>
-            <span class="about-col-value" id="plan-weight">60 kg</span>
+        <div class="plan-hero">
+          <div class="plan-hero-title">Your 4 Weeks' Foundation Plan is Ready.</div>
+          <div class="plan-hero-sub">Built around your goal, schedule, and starting point.</div>
+        </div>
+        <div class="plan-about-card">
+          <div class="plan-about-col">
+            <span class="plan-about-label">Weight</span>
+            <span class="plan-about-value" id="plan-weight">60 kg</span>
           </div>
-          <div class="about-col">
-            <span class="about-col-label">Age</span>
-            <span class="about-col-value" id="plan-age">28</span>
+          <div class="plan-about-col">
+            <span class="plan-about-label">Age</span>
+            <span class="plan-about-value" id="plan-age">28</span>
           </div>
-          <div class="about-col">
-            <span class="about-col-label">Gender</span>
-            <span class="about-col-value" id="plan-gender">F</span>
+          <div class="plan-about-col">
+            <span class="plan-about-label">Gender</span>
+            <span class="plan-about-value" id="plan-gender">F</span>
           </div>
         </div>
-        <p class="plan-desc">This 30-day plan will help you start from the basics and build confidence in the gym.</p>
-        <div class="session-rows">
-          <div class="session-row">
-            <div style="flex:1; min-width:0;">
-              <span class="session-chip">Session 1</span>
-              <div class="session-exercises">Hip Thrust · Bulgarian Split · Leg Press</div>
-            </div>
-            <div class="session-more">···</div>
+        <p class="plan-desc" style="padding:12px var(--ph) 0;">From here, we'll help you build confidence and become a better version of yourself — step by step, after every 30 days.</p>
+        <div class="plan-session-grid">
+          <div class="plan-session-cell">
+            <span class="plan-session-chip">Session 1</span>
+            <div class="plan-session-exercises">Hip Thrust · Bulgarian Split · Leg Press</div>
           </div>
-          <div class="session-row">
-            <div style="flex:1; min-width:0;">
-              <span class="session-chip">Session 2</span>
-              <div class="session-exercises">Chest Press · Lat Pulldown · Shoulder Press</div>
-            </div>
-            <div class="session-more">···</div>
+          <div class="plan-session-cell">
+            <span class="plan-session-chip">Session 2</span>
+            <div class="plan-session-exercises">Chest Press · Lat Pulldown · Shoulder Press</div>
           </div>
-          <div class="session-row">
-            <div style="flex:1; min-width:0;">
-              <span class="session-chip">Session 3</span>
-              <div class="session-exercises">Deadlift · Leg Curl · Calf Raise</div>
-            </div>
-            <div class="session-more">···</div>
+          <div class="plan-session-cell">
+            <span class="plan-session-chip">Session 3</span>
+            <div class="plan-session-exercises">Deadlift · Leg Curl · Calf Raise</div>
           </div>
-          <div class="session-row">
-            <div style="flex:1; min-width:0;">
-              <span class="session-chip">Session 4</span>
-              <div class="session-exercises">Rest &amp; Stretch Day</div>
-            </div>
-            <div class="session-more">···</div>
+          <div class="plan-session-cell">
+            <span class="plan-session-chip">Session 4</span>
+            <div class="plan-session-exercises">Rest &amp; Stretch Day</div>
           </div>
         </div>
       </div>
       <div class="cta-zone">
-        <button class="btn-primary" style="height:56px;" onclick="go('s-session-overview')">Continue →</button>
+        <p style="font:500 13px/1 'Outfit',sans-serif; color:var(--color-stone); text-align:center; margin-bottom:2px;">Day 1 · Full Body · ~45 min</p>
+        <button class="btn-dark" onclick="go('s-session-overview')">Start my first session →</button>
+        <button class="btn-liquid-glass" onclick="go('s-home')" style="margin-top:2px;">Save my plan for now</button>
       </div>
     </div>
 
@@ -1771,7 +2288,7 @@
         </div>
       </div>
       <div class="cta-zone" style="padding-bottom:28px;">
-        <button class="btn-dark" onclick="go('s-exercise')">Start Workout</button>
+        <button class="btn-dark" onclick="startSession()">Start Workout</button>
       </div>
     </div>
 
@@ -1779,55 +2296,485 @@
          S08 — ACTIVE EXERCISE LOGGER
     ══════════════════════════════════════════════════════ -->
     <div id="s-exercise" class="screen">
-      <div class="status-bar">
-        <span>9:41</span>
-        <div class="status-bar-right" style="color:#545F71">
-          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#545F71" opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#545F71"/><path d="M23 4v4a2 2 0 000-4z" fill="#545F71" opacity="0.4"/></svg>
-        </div>
-      </div>
-      <div class="nav-header">
-        <div class="nav-back" onclick="go('s-session-overview')">←</div>
-        <span style="font:600 14px/1 'Outfit',sans-serif; color:var(--color-slate);">Session 1 / 3</span>
-        <div style="width:36px;"></div>
-      </div>
-      <div class="exercise-scroll">
-        <!-- Video placeholder -->
-        <div class="video-placeholder">
-          <div class="btn-glass-symbol play-btn">
-            <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-              <path d="M2 1.5L16.5 10L2 18.5V1.5Z" fill="#68788C"/>
+
+      <!-- Status -->
+        <div class="status">
+          <span class="s-time">9:41</span>
+          <div class="s-icons">
+            <svg viewBox="0 0 20 16" fill="none">
+              <rect x="0"    y="10" width="3" height="6"  rx="1" fill="white" opacity="0.35"/>
+              <rect x="4.5"  y="7"  width="3" height="9"  rx="1" fill="white" opacity="0.55"/>
+              <rect x="9"    y="4"  width="3" height="12" rx="1" fill="white" opacity="0.75"/>
+              <rect x="13.5" y="1"  width="3" height="15" rx="1" fill="white"/>
+            </svg>
+            <svg viewBox="0 0 20 16" fill="none">
+              <path d="M2 5.5C5.2 2.2 14.8 2.2 18 5.5"       stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+              <path d="M4.5 8.5C6.8 6.2 13.2 6.2 15.5 8.5"   stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
+              <path d="M7.5 11.5C8.8 10.2 11.2 10.2 13 11.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="10" cy="15" r="1.3" fill="white"/>
+            </svg>
+            <svg viewBox="0 0 26 14" fill="none">
+              <rect x="0.5" y="0.5" width="21" height="13" rx="3.5" stroke="white" stroke-opacity="0.38"/>
+              <rect x="2" y="2" width="16" height="10" rx="2" fill="white"/>
+              <path d="M23 4.5V9.5C24.2 9 25 8 25 6.5C25 5 24.2 5 23 4.5Z" fill="white" opacity="0.4"/>
             </svg>
           </div>
-          <span class="video-label">Bulgarian Split</span>
         </div>
-        <!-- Exercise info -->
-        <div class="ex-info-block">
-          <div class="ex-current-label">Current Exercise</div>
-          <div class="ex-timer-display">03:30</div>
-          <div class="ex-name-display">Hip Thrust</div>
+      
+        <div class="back-btn" onclick="go('s-session-overview')">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M9.5 3L5 7.5L9.5 12" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        <!-- Set logger -->
-        <div class="set-logger-row">
-          <div class="set-box">
-            <span class="set-box-value">3</span>
-            <span class="set-box-label">Set</span>
+      
+        <!-- Video -->
+        <div class="video-area">
+          <div class="video-center">
+            <div class="vid-ring">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="4" width="12" height="12" rx="2.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.4"/>
+                <path d="M14 7.5L18 5.5v9l-4-2V7.5Z" stroke="rgba(255,255,255,0.4)" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="vid-hint">Exercise demo</span>
           </div>
-          <span class="set-sep">×</span>
-          <div class="set-box">
-            <span class="set-box-value">8</span>
-            <span class="set-box-label">Reps</span>
+      
+          <div class="next-up">
+            <div class="nu-lbl">Next up</div>
+            <div class="nu-thumb">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M4 2.5L11 7L4 11.5V2.5Z" fill="rgba(255,255,255,0.28)"/>
+              </svg>
+            </div>
+            <div class="nu-name">Romanian deadlift</div>
           </div>
-          <span class="set-sep">×</span>
-          <div class="set-box">
-            <span class="set-box-value">60</span>
-            <span class="set-box-label">KG</span>
+      
+          <div class="video-bottom" id="videoBottom">
           </div>
         </div>
-      </div>
-      <div class="ex-cta-row">
-        <button class="btn-dark btn-finish" onclick="go('s-rest')">▶ Finish the set</button>
-        <button class="btn-stop" onclick="go('s-session-overview')">■ Stop</button>
-      </div>
+      
+        <!-- Info / cue card button — floats above sheet -->
+        <button class="btn-info" id="btnInfo" onclick="showToast('Opening form cue card…')">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6.5" stroke="#4B5563" stroke-width="1.4"/>
+            <path d="M8 7.5V11" stroke="#4B5563" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="8" cy="5.5" r="0.85" fill="#4B5563"/>
+          </svg>
+        </button>
+      
+        <!-- Sheet -->
+        <div class="sheet" id="sheet">
+          <div class="drag-zone" id="dragZone">
+            <div class="drag-pill"></div>
+          </div>
+      
+          <div class="sheet-inner">
+      
+            <!-- Timer -->
+            <div class="timer-section">
+              <div class="timer-lbl">Hip thrust</div>
+              <div class="timer-display" id="timerDisplay">00:00</div>
+            </div>
+      
+            <!-- Progress bar -->
+            <div class="set-row">
+              <div class="dot active" id="dot-0"></div>
+              <div class="dot"        id="dot-1"></div>
+              <div class="dot"        id="dot-2"></div>
+            </div>
+      
+            <!-- Log panel -->
+            <div class="log-panel">
+      
+              <!-- Sets auto -->
+              <div class="field-sets">
+                <div class="field-lbl">Sets</div>
+                <div class="sets-val" id="setsVal">1</div>
+                <div class="sets-denom">of 3</div>
+                <div class="sets-auto">auto</div>
+              </div>
+      
+              <!-- Reps — swipe box -->
+              <div class="field-num" id="repsBox" data-field="reps">
+                <div class="field-lbl">Reps</div>
+                <!-- up arrow hint -->
+                <div class="swipe-hint top">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2 8L6 4L10 8" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="num-viewport">
+                  <div class="num-value" id="repsVal">12</div>
+                </div>
+                <!-- down arrow hint -->
+                <div class="swipe-hint bottom">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="field-num-unit">reps</div>
+                <div class="field-num-plan">plan: 12</div>
+              </div>
+      
+              <!-- Weight — swipe box -->
+              <div class="field-num" id="weightBox" data-field="weight">
+                <div class="field-lbl">Weight</div>
+                <div class="swipe-hint top">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2 8L6 4L10 8" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="num-viewport">
+                  <div class="num-value" id="weightVal">32</div>
+                </div>
+                <div class="swipe-hint bottom">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="field-num-unit">kg</div>
+                <div class="field-num-plan">plan: 32 kg</div>
+              </div>
+      
+            </div>
+      
+            <div class="helper">From your plan</div>
+      
+            <!-- Slide hint (visible only when collapsed) -->
+            <div class="slide-hint">↑ Slide up to log or skip</div>
+      
+            <!-- CTAs -->
+            <div class="cta-row">
+              <button class="btn-log"   onclick="logSet()">Log set</button>
+              <button class="btn-pause" onclick="openPause()">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                  <rect x="3"   y="2" width="3" height="11" rx="1.5" fill="#4B5563"/>
+                  <rect x="9"   y="2" width="3" height="11" rx="1.5" fill="#4B5563"/>
+                </svg>
+              </button>
+              <button class="btn-skip" onclick="skipSet()">Skip set</button>
+            </div>
+      
+            <div class="spec-row">
+              <span class="spec">log.set</span>
+              <span class="spec">pause</span>
+              <span class="spec">skip.set</span>
+            </div>
+            <div class="home-ind"><div class="home-bar"></div></div>
+          </div>
+        </div>
+      
+        <!-- Pause modal -->
+        <div class="modal-overlay" id="pauseModal" onclick="handleModalBg(event)">
+          <div class="modal-sheet">
+            <div class="modal-pill"></div>
+            <div class="modal-head">Need a breather?</div>
+            <div class="modal-body">Your progress is saved. Pick up right where you left off — or end the session if you're done for today.</div>
+            <div class="modal-btns">
+              <button class="m-end" onclick="endSession()">End session</button>
+              <button class="m-go"  onclick="closePause()">Keep going</button>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Cue card screen (S10) — slides up from bottom -->
+        <div class="cuecard-overlay" id="cuecardOverlay">
+          <div class="cuecard-header">
+            <button class="cuecard-back" onclick="closeCuecard()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M10 3L5 8L10 13" stroke="#1e3a5f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Back
+            </button>
+            <div class="cuecard-title">Form cue card</div>
+            <div style="width:48px"></div>
+          </div>
+              <div class="cuecard-body">
+      
+            <!-- Visual reference: focus + avoid -->
+            <div class="cue-section">
+              <div class="cue-section-lbl">Visual reference</div>
+              <div class="visual-row">
+      
+                <!-- Focus -->
+                <div class="visual-card">
+                  <div class="visual-thumb visual-thumb-focus">
+                    <div class="visual-thumb-icon">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="9" cy="9" r="6" stroke="#7eb8ff" stroke-width="1.5"/>
+                        <path d="M6 9l2 2 4-4" stroke="#7eb8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <span class="visual-pill visual-pill-focus">Do this</span>
+                  </div>
+                  <div class="visual-card-lbl">Full hip extension, neutral spine</div>
+                </div>
+      
+                <!-- Avoid -->
+                <div class="visual-card">
+                  <div class="visual-thumb visual-thumb-avoid">
+                    <div class="visual-thumb-icon">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="9" cy="9" r="6" stroke="#ff9a9a" stroke-width="1.5"/>
+                        <path d="M6.5 6.5l5 5M11.5 6.5l-5 5" stroke="#ff9a9a" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <span class="visual-pill visual-pill-avoid">Avoid</span>
+                  </div>
+                  <div class="visual-card-lbl">Lower back arch at the top</div>
+                </div>
+      
+              </div>
+            </div>
+      
+            <div class="cue-section">
+              <div class="cue-section-lbl">Exercise</div>
+              <div class="cue-card">
+                <div class="cue-card-title">Hip thrust</div>
+                <div class="cue-card-body">Glutes, hamstrings, core stabilisers.</div>
+              </div>
+            </div>
+      
+            <div class="cue-section">
+              <div class="cue-section-lbl">Setup</div>
+              <div class="cue-card">
+                <div class="cue-card-body">Sit with your upper back against a bench. Place the barbell across your hips with a pad. Feet flat, hip-width apart, knees above ankles.</div>
+              </div>
+            </div>
+      
+            <div class="cue-section">
+              <div class="cue-section-lbl">Key cues</div>
+              <div class="cue-highlight"><p>Drive through your heels — not your toes.</p></div>
+              <div class="cue-highlight"><p>Squeeze your glutes at the top. Hold for one count.</p></div>
+              <div class="cue-highlight"><p>Keep your chin tucked — don't hyperextend your neck.</p></div>
+            </div>
+      
+            <div class="cue-section">
+              <div class="cue-section-lbl">Common mistake</div>
+              <div class="cue-card">
+                <div class="cue-card-title">Arching the lower back</div>
+                <div class="cue-card-body">At the top, your body should form a straight line from knees to shoulders — not an arch. Ribs stay down.</div>
+              </div>
+            </div>
+      
+            <!-- Alternatives -->
+            <div class="cue-section">
+              <div class="cue-section-lbl">Alternative exercises</div>
+      
+              <!-- Glute bridge -->
+              <div class="alt-swipe-wrap">
+                <div class="alt-swipe-reveal">
+                  <div class="alt-reveal-btn">
+                    <span class="alt-reveal-lbl">Select</span>
+                  </div>
+                </div>
+                <div class="alt-card" data-name="Glute bridge" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event,this)" ontouchend="swipeEnd(event,this)" onmousedown="swipeStart(event,this)" onmousemove="swipeMove(event,this)" onmouseup="swipeEnd(event,this)">
+                  <div class="alt-thumb">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="14" width="18" height="3" rx="2" fill="#c8d6e8"/>
+                      <path d="M6 14 Q12 7 18 14" stroke="#8aafd4" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="alt-info">
+                    <div class="alt-name">Glute bridge</div>
+                    <div class="alt-tags">
+                      <span class="alt-tag alt-tag-level-beg">Beginner</span>
+                      <span class="alt-tag alt-tag-muscle">Glutes</span>
+                      <span class="alt-tag alt-tag-muscle">Hamstrings</span>
+                      <span class="alt-tag alt-tag-match">✓ Same focus</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Romanian deadlift -->
+              <div class="alt-swipe-wrap">
+                <div class="alt-swipe-reveal">
+                  <div class="alt-reveal-btn">
+                    <span class="alt-reveal-lbl">Select</span>
+                  </div>
+                </div>
+                <div class="alt-card" data-name="Romanian deadlift" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event,this)" ontouchend="swipeEnd(event,this)" onmousedown="swipeStart(event,this)" onmousemove="swipeMove(event,this)" onmouseup="swipeEnd(event,this)">
+                  <div class="alt-thumb">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <rect x="4" y="10" width="16" height="3" rx="1.5" fill="#c8d6e8"/>
+                      <circle cx="4" cy="11.5" r="3" fill="#8aafd4"/>
+                      <circle cx="20" cy="11.5" r="3" fill="#8aafd4"/>
+                      <line x1="12" y1="10" x2="12" y2="20" stroke="#8aafd4" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="alt-info">
+                    <div class="alt-name">Romanian deadlift</div>
+                    <div class="alt-tags">
+                      <span class="alt-tag alt-tag-level-reg">Gym regular</span>
+                      <span class="alt-tag alt-tag-muscle">Hamstrings</span>
+                      <span class="alt-tag alt-tag-muscle">Glutes</span>
+                      <span class="alt-tag alt-tag-match">✓ Same focus</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Cable kickback -->
+              <div class="alt-swipe-wrap">
+                <div class="alt-swipe-reveal">
+                  <div class="alt-reveal-btn">
+                    <span class="alt-reveal-lbl">Select</span>
+                  </div>
+                </div>
+                <div class="alt-card" data-name="Cable kickback" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event,this)" ontouchend="swipeEnd(event,this)" onmousedown="swipeStart(event,this)" onmousemove="swipeMove(event,this)" onmouseup="swipeEnd(event,this)">
+                  <div class="alt-thumb">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <circle cx="8" cy="12" r="4" fill="#c8d6e8"/>
+                      <path d="M12 12 Q17 8 20 14" stroke="#8aafd4" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="alt-info">
+                    <div class="alt-name">Cable kickback</div>
+                    <div class="alt-tags">
+                      <span class="alt-tag alt-tag-level-beg">Beginner</span>
+                      <span class="alt-tag alt-tag-muscle">Glutes</span>
+                      <span class="alt-tag alt-tag-muscle">Core</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Bulgarian split squat -->
+              <div class="alt-swipe-wrap">
+                <div class="alt-swipe-reveal">
+                  <div class="alt-reveal-btn">
+                    <span class="alt-reveal-lbl">Select</span>
+                  </div>
+                </div>
+                <div class="alt-card" data-name="Bulgarian split squat" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event,this)" ontouchend="swipeEnd(event,this)" onmousedown="swipeStart(event,this)" onmousemove="swipeMove(event,this)" onmouseup="swipeEnd(event,this)">
+                  <div class="alt-thumb">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <rect x="14" y="13" width="7" height="3" rx="1.5" fill="#c8d6e8"/>
+                      <path d="M5 20 L10 13 L14 16" stroke="#8aafd4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="alt-info">
+                    <div class="alt-name">Bulgarian split squat</div>
+                    <div class="alt-tags">
+                      <span class="alt-tag alt-tag-level-reg">Gym regular</span>
+                      <span class="alt-tag alt-tag-muscle">Quads</span>
+                      <span class="alt-tag alt-tag-muscle">Glutes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+      
+          </div>
+        </div>
+      
+        <!-- S09 Rest Timer — full screen, slides up after logging -->
+        <div class="rest-overlay" id="restOverlay">
+      
+          <!-- Dark video bg -->
+          <div class="rest-bg">
+            <div class="rest-grid"></div>
+            <div class="rest-glow"></div>
+            <div class="rest-vignette"></div>
+          </div>
+      
+          <!-- Status bar -->
+          <div class="rest-status">
+            <span class="rest-s-time">9:41</span>
+          </div>
+      
+          <!-- Next up card — full width horizontal -->
+          <div class="rest-next-up" id="nextUpCard">
+            <div class="rnu-lbl">Next up</div>
+            <div class="rnu-row">
+              <div class="rnu-thumb">
+                <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+                  <path d="M4 2.5L11 7L4 11.5V2.5Z" fill="rgba(255,255,255,0.35)"/>
+                </svg>
+              </div>
+              <div class="rnu-info">
+                <div class="rnu-name">Romanian deadlift</div>
+                <div class="rnu-meta">3 sets · 10 reps · 40 kg</div>
+              </div>
+            </div>
+          </div>
+            <!-- Expanded content -->
+      
+          <!-- Cue card icon -->
+      
+          <!-- Content layer -->
+          <div class="rest-content">
+      
+            <!-- Headline -->
+            <div class="rest-headline">
+              <div class="rest-pre-lbl">Hip thrust</div>
+              <div class="rest-title">Rest up.</div>
+            </div>
+      
+            <!-- Central timer with ripple rings -->
+            <div class="rest-center">
+              <div class="rest-ring rest-ring-1"></div>
+              <div class="rest-ring rest-ring-2"></div>
+              <div class="rest-ring rest-ring-3"></div>
+      
+              <div class="rest-timer-blob">
+                <!-- Repeat / add time icon at top of blob -->
+                <button class="rest-repeat-btn" onclick="addRestTime()">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M2 9C2 5.13 5.13 2 9 2c2.3 0 4.35 1.03 5.73 2.66" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M16 9c0 3.87-3.13 7-7 7-2.3 0-4.35-1.03-5.73-2.66" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M13.5 1.5L15.73 4.66M4.27 13.34L2.5 16.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div class="rest-timer-display" id="restTimerDisplay">01:30</div>
+                <div class="rest-duration-row">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <circle cx="6" cy="6" r="5" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                    <path d="M6 3V6L7.5 7.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                  <span class="rest-rec-note">60 – 90 sec</span>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Breathing nudge -->
+            <div class="rest-breath-row">
+              <div class="rest-breath-dot"></div>
+              <span class="rest-breath-text">Keep breathing — you're doing great.</span>
+            </div>
+      
+          </div>
+      
+          <!-- Bottom area -->
+          <div class="rest-bottom">
+            <button class="rest-skip-btn" onclick="skipRest()">
+              <div class="rest-skip-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M5 5L14 11L5 17V5Z" fill="rgba(255,255,255,0.8)"/>
+                  <rect x="15" y="5" width="2.5" height="12" rx="1.25" fill="rgba(255,255,255,0.8)"/>
+                </svg>
+              </div>
+              <span class="rest-skip-label">Skip rest</span>
+            </button>
+            <div class="rest-home-bar"></div>
+          </div>
+      
+        </div>
+      
+        <!-- Swap confirmation sheet — inside phone so z-index stacks correctly -->
+        <div class="swap-overlay" id="swapOverlay" onclick="handleSwapBg(event)">
+          <div class="swap-sheet">
+            <div class="swap-pill"></div>
+            <div class="swap-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 16l5-5 5 5M7 11l5-5 5 5" stroke="#1e3a5f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="swap-head">Switch exercise?</div>
+            <div class="swap-sub">Replace <strong>Hip thrust</strong> with<br><strong id="swapExName">—</strong> for this session.</div>
+            <div class="swap-btns">
+              <button class="swap-cancel" onclick="closeSwap()">Keep it</button>
+              <button class="swap-confirm" onclick="confirmSwap()">Switch</button>
+            </div>
+          </div>
+        </div>
+      
+        <div class="toast" id="toast"></div>
+
     </div>
 
     <!-- ══════════════════════════════════════════════════════
@@ -1995,15 +2942,24 @@
     var userName = '';
     var selectedDays = [0, 2, 4]; // M, W, F default
     var restTimer = null;
-    var restSeconds = 30;
 
     /* ─── NAVIGATION ───────────────────────────────────────── */
     function go(screenId) {
-      document.querySelectorAll('.screen').forEach(function(s) {
-        s.classList.remove('active');
-      });
+      var current = document.querySelector('.screen.active');
       var target = document.getElementById(screenId);
-      if (target) target.classList.add('active');
+      if (!target || target === current) return;
+
+      if (current) {
+        current.classList.add('screen-exit');
+        setTimeout(function() {
+          current.classList.remove('active', 'screen-exit');
+          target.classList.add('active', 'screen-enter');
+          setTimeout(function() { target.classList.remove('screen-enter'); }, 260);
+        }, 180);
+      } else {
+        target.classList.add('active', 'screen-enter');
+        setTimeout(function() { target.classList.remove('screen-enter'); }, 260);
+      }
     }
 
     /* ─── NAME INPUT ────────────────────────────────────────── */
@@ -2026,7 +2982,8 @@
     var checkSVG = '<svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
     function selectCard(group, idx) {
-      var count = group === 'q1' ? 4 : 4;
+      var counts = { q1: 6, exp: 5, q3: 4 };
+      var count = counts[group] !== undefined ? counts[group] : 4;
       for (var i = 0; i < count; i++) {
         var card = document.getElementById(group + '-card-' + i);
         var chk  = document.getElementById(group + '-chk-' + i);
@@ -2126,22 +3083,414 @@
       go('s-home');
     }
 
-    /* ─── REST TIMER AUTO-START (MutationObserver) ──────────── */
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(m) {
-        if (m.target.id === 's-rest') {
-          if (m.target.classList.contains('active')) {
-            startRestTimer();
-          } else {
-            clearInterval(restTimer);
-          }
-        }
-      });
-    });
+/* ─── INDEX.HTML INTEGRATION ─── */
+let allSetsDone = false;
 
-    document.querySelectorAll('.screen').forEach(function(s) {
-      observer.observe(s, { attributes: true, attributeFilter: ['class'] });
-    });
+function s08Init() {
+  setTop(SNAP_DEF, false);
+  setupSwipeBox('repsBox',   'repsVal',   'reps');
+  setupSwipeBox('weightBox', 'weightVal', 'weight');
+  const bi = document.getElementById('btnInfo');
+  if (bi) bi.onclick = openCuecard;
+}
+
+function startSession() {
+  allSetsDone = false;
+  currentSet = 1;
+  elapsed = 0;
+  timerRunning = true;
+  clearInterval(restInterval);
+  go('s-exercise');
+  setTimeout(function() {
+    updateSetUI();
+    s08Init();
+    const restEl = document.getElementById('restOverlay');
+    if (restEl) restEl.classList.remove('open');
+    const ccEl = document.getElementById('cuecardOverlay');
+    if (ccEl) ccEl.classList.remove('open');
+    const pm = document.getElementById('pauseModal');
+    if (pm) pm.classList.remove('open');
+    const te = document.getElementById('timerDisplay');
+    if (te) te.textContent = '00:00';
+  }, 80);
+}
+
+/* ─── ALT CARD SWIPE ─── */
+const SWIPE_THRESHOLD = 52;
+const SNAP_OPEN      = 88;
+let swipeState = null; // { el, startX, startY, isDragging, isLocked }
+let openCard   = null; // currently swiped-open card
+
+function swipeStart(e, el) {
+  const pt = e.touches ? e.touches[0] : e;
+  swipeState = { el, startX: pt.clientX, startY: pt.clientY, isDragging: false, isLocked: false, moved: 0 };
+  el.classList.remove('snap-back');
+}
+
+function swipeMove(e, el) {
+  if (!swipeState || swipeState.el !== el) return;
+  const pt = e.touches ? e.touches[0] : e;
+  const dx = pt.clientX - swipeState.startX;
+  const dy = pt.clientY - swipeState.startY;
+
+  // lock scroll direction early
+  if (!swipeState.isLocked) {
+    if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+      swipeState.isLocked = true;
+      swipeState.isDragging = Math.abs(dx) > Math.abs(dy);
+    }
+    return;
+  }
+  if (!swipeState.isDragging) return;
+  if (e.cancelable) e.preventDefault();
+
+  // only allow leftward drag
+  const currentBase = el.classList.contains('swiped') ? -SNAP_OPEN : 0;
+  const raw = currentBase + dx;
+  const clamped = Math.min(0, Math.max(-SNAP_OPEN - 12, raw));
+  el.style.transition = 'none';
+  el.style.transform = `translateX(${clamped}px)`;
+  swipeState.moved = dx;
+}
+
+function swipeEnd(e, el) {
+  if (!swipeState || swipeState.el !== el) return;
+  const dx = swipeState.moved;
+  swipeState = null;
+
+  el.style.transition = '';
+  el.classList.add('snap-back');
+
+  const wasSwiped = el.classList.contains('swiped');
+
+  if (!wasSwiped && dx < -SWIPE_THRESHOLD) {
+    // snap open
+    el.classList.add('swiped');
+    if (openCard && openCard !== el) closeCard(openCard);
+    openCard = el;
+  } else if (wasSwiped && dx > SWIPE_THRESHOLD / 2) {
+    closeCard(el);
+  } else if (wasSwiped) {
+    // stayed open — if tap on reveal area → trigger select
+    el.style.transform = `translateX(-${SNAP_OPEN}px)`;
+  } else {
+    closeCard(el);
+  }
+
+  // if fully open and barely moved (tap) → open swap
+  if (el.classList.contains('swiped') && Math.abs(dx) < 8) {
+    openSwap(el.dataset.name);
+  }
+}
+
+function closeCard(el) {
+  el.classList.remove('swiped');
+  el.style.transform = '';
+  if (openCard === el) openCard = null;
+}
+
+// close open card when tapping elsewhere
+document.addEventListener('mousedown', e => {
+  if (openCard && !openCard.contains(e.target)) closeCard(openCard);
+});
+
+/* ─── SWAP CONFIRMATION ─── */
+let pendingSwapName = '';
+
+function openSwap(name) {
+  pendingSwapName = name;
+  document.getElementById('swapExName').textContent = name;
+  document.getElementById('swapOverlay').classList.add('open');
+}
+function closeSwap() {
+  document.getElementById('swapOverlay').classList.remove('open');
+  if (openCard) closeCard(openCard);
+}
+function confirmSwap() {
+  closeSwap();
+  closeCuecard();
+  showToast(`Switched to ${pendingSwapName}. Let's go.`);
+}
+function handleSwapBg(e) {
+  if (e.target === document.getElementById('swapOverlay')) closeSwap();
+}
+
+/* ─── SHEET DRAG ─── */
+const PHONE_H = 844, SNAP_EXP = 108, SNAP_DEF = 310, SNAP_COL = 492;
+const sheet = document.getElementById('sheet');
+const dragZone = document.getElementById('dragZone');
+const vidBottom = document.getElementById('videoBottom');
+let curTop = SNAP_DEF;
+
+const btnInfo = document.getElementById('btnInfo');
+
+function applySnapState(t, animate) {
+  const isCollapsed = t >= SNAP_COL - 10;
+  const wasCollapsed = sheet.classList.contains('collapsed');
+  if (isCollapsed !== wasCollapsed) {
+    if (animate) {
+      sheet.classList.toggle('collapsed', isCollapsed);
+    } else {
+      sheet.classList.toggle('collapsed', isCollapsed);
+    }
+  }
+}
+
+function setTop(top, animate) {
+  const t = Math.max(SNAP_EXP, Math.min(SNAP_COL, top));
+  sheet.style.transition = animate ? 'top 0.34s cubic-bezier(0.32,1.08,0.58,1)' : 'none';
+  btnInfo.style.transition = animate ? 'top 0.34s cubic-bezier(0.32,1.08,0.58,1)' : 'none';
+  if (animate) setTimeout(() => { sheet.style.transition = ''; btnInfo.style.transition = ''; }, 360);
+  sheet.style.top = t + 'px'; curTop = t;
+  btnInfo.style.top = (t - 58) + 'px';
+  vidBottom.style.bottom = (PHONE_H - t) + 'px';
+  applySnapState(t, animate);
+}
+// setTop called in startSession
+let shDrag = false, shSY = 0, shST = 0;
+dragZone.addEventListener('mousedown',  e => { shDrag=true; shSY=e.clientY; shST=curTop; sheet.style.transition='none'; e.preventDefault(); });
+dragZone.addEventListener('touchstart', e => { shDrag=true; shSY=e.touches[0].clientY; shST=curTop; sheet.style.transition='none'; e.preventDefault(); }, {passive:false});
+window.addEventListener('mousemove', e => {
+  if (!shDrag) return;
+  const t = Math.max(SNAP_EXP, Math.min(SNAP_COL, shST + e.clientY - shSY));
+  sheet.style.top = t+'px'; vidBottom.style.bottom=(PHONE_H-t)+'px';
+  btnInfo.style.top = (t - 58) + 'px'; curTop=t;
+  applySnapState(t, false);
+});
+window.addEventListener('touchmove', e => {
+  if (!shDrag) return;
+  const t = Math.max(SNAP_EXP, Math.min(SNAP_COL, shST + e.touches[0].clientY - shSY));
+  sheet.style.top = t+'px'; vidBottom.style.bottom=(PHONE_H-t)+'px';
+  btnInfo.style.top = (t - 58) + 'px'; curTop=t;
+  applySnapState(t, false);
+  e.preventDefault();
+}, {passive:false});
+function endShDrag() {
+  if (!shDrag) return; shDrag=false;
+  const snaps = [SNAP_EXP, SNAP_DEF, SNAP_COL];
+  setTop(snaps.reduce((a,b) => Math.abs(b-curTop)<Math.abs(a-curTop)?b:a), true);
+}
+window.addEventListener('mouseup', endShDrag);
+window.addEventListener('touchend', endShDrag);
+
+/* ─── TIMER ─── */
+let elapsed = 0, timerRunning = true;
+const timerEl = document.getElementById('timerDisplay');
+function pad(n) { return String(n).padStart(2,'0'); }
+setInterval(() => {
+  if (!timerRunning) return;
+  elapsed++;
+  timerEl.textContent = pad(Math.floor(elapsed/60)) + ':' + pad(elapsed%60);
+}, 1000);
+
+/* ─── SETS ─── */
+let currentSet = 1; const totalSets = 3;
+function updateSetUI() {
+  const sv = document.getElementById('setsVal');
+  sv.textContent = currentSet;
+  sv.classList.remove('bump'); void sv.offsetWidth; sv.classList.add('bump');
+  for (let i=0; i<totalSets; i++) {
+    const d = document.getElementById('dot-'+i); d.className='dot';
+    if (i < currentSet-1) d.classList.add('done');
+    else if (i===currentSet-1) d.classList.add('active');
+  }
+}
+function logSet() {
+  if (currentSet < totalSets) {
+    showToast('Set '+currentSet+' logged.');
+    currentSet++;
+    setTimeout(updateSetUI, 280);
+    setTimeout(openRest, 400);
+  } else {
+    allSetsDone = true;
+    for (let i=0;i<totalSets;i++) document.getElementById('dot-'+i).className='dot done';
+    showToast("That\'s all 3 sets. Rest up.");
+    setTimeout(openRest, 600);
+  }
+  const b = document.querySelector('.btn-log');
+  b.style.background='#2D4A6E'; setTimeout(()=>b.style.background='',180);
+}
+function skipSet() {
+  if (currentSet<totalSets) { showToast('Skipped. On to set '+(currentSet+1)+'.'); currentSet++; setTimeout(updateSetUI,280); }
+  else showToast('Last set skipped.');
+}
+
+/* ─── SWIPE NUMBER BOXES ─── */
+const fieldConfig = {
+  reps:   { min: 1,   max: 30,  step: 1,   decimals: 0 },
+  weight: { min: 0,   max: 150, step: 2.5, decimals: 1 }
+};
+const fieldValues = { reps: 12, weight: 32 };
+
+function formatVal(field, v) {
+  const cfg = fieldConfig[field];
+  return cfg.decimals > 0 && v % 1 !== 0 ? v.toFixed(cfg.decimals) : String(Math.round(v));
+}
+
+function animateNumber(el, direction, newVal) {
+  // slide out old, slide in new
+  const outY = direction === 'up' ? '-60%' : '60%';
+  const inY  = direction === 'up' ?  '60%' : '-60%';
+  el.style.transition = 'none';
+  el.style.transform = 'translateY(0)';
+  el.style.opacity = '1';
+
+  requestAnimationFrame(() => {
+    el.style.transition = 'transform 0.14s ease, opacity 0.1s ease';
+    el.style.transform = `translateY(${outY})`;
+    el.style.opacity = '0';
+
+    setTimeout(() => {
+      el.textContent = newVal;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${inY})`;
+      el.style.opacity = '0';
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 0.16s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.12s ease';
+        el.style.transform = 'translateY(0)';
+        el.style.opacity = '1';
+      });
+    }, 110);
+  });
+}
+
+function setupSwipeBox(boxId, valElId, field) {
+  const box = document.getElementById(boxId);
+  const valEl = document.getElementById(valElId);
+  const cfg = fieldConfig[field];
+
+  let dragging = false, startY = 0, accumulated = 0;
+  const SENSITIVITY = 18; // px per step
+
+  function changeBy(delta) {
+    const newRaw = fieldValues[field] + delta * cfg.step;
+    const clamped = Math.max(cfg.min, Math.min(cfg.max, Math.round(newRaw / cfg.step) * cfg.step));
+    if (clamped === fieldValues[field]) return;
+    const direction = clamped > fieldValues[field] ? 'up' : 'down';
+    fieldValues[field] = clamped;
+    animateNumber(valEl, direction, formatVal(field, clamped));
+  }
+
+  function start(clientY) {
+    dragging = true; startY = clientY; accumulated = 0;
+    box.classList.add('dragging');
+  }
+  function move(clientY) {
+    if (!dragging) return;
+    const dy = startY - clientY; // positive = swipe up = increase
+    const steps = Math.floor(Math.abs(dy - accumulated) / SENSITIVITY);
+    if (steps > 0) {
+      const dir = dy > accumulated ? 1 : -1;
+      changeBy(dir * steps);
+      accumulated += dir * steps * SENSITIVITY;
+    }
+  }
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    box.classList.remove('dragging');
+    accumulated = 0;
+  }
+
+  box.addEventListener('mousedown',  e => { start(e.clientY); e.preventDefault(); e.stopPropagation(); });
+  box.addEventListener('touchstart', e => { start(e.touches[0].clientY); e.preventDefault(); e.stopPropagation(); }, {passive:false});
+  window.addEventListener('mousemove', e => move(e.clientY));
+  window.addEventListener('touchmove', e => { if (dragging) { move(e.touches[0].clientY); e.preventDefault(); } }, {passive:false});
+  window.addEventListener('mouseup',  end);
+  window.addEventListener('touchend', end);
+
+  // scroll wheel too
+  box.addEventListener('wheel', e => {
+    e.preventDefault(); e.stopPropagation();
+    changeBy(e.deltaY < 0 ? 1 : -1);
+  }, {passive:false});
+}
+
+// swipe boxes initialized in s08Init()
+
+/* ─── CUE CARD NAVIGATION ─── */
+const cuecardOverlay = document.getElementById('cuecardOverlay');
+function openCuecard() {
+  // force animation replay by briefly removing open
+  cuecardOverlay.classList.remove('open');
+  void cuecardOverlay.offsetWidth; // reflow
+  cuecardOverlay.classList.add('open');
+}
+function closeCuecard() { cuecardOverlay.classList.remove('open'); }
+// btnInfo onclick set in s08Init()
+
+/* ─── REST TIMER (S09) ─── */
+const restOverlay = document.getElementById('restOverlay');
+const restTimerEl = document.getElementById('restTimerDisplay');
+let restSeconds   = 90;
+let restTotal     = 90;
+let restInterval  = null;
+
+function updateRestDisplay() {
+  const m = Math.floor(restSeconds / 60);
+  const s = restSeconds % 60;
+  restTimerEl.textContent = pad(m) + ':' + pad(s);
+}
+
+function startRestTimer() {
+  clearInterval(restInterval);
+  restInterval = setInterval(() => {
+    if (restSeconds > 0) {
+      restSeconds--;
+      updateRestDisplay();
+    } else {
+      clearInterval(restInterval);
+      if (allSetsDone) {
+        restOverlay.classList.remove('open');
+        go('s-complete');
+      } else {
+        showToast('Rest done. Next set when you\'re ready.');
+      }
+    }
+  }, 1000);
+}
+
+function openRest() {
+  restSeconds = 90; restTotal = 90;
+  updateRestDisplay();
+  restOverlay.classList.add('open');
+  setTimeout(startRestTimer, 400);
+}
+
+function skipRest() {
+  clearInterval(restInterval);
+  restOverlay.classList.remove('open');
+  if (allSetsDone) {
+    go('s-complete');
+  } else {
+    showToast("Rest skipped. Let\'s go.");
+  }
+}
+
+function addRestTime() {
+  restSeconds = Math.min(restSeconds + 30, 300);
+  restTotal   = Math.max(restTotal, restSeconds);
+  updateRestDisplay();
+  showToast('+30 sec added.');
+}
+
+function openRestCuecard() {
+  cuecardOverlay.classList.add('open');
+}
+
+/* ─── PAUSE ─── */
+function openPause() { timerRunning=false; timerEl.style.opacity='0.38'; document.getElementById('pauseModal').classList.add('open'); }
+function closePause() { timerRunning=true; timerEl.style.opacity='1'; document.getElementById('pauseModal').classList.remove('open'); }
+function endSession() { closePause(); go('s-session-overview'); }
+function handleModalBg(e) { if(e.target===document.getElementById('pauseModal')) closePause(); }
+
+/* ─── TOAST ─── */
+let toastT;
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2300);
+}
   </script>
 </body>
 </html>
