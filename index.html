@@ -18,8 +18,8 @@
       --bg-gradient:     linear-gradient(180deg, #C8D8F0 0%, #D4C8EE 48%, #EAE4F4 72%, #F6F7F9 100%);
       --color-surface:   #FFFFFF;
       --color-surface-2: #EEF2FC;
-      --color-primary:      #1762F9;
-      --color-primary-dim:  #D8E6FF;
+      --color-primary:      #7EB1FE;
+      --color-primary-dim:  #D6E8FF;
       --color-primary-dark: #1050D4;
       --color-teal:    #60A8A0;
       --color-rose:    #D06080;
@@ -29,9 +29,9 @@
       --color-stone:   #68788C;
       --color-pebble:  #98AAB8;
       --color-divide:  #CDD8EE;
-      --shadow-sm: 0 1px 4px 0 rgba(23,98,249,0.10);
-      --shadow-md: 0 4px 16px rgba(23,98,249,0.12), 0 1px 4px rgba(23,98,249,0.08);
-      --shadow-lg: 0 8px 32px rgba(23,98,249,0.14), 0 4px 12px rgba(23,98,249,0.10);
+      --shadow-sm: 0 1px 4px 0 rgba(126,177,254,0.10);
+      --shadow-md: 0 4px 16px rgba(126,177,254,0.12), 0 1px 4px rgba(126,177,254,0.08);
+      --shadow-lg: 0 8px 32px rgba(126,177,254,0.14), 0 4px 12px rgba(126,177,254,0.10);
       --ph: 24px;
       --radius: 16px;
       --font-logo:    'Gabarito', sans-serif;
@@ -90,6 +90,85 @@
       animation: screen-in 260ms cubic-bezier(0.32, 0, 0.67, 1.06) forwards;
     }
 
+    /* ─── SPOTTR BACKGROUND SYSTEM ───────────────────────────── */
+    @keyframes bg-drift {
+      0%   { background-position: 0% 0%; }
+      33%  { background-position: 3% -2%; }
+      66%  { background-position: -2% 3%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* Variation A — blue bloom top-left (goal screen) */
+    #s-q1.q-screen {
+      background:
+        radial-gradient(ellipse 80% 55% at 10% 5%, rgba(162,202,240,0.85) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 78% 80%, rgba(196,176,238,0.65) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 40% at 55% 45%, rgba(180,212,248,0.40) 0%, transparent 75%),
+        #F8F6FF;
+    }
+    /* Variation B — blue bloom top-right (experience screen) */
+    #s-experience.q-screen {
+      background:
+        radial-gradient(ellipse 70% 55% at 88% 8%, rgba(170,208,245,0.80) 0%, transparent 70%),
+        radial-gradient(ellipse 52% 48% at 12% 78%, rgba(210,190,255,0.60) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 38% at 42% 38%, rgba(180,212,248,0.38) 0%, transparent 72%),
+        #F9F7FF;
+    }
+    /* Variation C — center bloom (q2 where do you train) */
+    #s-q2.q-screen {
+      background:
+        radial-gradient(ellipse 88% 52% at 50% 2%, rgba(162,202,240,0.78) 0%, transparent 68%),
+        radial-gradient(ellipse 48% 58% at 18% 88%, rgba(198,182,240,0.58) 0%, transparent 62%),
+        radial-gradient(ellipse 56% 46% at 82% 48%, rgba(178,210,248,0.42) 0%, transparent 72%),
+        #F9F7FF;
+    }
+    /* Variation D — bloom from bottom-right (q3 days) */
+    #s-q3.q-screen {
+      background:
+        radial-gradient(ellipse 72% 58% at 72% 92%, rgba(200,182,244,0.72) 0%, transparent 70%),
+        radial-gradient(ellipse 62% 44% at 12% 18%, rgba(162,202,240,0.68) 0%, transparent 65%),
+        radial-gradient(ellipse 58% 40% at 55% 42%, rgba(178,210,248,0.36) 0%, transparent 72%),
+        #F8F5FF;
+    }
+    /* Variation E — left bloom (medical input) */
+    #s-medical-input {
+      background:
+        radial-gradient(ellipse 62% 62% at 0% 42%, rgba(170,208,248,0.78) 0%, transparent 72%),
+        radial-gradient(ellipse 52% 46% at 88% 72%, rgba(204,182,252,0.58) 0%, transparent 65%),
+        radial-gradient(ellipse 68% 36% at 48% 8%, rgba(180,212,248,0.42) 0%, transparent 70%),
+        #F8F6FF;
+    }
+    /* Variation F — right bloom (health sync) */
+    #s-health-sync {
+      background:
+        radial-gradient(ellipse 68% 56% at 92% 15%, rgba(162,202,240,0.75) 0%, transparent 70%),
+        radial-gradient(ellipse 58% 50% at 8% 72%, rgba(210,188,252,0.60) 0%, transparent 65%),
+        radial-gradient(ellipse 62% 42% at 42% 52%, rgba(178,210,248,0.38) 0%, transparent 72%),
+        #F9F7FF;
+    }
+    /* Variation G — centered top (generating, plan, home) */
+    #s-generating {
+      background:
+        radial-gradient(ellipse 78% 62% at 28% 12%, rgba(162,202,240,0.72) 0%, transparent 70%),
+        radial-gradient(ellipse 58% 54% at 78% 78%, rgba(208,190,252,0.62) 0%, transparent 65%),
+        #F8F7FF;
+    }
+    #s-home {
+      background:
+        radial-gradient(ellipse 72% 56% at 15% 85%, rgba(196,178,240,0.68) 0%, transparent 70%),
+        radial-gradient(ellipse 65% 48% at 80% 10%, rgba(162,202,240,0.70) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 42% at 50% 42%, rgba(178,210,248,0.38) 0%, transparent 72%),
+        #F9F7FF;
+    }
+    /* Variation H — bloom top-center (name screen) */
+    #s-name {
+      background:
+        radial-gradient(ellipse 82% 52% at 38% 0%, rgba(170,208,245,0.72) 0%, transparent 68%),
+        radial-gradient(ellipse 52% 48% at 88% 78%, rgba(204,180,248,0.55) 0%, transparent 65%),
+        #F9F7FF;
+    }
+
+
     /* ─── STATUS BAR ─────────────────────────────────────────── */
     .status-bar {
       height: 44px;
@@ -118,7 +197,7 @@
       -webkit-backdrop-filter: blur(20px) saturate(1.2);
       border: 1.5px solid rgba(255,255,255,0.70);
       box-shadow:
-        0 4px 24px rgba(23,98,249,0.08),
+        0 4px 24px rgba(126,177,254,0.08),
         inset 0 1px 0 rgba(255,255,255,0.95),
         inset 0 -1px 0 rgba(0,0,0,0.04);
     }
@@ -193,14 +272,14 @@
     }
 
     .btn-primary {
-      background: #1762F9;
+      background: linear-gradient(180deg, #3A3A3C 0%, #1E1E1E 100%);
       color: #FFFFFF;
       font: 600 15px/1 'Outfit', sans-serif;
       height: 52px;
       border-radius: 999px;
       border: none;
       width: 100%;
-      box-shadow: var(--shadow-md);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.28);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -209,12 +288,12 @@
       letter-spacing: 0.2px;
     }
     .btn-primary:hover {
-      background: #2B73FF;
-      box-shadow: 0 6px 28px rgba(23,98,249,0.45);
+      background: linear-gradient(180deg, #4A4A4E 0%, #2A2A2A 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 32px rgba(0,0,0,0.38);
     }
     .btn-primary:active {
-      background: #0E52D6;
-      box-shadow: 0 2px 12px rgba(23,98,249,0.30);
+      background: linear-gradient(180deg, #2A2A2C 0%, #141414 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 12px rgba(0,0,0,0.40);
       transform: scale(0.97);
     }
     .btn-primary:disabled { opacity: 0.38; pointer-events: none; }
@@ -271,6 +350,27 @@
       transform: scale(0.97);
     }
 
+
+    /* ─── SQUARE CHECKBOX (q3 multi-select) ─────────────────── */
+    .sq-check {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(180,200,220,0.70);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 140ms ease, border-color 140ms ease;
+    }
+    .sq-check.selected {
+      background: #2A2A2C;
+      border-color: #2A2A2C;
+    }
+
     .btn-glass-symbol {
       width: 36px; height: 36px;
       border-radius: 50%;
@@ -288,9 +388,9 @@
     }
     .btn-glass-symbol:active { transform: scale(0.92); }
     .btn-glass-symbol.selected {
-      background: #1762F9;
-      border-color: #1762F9;
-      box-shadow: 0 2px 8px rgba(23,98,249,0.30);
+      background: #7EB1FE;
+      border-color: #7EB1FE;
+      box-shadow: 0 2px 8px rgba(126,177,254,0.30);
     }
 
     /* ─── LAYOUT HELPERS ─────────────────────────────────────── */
@@ -344,11 +444,14 @@
     }
     .progress-bar-seg {
       height: 3px;
-      width: 72px;
+      width: 52px;
       border-radius: 999px;
       background: var(--color-divide);
     }
-    .progress-bar-seg.active { background: var(--color-primary); }
+    .progress-bar-seg.active { background: #2A2A2C; }
+
+    /* keep progress bars from overlapping with skip/back */
+    .nav-header { padding-top: 4px; padding-bottom: 4px; }
 
     /* ─── WORDMARK ANIMATION ─────────────────────────────────── */
     @keyframes letter-float {
@@ -383,7 +486,7 @@
     .input-field::placeholder { color: var(--color-pebble); }
     .input-field:focus {
       border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(23,98,249,0.12);
+      box-shadow: 0 0 0 3px rgba(126,177,254,0.12);
     }
     select.input-field {
       appearance: none;
@@ -598,10 +701,10 @@
     .connect-btn {
       width: 100%;
       height: 48px;
-      background: #FFFFFF;
-      border: 1.5px solid var(--color-primary);
-      color: var(--color-primary);
-      font: 500 15px/1 'Outfit', sans-serif;
+      background: rgba(255,255,255,0.90);
+      border: 1.5px solid rgba(255,255,255,0.70);
+      color: #1A1A2E;
+      font: 600 15px/1 'Outfit', sans-serif;
       border-radius: 999px;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
@@ -730,7 +833,7 @@
     }
 
     /* ─── Q SCREENS (shared) ─────────────────────────────────── */
-    .q-screen { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
+    .q-screen { background: #F8F7FF; }  /* individual overrides below */
     .q-content {
       flex: 1;
       overflow-y: auto;
@@ -780,7 +883,7 @@
     }
 
     /* ─── MEDICAL INPUT ──────────────────────────────────────── */
-    #s-medical-input { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
+    /* #s-medical-input bg now in SPOTTR BACKGROUND SYSTEM above */
     .medical-content {
       flex: 1;
       padding: 16px var(--ph) 0;
@@ -800,7 +903,7 @@
     }
 
     /* ─── HEALTH SYNC ────────────────────────────────────────── */
-    #s-health-sync { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
+    /* #s-health-sync bg now in SPOTTR BACKGROUND SYSTEM above */
     .hs-content {
       flex: 1;
       overflow-y: auto;
@@ -808,13 +911,15 @@
     }
     .hs-content::-webkit-scrollbar { display: none; }
     .apple-section {
-      background: #FFFFFF;
+      background: linear-gradient(135deg, #8BB2D0 0%, #CFCECD 100%);
       border-radius: var(--radius);
       padding: 20px;
       text-align: center;
       box-shadow: var(--shadow-sm);
       margin-bottom: 16px;
     }
+    .apple-section .apple-heading,
+    .apple-section .apple-sub { color: rgba(255,255,255,0.92); }
     .apple-icon { font-size: 32px; line-height: 1; margin-bottom: 10px; }
     .apple-heading {
       font: 700 20px/1.3 'Plus Jakarta Sans', sans-serif;
@@ -839,8 +944,8 @@
     }
 
     /* ─── GENERATING ─────────────────────────────────────────── */
-    #s-home { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
-    #s-generating { background: radial-gradient(ellipse at 60% 0%, #C9DDFF 0%, #FFFFFF 70%); }
+    /* #s-home bg now in SPOTTR BACKGROUND SYSTEM above */
+    /* #s-generating bg now in SPOTTR BACKGROUND SYSTEM above */
     .gen-center {
       flex: 1;
       display: flex;
@@ -894,7 +999,7 @@
       backdrop-filter: blur(20px) saturate(1.2);
       -webkit-backdrop-filter: blur(20px) saturate(1.2);
       border: 1.5px solid rgba(255,255,255,0.70);
-      box-shadow: 0 4px 16px rgba(23,98,249,0.10);
+      box-shadow: 0 4px 16px rgba(126,177,254,0.10);
       border-radius: 16px;
       padding: 16px;
       margin: 12px var(--ph) 0;
@@ -932,7 +1037,7 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.65);
-      box-shadow: 0 2px 8px rgba(23,98,249,0.08);
+      box-shadow: 0 2px 8px rgba(126,177,254,0.08);
       border-radius: 14px;
       padding: 14px 12px;
       display: flex;
@@ -1841,7 +1946,7 @@
       </div>
       <div class="cta-zone">
         <button class="btn-dark" onclick="go('s-q1')">Start my journey →</button>
-        <button class="btn-liquid-glass" onclick="go('s-q1')">Create Account</button>
+        <button class="btn-liquid-glass" onclick="go('s-q1')">Continue as a guest</button>
       </div>
     </div>
 
@@ -1857,41 +1962,46 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-welcome-personal')">←</div>
+        <div class="nav-back" onclick="go('s-welcome-personal')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progress-bars">
           <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg"></div>
           <div class="progress-bar-seg"></div>
           <div class="progress-bar-seg"></div>
         </div>
         <span class="nav-skip" onclick="go('s-q2')">Skip</span>
       </div>
       <div class="q-content">
-        <p class="q-meta-label">Question 1/3</p>
+        <p class="q-meta-label">Step 1/4</p>
         <h2 class="q-heading">What are you training for?</h2>
         <div class="cards-stack">
           <div class="sel-card" id="q1-card-0" onclick="selectCard('q1',0)">
-            <div class="sel-card-text"><div class="sel-card-title">Build muscle</div></div>
+            <div class="sel-card-text">
+              <div class="sel-card-title">To feel stronger</div>
+              <div class="sel-card-sub">Build muscle, get more capable in your body</div>
+            </div>
             <div class="btn-glass-symbol" id="q1-chk-0"></div>
           </div>
           <div class="sel-card" id="q1-card-1" onclick="selectCard('q1',1)">
-            <div class="sel-card-text"><div class="sel-card-title">Lose fat</div></div>
+            <div class="sel-card-text">
+              <div class="sel-card-title">Build a consistent routine</div>
+              <div class="sel-card-sub">Get into the habit of moving regularly</div>
+            </div>
             <div class="btn-glass-symbol" id="q1-chk-1"></div>
           </div>
           <div class="sel-card" id="q1-card-2" onclick="selectCard('q1',2)">
-            <div class="sel-card-text"><div class="sel-card-title">Get stronger</div></div>
+            <div class="sel-card-text">
+              <div class="sel-card-title">A specific sport, activity, or event</div>
+              <div class="sel-card-sub">Train for something that matters to you</div>
+            </div>
             <div class="btn-glass-symbol" id="q1-chk-2"></div>
           </div>
           <div class="sel-card" id="q1-card-3" onclick="selectCard('q1',3)">
-            <div class="sel-card-text"><div class="sel-card-title">Improve fitness</div></div>
+            <div class="sel-card-text">
+              <div class="sel-card-title">My mental health and energy</div>
+              <div class="sel-card-sub">Feel calmer, sleep better, manage stress</div>
+            </div>
             <div class="btn-glass-symbol" id="q1-chk-3"></div>
-          </div>
-          <div class="sel-card" id="q1-card-4" onclick="selectCard('q1',4)">
-            <div class="sel-card-text"><div class="sel-card-title">Train for sport</div></div>
-            <div class="btn-glass-symbol" id="q1-chk-4"></div>
-          </div>
-          <div class="sel-card" id="q1-card-5" onclick="selectCard('q1',5)">
-            <div class="sel-card-text"><div class="sel-card-title">Just stay active</div></div>
-            <div class="btn-glass-symbol" id="q1-chk-5"></div>
           </div>
         </div>
       </div>
@@ -1912,16 +2022,17 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-q1')">←</div>
+        <div class="nav-back" onclick="go('s-q1')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progress-bars">
           <div class="progress-bar-seg active"></div>
+          <div class="progress-bar-seg"></div>
           <div class="progress-bar-seg"></div>
           <div class="progress-bar-seg"></div>
         </div>
         <span class="nav-skip" onclick="go('s-q2')">Skip</span>
       </div>
       <div class="q-content">
-        <p class="q-meta-label">Experience 1.5/3</p>
+        <p class="q-meta-label">Step 2/4</p>
         <h2 class="q-heading">How would you describe your experience level?</h2>
         <div class="cards-stack">
           <div class="sel-card" id="exp-card-0" onclick="selectCard('exp',0)">
@@ -1962,8 +2073,9 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-q1')">←</div>
+        <div class="nav-back" onclick="go('s-q1')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg"></div>
@@ -1971,7 +2083,7 @@
         <span class="nav-skip" onclick="go('s-q3')">Skip</span>
       </div>
       <div class="q-content">
-        <p class="q-meta-label">Availability 2/3</p>
+        <p class="q-meta-label">Step 3/4</p>
         <h2 class="q-heading" style="font-size:24px;">How often you like to train per week?</h2>
         <p class="q-sub">Setting a goal will help you stay motivated and track your progress</p>
         <div class="day-picker-wrap">
@@ -2004,8 +2116,9 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-q2')">←</div>
+        <div class="nav-back" onclick="go('s-q2')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="progress-bars">
+          <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg active"></div>
           <div class="progress-bar-seg active"></div>
@@ -2013,37 +2126,37 @@
         <span class="nav-skip" onclick="go('s-medical-intro')">Skip</span>
       </div>
       <div class="q-content">
-        <p class="q-meta-label">Location 3/3</p>
+        <p class="q-meta-label">Step 4/4</p>
         <h2 class="q-heading">Where do you work out?</h2>
         <p class="q-sub">We will create your plan based from your location. You can change this in the settings.</p>
         <div class="cards-stack">
-          <div class="sel-card" id="q3-card-0" onclick="selectCard('q3',0)">
+          <div class="sel-card" id="q3-card-0" onclick="selectCardMulti('q3',0,4)">
             <div class="sel-card-text">
               <div class="sel-card-title">Large Gym</div>
               <div class="sel-card-sub">Well-stocked gym with machines like Equinox, Anytime Fitness</div>
             </div>
-            <div class="btn-glass-symbol" id="q3-chk-0"></div>
+            <div class="sq-check" id="q3-chk-0"></div>
           </div>
-          <div class="sel-card" id="q3-card-1" onclick="selectCard('q3',1)">
+          <div class="sel-card" id="q3-card-1" onclick="selectCardMulti('q3',1,4)">
             <div class="sel-card-text">
               <div class="sel-card-title">Compact Gym</div>
-              <div class="sel-card-sub">Compact gyms with limited equipment</div>
+              <div class="sel-card-sub">Smaller gym with limited equipment</div>
             </div>
-            <div class="btn-glass-symbol" id="q3-chk-1"></div>
+            <div class="sq-check" id="q3-chk-1"></div>
           </div>
-          <div class="sel-card" id="q3-card-2" onclick="selectCard('q3',2)">
+          <div class="sel-card" id="q3-card-2" onclick="selectCardMulti('q3',2,4)">
             <div class="sel-card-text">
               <div class="sel-card-title">Garage Gym</div>
               <div class="sel-card-sub">Private, own rack, dumbbells, etc.</div>
             </div>
-            <div class="btn-glass-symbol" id="q3-chk-2"></div>
+            <div class="sq-check" id="q3-chk-2"></div>
           </div>
-          <div class="sel-card" id="q3-card-3" onclick="selectCard('q3',3)">
+          <div class="sel-card" id="q3-card-3" onclick="selectCardMulti('q3',3,4)">
             <div class="sel-card-text">
               <div class="sel-card-title">At Home</div>
-              <div class="sel-card-sub">Limited equipment such as dumbbell and bands</div>
+              <div class="sel-card-sub">Limited equipment — dumbbells, bands, bodyweight</div>
             </div>
-            <div class="btn-glass-symbol" id="q3-chk-3"></div>
+            <div class="sq-check" id="q3-chk-3"></div>
           </div>
         </div>
       </div>
@@ -2072,7 +2185,7 @@
       </div>
       <div class="cta-zone">
         <button class="btn-dark" onclick="go('s-medical-input')">I have something to share</button>
-        <div class="text-link-white" onclick="go('s-health-sync')">No, I'm good →</div>
+        <button class="btn-liquid-glass" onclick="go('s-health-sync')">No, I'm good</button>
       </div>
     </div>
 
@@ -2087,7 +2200,7 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-medical-intro')">←</div>
+        <div class="nav-back" onclick="go('s-medical-intro')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div></div>
       </div>
       <div class="medical-content">
@@ -2114,7 +2227,7 @@
         </div>
       </div>
       <div class="nav-header">
-        <div class="nav-back" onclick="go('s-medical-intro')">←</div>
+        <div class="nav-back" onclick="go('s-medical-intro')"><svg width="10" height="18" viewBox="0 0 10 18" fill="none"><path d="M9 1L1 9l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <span style="font:600 14px/1 'Outfit',sans-serif; color:var(--color-slate);">Health Profile</span>
         <div style="width:36px;"></div>
       </div>
@@ -2124,7 +2237,7 @@
           <h3 class="apple-heading">Sync Spottr with Apple Health for the Best Experience</h3>
           <p class="apple-sub">The more access, the better your plan.</p>
           <button class="connect-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1762F9"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#7EB1FE"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             Connect Apple Health
           </button>
         </div>
@@ -2240,8 +2353,8 @@
         <div class="ring-wrap">
           <div class="ring-inner">
             <svg width="52" height="52" style="transform:rotate(-90deg)">
-              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(23,98,249,0.15)" stroke-width="4"/>
-              <circle cx="26" cy="26" r="21" fill="none" stroke="#1762F9" stroke-width="4"
+              <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(126,177,254,0.15)" stroke-width="4"/>
+              <circle cx="26" cy="26" r="21" fill="none" stroke="#7EB1FE" stroke-width="4"
                 stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="33"/>
             </svg>
             <div class="ring-center-text">1:00</div>
@@ -2792,7 +2905,7 @@
         <div class="rest-ring-wrap">
           <svg width="180" height="180" style="transform:rotate(-90deg)">
             <circle cx="90" cy="90" r="80" fill="none" stroke="#EEF2FC" stroke-width="10"/>
-            <circle cx="90" cy="90" r="80" fill="none" stroke="#1762F9" stroke-width="10"
+            <circle cx="90" cy="90" r="80" fill="none" stroke="#7EB1FE" stroke-width="10"
               stroke-linecap="round" id="rest-ring" class="ring-progress"
               stroke-dasharray="502" stroke-dashoffset="0"/>
           </svg>
@@ -2917,8 +3030,8 @@
       </div>
       <div class="bottom-nav">
         <div class="bottom-nav-item active">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1762F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span class="bottom-nav-label" style="color:#1762F9;">Home</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7EB1FE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="bottom-nav-label" style="color:#7EB1FE;">Home</span>
         </div>
         <div class="bottom-nav-item">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#98AAB8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -2981,8 +3094,32 @@
     /* ─── SELECTION CARDS ───────────────────────────────────── */
     var checkSVG = '<svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+
+    function selectCardMulti(group, idx, total) {
+      var card = document.getElementById(group + '-card-' + idx);
+      var chk  = document.getElementById(group + '-chk-' + idx);
+      if (!card) return;
+      var isSelected = card.classList.contains('selected');
+      if (isSelected) {
+        card.classList.remove('selected');
+        if (chk) { chk.classList.remove('selected'); chk.innerHTML = ''; }
+      } else {
+        card.classList.add('selected');
+        if (chk) { chk.classList.add('selected'); chk.innerHTML = '<svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
+      }
+      var contBtn = document.getElementById(group + '-continue');
+      if (contBtn) {
+        var anySelected = false;
+        for (var i = 0; i < total; i++) {
+          var c = document.getElementById(group + '-card-' + i);
+          if (c && c.classList.contains('selected')) { anySelected = true; break; }
+        }
+        contBtn.disabled = !anySelected;
+      }
+    }
+
     function selectCard(group, idx) {
-      var counts = { q1: 6, exp: 5, q3: 4 };
+      var counts = { q1: 4, exp: 5, q3: 4 };
       var count = counts[group] !== undefined ? counts[group] : 4;
       for (var i = 0; i < count; i++) {
         var card = document.getElementById(group + '-card-' + i);
