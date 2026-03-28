@@ -701,15 +701,18 @@
     .connect-btn {
       width: 100%;
       height: 48px;
-      background: rgba(255,255,255,0.90);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1.5px solid rgba(255,255,255,0.70);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.90);
       color: #1A1A2E;
       font: 600 15px/1 'Outfit', sans-serif;
       border-radius: 999px;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       gap: 8px;
-      transition: background 120ms;
+      transition: background 120ms, box-shadow 120ms;
     }
     .connect-btn:active { background: #EEF2FC; }
     .tab-bar {
@@ -2016,6 +2019,51 @@
       color: var(--color-stone);
       margin-bottom: 10px;
     }
+
+    /* ─── MEDICAL BOTTOM SHEET ──────────────────────────── */
+    .medical-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,10,20,0.32);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 240ms ease;
+      z-index: 40;
+    }
+    .medical-overlay.open { opacity: 1; pointer-events: all; }
+    .medical-sheet {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(248,247,255,0.97);
+      backdrop-filter: blur(28px) saturate(1.4);
+      -webkit-backdrop-filter: blur(28px) saturate(1.4);
+      border-radius: 24px 24px 0 0;
+      border: 1.5px solid rgba(255,255,255,0.80);
+      border-bottom: none;
+      padding: 0 20px 32px;
+      transform: translateY(100%);
+      transition: transform 340ms cubic-bezier(0.32, 1.08, 0.58, 1);
+      box-shadow: 0 -8px 40px rgba(139,178,208,0.22);
+      z-index: 41;
+    }
+    .medical-overlay.open .medical-sheet { transform: translateY(0); }
+    .medical-handle-row {
+      display: flex; justify-content: center;
+      padding: 12px 0 18px;
+      cursor: grab;
+    }
+    .medical-handle {
+      width: 36px; height: 4px;
+      background: rgba(0,0,0,0.14); border-radius: 2px;
+    }
+    .medical-sheet-heading {
+      font: 700 18px/1.25 'Plus Jakarta Sans', sans-serif;
+      color: var(--color-slate); margin-bottom: 6px;
+    }
+    .medical-sheet-sub {
+      font: 400 13px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone); margin-bottom: 16px;
+    }
+
     .cta-sub-note {
       font: 400 12px/1 'Outfit', sans-serif;
       color: var(--color-stone);
@@ -2028,6 +2076,29 @@
     }
 
     /* ─── GENERATING SCREEN (rebuilt) ────────────────────────── */
+
+    /* ─── 3D DUMBBELL (GENERATING SCREEN) ───────────────── */
+    @keyframes db-float {
+      0%, 100% { transform: translateY(0px) rotate(-4deg); }
+      50%       { transform: translateY(-14px) rotate(-4deg); }
+    }
+    @keyframes db-shadow-pulse {
+      0%, 100% { transform: scaleX(1); opacity: 0.20; }
+      50%       { transform: scaleX(0.75); opacity: 0.10; }
+    }
+    .gen-dumbbell-wrap {
+      margin-bottom: 28px;
+      animation: db-float 3.2s ease-in-out infinite;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .gen-dumbbell-shadow {
+      width: 72px; height: 10px;
+      background: radial-gradient(ellipse, rgba(90,140,175,0.40) 0%, transparent 70%);
+      border-radius: 50%;
+      margin-top: 8px;
+      animation: db-shadow-pulse 3.2s ease-in-out infinite;
+    }
+
     .gen-nav-label {
       font: 600 15px/1 'Outfit', sans-serif;
       color: var(--color-slate);
@@ -2092,10 +2163,11 @@
     }
     .plan-new-scroll::-webkit-scrollbar { display: none; }
     .plan-new-hero {
-      background: var(--gradient-steel-mist);
+      background: linear-gradient(135deg, #4E86AA 0%, #7BA5BC 55%, #A8BECC 100%);
       border-radius: 20px;
       padding: 22px 20px;
       margin-bottom: 12px;
+      box-shadow: 0 6px 24px rgba(78,134,170,0.28);
     }
     .plan-new-eyebrow {
       font: 600 10px/1 'Outfit', sans-serif;
@@ -2144,11 +2216,14 @@
       margin-bottom: 10px;
     }
     .plan-week-row {
-      border: 1.5px solid rgba(0,0,0,0.07);
+      border: 1.5px solid rgba(255,255,255,0.70);
       border-radius: 14px;
       overflow: hidden;
       margin-bottom: 8px;
-      background: rgba(255,255,255,0.70);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(14px) saturate(1.2);
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      box-shadow: 0 2px 12px rgba(162,202,240,0.08);
     }
     .plan-week-header {
       display: flex; align-items: center;
@@ -2178,11 +2253,13 @@
     }
     .plan-week-body.open { display: block; }
     .plan-day-card {
-      border: 1px solid rgba(0,0,0,0.07);
+      border: 1px solid rgba(255,255,255,0.65);
       border-radius: 10px;
       padding: 10px 12px;
       margin-bottom: 7px;
-      background: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.80);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .plan-day-card:last-child { margin-bottom: 0; }
     .plan-day-card.rest { opacity: 0.45; }
@@ -2697,8 +2774,25 @@
         <div class="glass-orb" style="width:185px; height:185px;"></div>
       </div>
       <div class="cta-zone">
-        <button class="btn-dark" onclick="go('s-medical-input')">I have something to share</button>
+        <button class="btn-dark" onclick="openMedicalSheet()">I have something to share</button>
         <button class="btn-liquid-glass" onclick="go('s-health-sync')">No, I'm good</button>
+      </div>
+
+      <!-- ── Medical bottom sheet ── -->
+      <div class="medical-overlay" id="medical-overlay" onclick="closeMedicalSheet()">
+        <div class="medical-sheet" id="medical-sheet" onclick="event.stopPropagation()">
+          <div class="medical-handle-row" id="medical-handle-row">
+            <div class="medical-handle"></div>
+          </div>
+          <p class="medical-sheet-heading">Anything we should work around?</p>
+          <p class="medical-sheet-sub">Even something minor — we'd rather know and plan around it.</p>
+          <textarea
+            class="input-field"
+            placeholder="Describe any injuries, limitations, or anything else we should know..."
+            style="min-height:130px; border-radius:12px; height:auto; padding:14px 16px; resize:none; line-height:1.5; margin-bottom:16px;"
+          ></textarea>
+          <button class="btn-primary" onclick="closeMedicalSheet(); go('s-health-sync')">Continue</button>
+        </div>
       </div>
     </div>
 
@@ -2857,10 +2951,56 @@
         <span class="gen-nav-label">Building your plan</span>
       </div>
       <div class="gen-center">
-        <div class="gen-icon-wrap">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6.5 6.5h11M6.5 17.5h11M6 12h12M3 6.5h1M3 17.5h1M20 6.5h1M20 17.5h1M3 12h1M20 12h1"/>
+        <div class="gen-dumbbell-wrap">
+          <svg width="160" height="96" viewBox="0 0 160 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="db-plate-face" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#A2C4D8"/>
+                <stop offset="100%" stop-color="#6595B2"/>
+              </linearGradient>
+              <linearGradient id="db-plate-rim" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#7AABCA"/>
+                <stop offset="100%" stop-color="#4C82A0"/>
+              </linearGradient>
+              <linearGradient id="db-plate-r-face" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#B8D0E0"/>
+                <stop offset="100%" stop-color="#7AAFC8"/>
+              </linearGradient>
+              <linearGradient id="db-bar-g" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#CDD9E4"/>
+                <stop offset="45%" stop-color="#9BBCD0"/>
+                <stop offset="100%" stop-color="#7298B0"/>
+              </linearGradient>
+              <linearGradient id="db-knurl" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#B8CCDA"/>
+                <stop offset="100%" stop-color="#85A8BE"/>
+              </linearGradient>
+            </defs>
+            <!-- Left outer plate -->
+            <rect x="8" y="22" width="16" height="52" rx="6" fill="url(#db-plate-rim)"/>
+            <ellipse cx="24" cy="48" rx="5" ry="26" fill="url(#db-plate-face)"/>
+            <ellipse cx="8" cy="48" rx="5" ry="26" fill="#3E7090"/>
+            <rect x="8" y="22" width="16" height="3" rx="1.5" fill="rgba(255,255,255,0.28)"/>
+            <!-- Left inner collar -->
+            <rect x="24" y="32" width="8" height="32" rx="3" fill="url(#db-plate-rim)"/>
+            <ellipse cx="32" cy="48" rx="3.5" ry="16" fill="url(#db-plate-face)"/>
+            <!-- Bar -->
+            <rect x="32" y="42" width="96" height="12" rx="6" fill="url(#db-bar-g)"/>
+            <rect x="32" y="43" width="96" height="4" rx="3" fill="rgba(255,255,255,0.32)"/>
+            <!-- Knurl lines -->
+            <rect x="58" y="44" width="44" height="2" rx="1" fill="rgba(255,255,255,0.18)"/>
+            <rect x="58" y="48" width="44" height="2" rx="1" fill="rgba(255,255,255,0.12)"/>
+            <rect x="58" y="52" width="44" height="2" rx="1" fill="rgba(255,255,255,0.08)"/>
+            <!-- Right inner collar -->
+            <rect x="120" y="32" width="8" height="32" rx="3" fill="url(#db-plate-r-face)"/>
+            <ellipse cx="128" cy="48" rx="3.5" ry="16" fill="url(#db-plate-rim)"/>
+            <!-- Right outer plate -->
+            <rect x="136" y="22" width="16" height="52" rx="6" fill="url(#db-plate-r-face)"/>
+            <ellipse cx="152" cy="48" rx="5" ry="26" fill="#B8D2E4"/>
+            <ellipse cx="136" cy="48" rx="5" ry="26" fill="url(#db-plate-rim)"/>
+            <rect x="136" y="22" width="16" height="3" rx="1.5" fill="rgba(255,255,255,0.30)"/>
           </svg>
+          <div class="gen-dumbbell-shadow"></div>
         </div>
         <h2 class="gen-title">Hang tight, <span id="gen-name">there</span>.</h2>
         <p class="gen-sub">We're putting together your personalised 30-day plan based on everything you told us.</p>
@@ -3845,7 +3985,61 @@
       go('s-plan-review');
     }
 
-    /* ─── PLAN REVIEW → GENERATING → PLAN ──────────────────── */
+  
+  /* ─── MEDICAL BOTTOM SHEET ──────────────────────────────── */
+  (function() {
+    var overlay, sheet, handle;
+    var isDrag = false, dragStartY = 0, dragStartOffset = 0;
+
+    function getEls() {
+      if (!overlay) overlay = document.getElementById('medical-overlay');
+      if (!sheet)   sheet   = document.getElementById('medical-sheet');
+      if (!handle)  handle  = document.getElementById('medical-handle-row');
+    }
+
+    window.openMedicalSheet = function() {
+      getEls(); overlay.classList.add('open');
+    };
+    window.closeMedicalSheet = function() {
+      getEls();
+      sheet.style.transition = '';
+      sheet.style.transform  = '';
+      overlay.classList.remove('open');
+    };
+
+    function startDrag(y) {
+      getEls(); isDrag = true; dragStartY = y; dragStartOffset = 0;
+      sheet.style.transition = 'none';
+    }
+    function moveDrag(y) {
+      if (!isDrag) return;
+      var dy = Math.max(0, y - dragStartY);
+      sheet.style.transform = 'translateY(' + dy + 'px)';
+    }
+    function endDrag(y) {
+      if (!isDrag) return; isDrag = false;
+      sheet.style.transition = '';
+      if ((y - dragStartY) > 90) {
+        sheet.style.transform = '';
+        window.closeMedicalSheet();
+      } else {
+        sheet.style.transform = '';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      getEls();
+      if (!handle) return;
+      handle.addEventListener('touchstart', function(e) { startDrag(e.touches[0].clientY); }, {passive:true});
+      document.addEventListener('touchmove',  function(e) { if (isDrag) moveDrag(e.touches[0].clientY); }, {passive:true});
+      document.addEventListener('touchend',   function(e) { if (isDrag) endDrag(e.changedTouches[0].clientY); });
+      handle.addEventListener('mousedown',  function(e) { startDrag(e.clientY); e.preventDefault(); });
+      document.addEventListener('mousemove', function(e) { if (isDrag) moveDrag(e.clientY); });
+      document.addEventListener('mouseup',   function(e) { if (isDrag) endDrag(e.clientY); });
+    });
+  })();
+
+  /* ─── PLAN REVIEW → GENERATING → PLAN ──────────────────── */
     function goGenerating() {
       /* update generating + plan name */
       var gnEl = document.getElementById('gen-name'); if (gnEl) gnEl.textContent = userName || 'there';
