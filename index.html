@@ -3344,52 +3344,69 @@
         <div class="so-donut-wrap">
           <svg viewBox="0 0 158 158" width="158" height="158">
             <defs>
-              <!-- Gradient: Warm Up (cyan) -->
-              <linearGradient id="g-wu" gradientUnits="userSpaceOnUse" x1="79" y1="21" x2="113" y2="32">
-                <stop offset="0%" stop-color="#7DE8FA"/>
-                <stop offset="100%" stop-color="#28B4E0"/>
+              <!-- Pastel Warm Up — sky blue -->
+              <linearGradient id="g-wu" gradientUnits="userSpaceOnUse" x1="79" y1="21" x2="112" y2="31">
+                <stop offset="0%" stop-color="#C2EEFF"/>
+                <stop offset="100%" stop-color="#88D4F2"/>
               </linearGradient>
-              <!-- Gradient: Workout (purple) -->
-              <linearGradient id="g-wo" gradientUnits="userSpaceOnUse" x1="119" y1="37" x2="37" y2="119">
-                <stop offset="0%" stop-color="#C8B0F8"/>
-                <stop offset="100%" stop-color="#6848C0"/>
+              <!-- Pastel Workout — soft lavender -->
+              <linearGradient id="g-wo" gradientUnits="userSpaceOnUse" x1="116" y1="35" x2="27" y2="137">
+                <stop offset="0%" stop-color="#DDD4FD"/>
+                <stop offset="100%" stop-color="#C0B4F4"/>
               </linearGradient>
-              <!-- Gradient: Cool Down (coral) -->
-              <linearGradient id="g-cd" gradientUnits="userSpaceOnUse" x1="43" y1="125" x2="95" y2="23">
-                <stop offset="0%" stop-color="#FFAAAA"/>
-                <stop offset="100%" stop-color="#E04040"/>
+              <!-- Pastel Cool Down — blush rose -->
+              <linearGradient id="g-cd" gradientUnits="userSpaceOnUse" x1="30" y1="47" x2="73" y2="21">
+                <stop offset="0%" stop-color="#FFD8E6"/>
+                <stop offset="100%" stop-color="#F5AABE"/>
               </linearGradient>
-              <!-- Text paths for segment labels -->
-              <path id="tp-wu"  d="M 81,22  A 58,58 0 0,1 112,33"/>
-              <path id="tp-wo"  d="M 119,37 A 58,58 0 1,1 37,119"/>
-              <path id="tp-cd"  d="M 43,125 A 58,58 0 0,0 95,23"/>
+              <!--
+                Arc math: C = 2π×58 = 364.42
+                3 gaps × 6px = 18px total gap
+                WU 10% → 34.64px  WO 75% → 259.82px  CD 15% → 51.96px
+                Start angles (rotate from 3-o'clock CW):
+                  WU: -90° (12 o'clock)
+                  WO: -50° (+6px gap after WU end)
+                  CD: 213° (+6px gap after WO end)
+              -->
+              <!-- Text arc paths — each follows the ring at that segment -->
+              <!-- WU: CW arc at top (12 o'clock → 1 o'clock) -->
+              <path id="tp-wu" d="M 79,21 A 58,58 0 0,1 112,31"/>
+              <!-- WO: CCW arc at bottom so text reads L→R -->
+              <path id="tp-wo" d="M 50,129 A 58,58 0 0,0 120,120"/>
+              <!-- CD: CW arc on upper-left (10 o'clock → near 12) -->
+              <path id="tp-cd" d="M 30,47 A 58,58 0 0,1 73,21"/>
             </defs>
             <!-- Track ring -->
-            <circle cx="79" cy="79" r="58" fill="none" stroke="#E4EEF8" stroke-width="34"/>
-            <!-- Warm Up (10%) — rotate -90 to start at top -->
-            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wu)" stroke-width="30"
-              stroke-dasharray="28.44 336" stroke-linecap="round" transform="rotate(-90 79 79)"/>
-            <!-- Workout (75%) — rotate -46 -->
-            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wo)" stroke-width="30"
-              stroke-dasharray="265.31 99.11" stroke-linecap="round" transform="rotate(-46 79 79)"/>
-            <!-- Cool Down (15%) — rotate 232 -->
-            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-cd)" stroke-width="30"
-              stroke-dasharray="46.66 317.76" stroke-linecap="round" transform="rotate(232 79 79)"/>
-            <!-- Labels -->
-            <text font-family="Outfit,sans-serif" font-size="6.5" font-weight="700" fill="white" letter-spacing="0.2">
-              <textPath href="#tp-wu" startOffset="8%">Warm Up</textPath>
+            <circle cx="79" cy="79" r="58" fill="none" stroke="#EEF3FB" stroke-width="32"/>
+            <!-- Warm Up (10%): butt caps, 34.64px arc, starts at 12 o'clock -->
+            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wu)" stroke-width="28"
+              stroke-dasharray="34.64 329.78" stroke-linecap="butt" transform="rotate(-90 79 79)"/>
+            <!-- Workout (75%): 259.82px arc, 6px gap after WU -->
+            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wo)" stroke-width="28"
+              stroke-dasharray="259.82 104.60" stroke-linecap="butt" transform="rotate(-50 79 79)"/>
+            <!-- Cool Down (15%): 51.96px arc, 6px gap after WO -->
+            <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-cd)" stroke-width="28"
+              stroke-dasharray="51.96 312.46" stroke-linecap="butt" transform="rotate(213 79 79)"/>
+            <!-- Segment labels — dark-tinted to match each pastel -->
+            <text font-family="Outfit,sans-serif" font-size="5.5" font-weight="700" fill="#2878A8">
+              <textPath href="#tp-wu" startOffset="16%">Warm Up</textPath>
             </text>
-            <text font-family="Outfit,sans-serif" font-size="7.5" font-weight="700" fill="white" letter-spacing="0.4">
-              <textPath href="#tp-wo" startOffset="30%">Workout</textPath>
+            <text font-family="Outfit,sans-serif" font-size="7" font-weight="700" fill="#5838A8">
+              <textPath href="#tp-wo" startOffset="28%">Workout</textPath>
             </text>
-            <text font-family="Outfit,sans-serif" font-size="7" font-weight="700" fill="white" letter-spacing="0.3">
-              <textPath href="#tp-cd" startOffset="12%">Cool Down</textPath>
+            <text font-family="Outfit,sans-serif" font-size="5.5" font-weight="700" fill="#B03060">
+              <textPath href="#tp-cd" startOffset="20%">Cool Down</textPath>
             </text>
-            <!-- Centre -->
-            <text x="79" y="73" text-anchor="middle" font-family="DM Mono,monospace"
-              font-size="17" font-weight="500" fill="#1A1A2E" letter-spacing="-0.5">1:00 HR</text>
-            <text x="79" y="91" text-anchor="middle" font-family="Outfit,sans-serif"
-              font-size="9" font-weight="600" fill="#68788C" letter-spacing="1.8">TOTAL</text>
+            <!-- Centre — modern type -->
+            <text x="79" y="71" text-anchor="middle"
+              font-family="Plus Jakarta Sans,sans-serif"
+              font-size="22" font-weight="800" fill="#1A1A2E">1:00</text>
+            <text x="79" y="83" text-anchor="middle"
+              font-family="Outfit,sans-serif"
+              font-size="8.5" font-weight="500" fill="#8090A4" letter-spacing="0.5">hr</text>
+            <text x="79" y="95" text-anchor="middle"
+              font-family="Outfit,sans-serif"
+              font-size="7.5" font-weight="600" fill="#68788C" letter-spacing="2">TOTAL</text>
           </svg>
         </div>
         <div class="so-chips-col">
