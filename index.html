@@ -3345,57 +3345,52 @@
           <svg viewBox="0 0 158 158" width="158" height="158">
             <defs>
               <!-- Pastel Warm Up — sky blue -->
-              <linearGradient id="g-wu" gradientUnits="userSpaceOnUse" x1="79" y1="21" x2="112" y2="31">
+              <linearGradient id="g-wu" gradientUnits="userSpaceOnUse" x1="79" y1="21" x2="106" y2="28">
                 <stop offset="0%" stop-color="#C2EEFF"/>
                 <stop offset="100%" stop-color="#88D4F2"/>
               </linearGradient>
               <!-- Pastel Workout — soft lavender -->
-              <linearGradient id="g-wo" gradientUnits="userSpaceOnUse" x1="116" y1="35" x2="27" y2="137">
+              <linearGradient id="g-wo" gradientUnits="userSpaceOnUse" x1="127" y1="46" x2="21" y2="86">
                 <stop offset="0%" stop-color="#DDD4FD"/>
                 <stop offset="100%" stop-color="#C0B4F4"/>
               </linearGradient>
               <!-- Pastel Cool Down — blush rose -->
-              <linearGradient id="g-cd" gradientUnits="userSpaceOnUse" x1="30" y1="47" x2="73" y2="21">
+              <linearGradient id="g-cd" gradientUnits="userSpaceOnUse" x1="25" y1="58" x2="52" y2="28">
                 <stop offset="0%" stop-color="#FFD8E6"/>
                 <stop offset="100%" stop-color="#F5AABE"/>
               </linearGradient>
               <!--
-                Arc math: C = 2π×58 = 364.42
-                3 gaps × 6px = 18px total gap
-                WU 10% → 34.64px  WO 75% → 259.82px  CD 15% → 51.96px
-                Start angles (rotate from 3-o'clock CW):
-                  WU: -90° (12 o'clock)
-                  WO: -50° (+6px gap after WU end)
-                  CD: 213° (+6px gap after WO end)
+                Arc math: C = 364.42, gap = 28px (= stroke-width, so round caps just kiss)
+                3 gaps x 28px = 84px, arc pool = 280.42
+                WU 10% = 28.04px  WO 75% = 210.32px  CD 15% = 42.06px
+                Transforms: WU rotate(-90), WO rotate(-35), CD rotate(201)
               -->
-              <!-- Text arc paths — each follows the ring at that segment -->
-              <!-- WU: CW arc at top (12 o'clock → 1 o'clock) -->
-              <path id="tp-wu" d="M 79,21 A 58,58 0 0,1 112,31"/>
-              <!-- WO: CCW arc at bottom so text reads L→R -->
+              <!-- WU text path: CW arc at top -->
+              <path id="tp-wu" d="M 79,21 A 58,58 0 0,1 106,28"/>
+              <!-- WO text path: CCW arc at bottom so text reads L to R -->
               <path id="tp-wo" d="M 50,129 A 58,58 0 0,0 120,120"/>
-              <!-- CD: CW arc on upper-left (10 o'clock → near 12) -->
-              <path id="tp-cd" d="M 30,47 A 58,58 0 0,1 73,21"/>
+              <!-- CD text path: CW arc on upper-left -->
+              <path id="tp-cd" d="M 25,58 A 58,58 0 0,1 52,28"/>
             </defs>
-            <!-- Track ring -->
-            <circle cx="79" cy="79" r="58" fill="none" stroke="#EEF3FB" stroke-width="32"/>
-            <!-- Warm Up (10%): butt caps, 34.64px arc, starts at 12 o'clock -->
+            <!-- No track ring — floating segments only -->
+            <!-- Warm Up (10%): round caps, 28.04px center arc -->
             <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wu)" stroke-width="28"
-              stroke-dasharray="34.64 329.78" stroke-linecap="butt" transform="rotate(-90 79 79)"/>
-            <!-- Workout (75%): 259.82px arc, 6px gap after WU -->
+              stroke-dasharray="28.04 336.38" stroke-linecap="round" transform="rotate(-90 79 79)"/>
+            <!-- Workout (75%): 210.32px center arc -->
             <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-wo)" stroke-width="28"
-              stroke-dasharray="259.82 104.60" stroke-linecap="butt" transform="rotate(-50 79 79)"/>
-            <!-- Cool Down (15%): 51.96px arc, 6px gap after WO -->
+              stroke-dasharray="210.32 154.10" stroke-linecap="round" transform="rotate(-35 79 79)"/>
+            <!-- Cool Down (15%): 42.06px center arc -->
             <circle cx="79" cy="79" r="58" fill="none" stroke="url(#g-cd)" stroke-width="28"
-              stroke-dasharray="51.96 312.46" stroke-linecap="butt" transform="rotate(213 79 79)"/>
-            <!-- Segment labels — dark-tinted to match each pastel -->
+              stroke-dasharray="42.06 322.36" stroke-linecap="round" transform="rotate(201 79 79)"/>
+            <!-- Segment labels -->
             <text font-family="Outfit,sans-serif" font-size="5.5" font-weight="700" fill="#2878A8">
-              <textPath href="#tp-wu" startOffset="16%">Warm Up</textPath>
+              <textPath href="#tp-wu" startOffset="9%">Warm Up</textPath>
             </text>
             <text font-family="Outfit,sans-serif" font-size="7" font-weight="700" fill="#5838A8">
-              <textPath href="#tp-wo" startOffset="28%">Workout</textPath>
+              <textPath href="#tp-wo" startOffset="31%">Workout</textPath>
             </text>
             <text font-family="Outfit,sans-serif" font-size="5.5" font-weight="700" fill="#B03060">
-              <textPath href="#tp-cd" startOffset="20%">Cool Down</textPath>
+              <textPath href="#tp-cd" startOffset="13%">Cool Down</textPath>
             </text>
             <!-- Centre — modern type -->
             <text x="79" y="71" text-anchor="middle"
