@@ -1998,9 +1998,23 @@
       cursor: pointer; transition: all 120ms;
     }
     .coach-tag.active {
-      background: #2A2A2C;
-      border-color: #2A2A2C;
-      color: #FFFFFF;
+      background: linear-gradient(135deg, #B8D4F0 0%, #CFC8F4 100%);
+      border-color: rgba(162,202,240,0.60);
+      color: #2A2A2C;
+    }
+    .rv-edit-link {
+      font: 500 12px/1 'Outfit', sans-serif;
+      color: var(--color-stone);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-align: right;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .rv-card-sub {
+      font: 400 12px/1.5 'Outfit', sans-serif;
+      color: var(--color-stone);
+      margin-bottom: 10px;
     }
     .cta-sub-note {
       font: 400 12px/1 'Outfit', sans-serif;
@@ -2027,10 +2041,10 @@
     }
     .gen-icon-wrap {
       width: 72px; height: 72px; border-radius: 24px;
-      background: linear-gradient(135deg, #2A2A2C 0%, #1A1A1C 100%);
+      background: linear-gradient(135deg, #8BB2D0 0%, #CFCECD 100%);
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 28px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+      box-shadow: 0 8px 24px rgba(139,178,208,0.35);
     }
     .gen-title {
       font: 700 26px/1.25 'Plus Jakarta Sans', sans-serif;
@@ -2757,7 +2771,7 @@
         </div>
       </div>
       <div class="cta-zone">
-        <button class="btn-primary" onclick="goGenerating()">Continue</button>
+        <button class="btn-primary" onclick="goPlanReview()">Continue</button>
       </div>
     </div>
 
@@ -2791,6 +2805,7 @@
             <span class="rv-pill" id="rv-weight">Weight: —</span>
             <span class="rv-pill" id="rv-gender">Gender: —</span>
           </div>
+          <div class="rv-edit-link" onclick="go('s-health-sync')">Edit</div>
         </div>
 
         <div class="rv-card">
@@ -2800,10 +2815,12 @@
           <div class="rv-row"><span class="rv-row-label">Training at</span><span class="rv-row-val">Commercial Gym</span></div>
           <div class="rv-row"><span class="rv-row-label">Limitations</span><span class="rv-row-val">None noted</span></div>
           <div class="rv-row"><span class="rv-row-label">Experience</span><span class="rv-row-val">Brand new</span></div>
+          <div class="rv-edit-link" onclick="go('s-q1')">Change anything</div>
         </div>
 
         <div class="rv-card">
           <div class="rv-card-label">How Do You Want to Be Coached?</div>
+          <p class="rv-card-sub">Pick what feels right. You can change this anytime.</p>
           <div class="coach-group-label">Tone</div>
           <div class="coach-tags-wrap">
             <div class="coach-tag active" onclick="toggleCoachTag(this,'tone')">Push me hard</div>
@@ -2827,9 +2844,6 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         LOADING — GENERATING
-    ══════════════════════════════════════════════════════ -->
-        <!-- ══════════════════════════════════════════════════════
          LOADING — GENERATING PLAN
     ══════════════════════════════════════════════════════ -->
     <div id="s-generating" class="screen">
@@ -3816,20 +3830,23 @@
         'Days Active: ' + n + ' day' + (n !== 1 ? 's' : '') + ' per week';
     }
 
-    /* ─── PLAN REVIEW → GENERATING → PLAN ──────────────────── */
-    function goGenerating() {
+    /* ─── HEALTH SYNC → PLAN REVIEW ────────────────────────── */
+    function goPlanReview() {
       var weight = document.getElementById('hs-weight').value.trim();
       var age    = document.getElementById('hs-age').value.trim();
       var gender = document.getElementById('hs-gender').value;
 
-      /* update plan-review profile pills */
       if (weight) { var wpEl = document.getElementById('rv-weight'); if (wpEl) wpEl.textContent = 'Weight: ' + weight; }
       if (age)    { var agEl = document.getElementById('rv-age');    if (agEl) agEl.textContent = 'Age: ' + age; }
       if (gender) {
         var gMap = { male: 'Male', female: 'Female', other: 'Prefer not to say' };
         var gEl = document.getElementById('rv-gender'); if (gEl) gEl.textContent = gMap[gender] || '—';
       }
+      go('s-plan-review');
+    }
 
+    /* ─── PLAN REVIEW → GENERATING → PLAN ──────────────────── */
+    function goGenerating() {
       /* update generating + plan name */
       var gnEl = document.getElementById('gen-name'); if (gnEl) gnEl.textContent = userName || 'there';
       var pnEl = document.getElementById('plan-name-display'); if (pnEl) pnEl.textContent = userName || 'there';
